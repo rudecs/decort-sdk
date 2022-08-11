@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/computeci"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/computeci"
 )
 
 func (dc *decortClient) ComputeCI() *computeci.ComputeCI {

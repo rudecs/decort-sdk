@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/image"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/image"
 )
 
 func (dc *decortClient) Image() *image.Image {

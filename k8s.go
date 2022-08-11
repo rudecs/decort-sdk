@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/k8s"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/k8s"
 )
 
 func (dc *decortClient) K8S() *k8s.K8S {

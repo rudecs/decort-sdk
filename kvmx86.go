@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/kvmx86"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/kvmx86"
 )
 
 func (dc *decortClient) KVMX86() *kvmx86.KVMX86 {

@@ -1,7 +1,6 @@
 package client
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -32,12 +31,13 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 			return nil, fmt.Errorf("cannot get token: %v", err)
 		}
 
-		if resp.StatusCode != 200 {
-			return nil, fmt.Errorf("cannot get token: %v", err)
-		}
-
 		tokenBytes, _ := ioutil.ReadAll(resp.Body)
 		resp.Body.Close()
+
+		if resp.StatusCode != 200 {
+			return nil, fmt.Errorf("cannot get token: %s", tokenBytes)
+		}
+
 		token := string(tokenBytes)
 
 		t.token = token
@@ -48,8 +48,10 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("Authorization", "bearer "+t.token)
 	req.Header.Set("Accept", "application/json")
 
+	var resp *http.Response
+	var err error
 	for i := uint64(0); i < t.retries; i++ {
-		resp, err := t.base.RoundTrip(req)
+		resp, err = t.base.RoundTrip(req)
 		if err == nil {
 			if resp.StatusCode == 200 {
 				return resp, nil
@@ -58,8 +60,8 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 			err = fmt.Errorf("%s", respBytes)
 			resp.Body.Close()
 		}
-		fmt.Println(err)
+		//logrus.Errorf("Could not execute request: %v. Retrying %d/%d", err, i+1, t.retries)
 		time.Sleep(time.Second * 5)
 	}
-	return nil, errors.New("number of retries exceeded")
+	return nil, fmt.Errorf("could not execute request: %v", err)
 }

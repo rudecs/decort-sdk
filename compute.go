@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/compute"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/compute"
 )
 
 func (dc *decortClient) Compute() *compute.Compute {

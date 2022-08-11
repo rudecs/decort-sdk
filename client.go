@@ -1,13 +1,15 @@
-package client
+package decortsdk
 
 import (
 	"context"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 
 	"github.com/google/go-querystring/query"
+	"github.com/rudecs/decort-sdk/config"
+	"github.com/rudecs/decort-sdk/internal/client"
 )
 
 type decortClient struct {
@@ -15,10 +17,10 @@ type decortClient struct {
 	client    *http.Client
 }
 
-func New(config Config) *decortClient {
+func New(cfg config.Config) *decortClient {
 	return &decortClient{
-		decortUrl: config.DecortUrl,
-		client:    newHttpClient(config),
+		decortUrl: cfg.DecortURL,
+		client:    client.NewHttpClient(cfg),
 	}
 }
 
@@ -37,7 +39,7 @@ func (dc *decortClient) DecortApiCall(ctx context.Context, method, url string, p
 	}
 	defer resp.Body.Close()
 
-	respBytes, err := ioutil.ReadAll(resp.Body)
+	respBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

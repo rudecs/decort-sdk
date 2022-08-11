@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/disks"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/disks"
 )
 
 func (dc *decortClient) Disks() *disks.Disks {

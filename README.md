@@ -8,12 +8,12 @@ import (
 	"fmt"
 	"log"
 
-	decort "github.com/rudecs/decort-sdk"
-	"github.com/rudecs/decort-sdk/kvmx86"
+	"github.com/rudecs/decort-sdk/config"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/kvmx86"
 )
 
 func main() {
-	cfg := decort.Config{
+	cfg := config.Config{
 		AppID:     "<APPID>",
 		AppSecret: "<APPSECRET>",
 		SSOURL:    "https://sso.digitalenergy.online",

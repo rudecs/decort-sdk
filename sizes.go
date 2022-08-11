@@ -1,7 +1,7 @@
-package client
+package decortsdk
 
 import (
-	"github.com/rudecs/decort-sdk/sizes"
+	"github.com/rudecs/decort-sdk/pkg/cloudapi/sizes"
 )
 
 func (dc *decortClient) Sizes() *sizes.Sizes {
