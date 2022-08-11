@@ -1,0 +1,21 @@
+linters:
+  enable:
+    - bodyclose
+    - decorder
+    - dogsled
+    - errorlint
+    - exportloopref
+    - gocognit
+    - goconst
+    - gocyclo
+    - gosec
+    - ifshort
+    - makezero
+    - nestif
+    - nilerr
+    - prealloc
+    - unconvert
+    - unparam
+
+issues:
+  max-same-issues: 0
