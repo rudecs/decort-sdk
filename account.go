@@ -4,6 +4,6 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/account"
 )
 
-func (dc *decortClient) Account() *account.Account {
+func (dc *Client) Account() *account.Account {
 	return account.New(dc)
 }

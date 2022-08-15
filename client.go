@@ -12,19 +12,19 @@ import (
 	"github.com/rudecs/decort-sdk/internal/client"
 )
 
-type decortClient struct {
+type Client struct {
 	decortUrl string
 	client    *http.Client
 }
 
-func New(cfg config.Config) *decortClient {
-	return &decortClient{
+func New(cfg config.Config) *Client {
+	return &Client{
 		decortUrl: cfg.DecortURL,
 		client:    client.NewHttpClient(cfg),
 	}
 }
 
-func (dc *decortClient) DecortApiCall(ctx context.Context, method, url string, params interface{}) ([]byte, error) {
+func (dc *Client) DecortApiCall(ctx context.Context, method, url string, params interface{}) ([]byte, error) {
 	values, err := query.Values(params)
 	if err != nil {
 		return nil, err
