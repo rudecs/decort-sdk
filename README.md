@@ -1,5 +1,13 @@
 # Decort SDK
 
+## Install
+
+```bash
+go get -u github.com/rudecs/decort-sdk
+```
+
+## Example
+
 ```go
 package main
 
