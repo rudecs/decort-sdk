@@ -169,8 +169,6 @@ type ComputeRecord struct {
 	VirtualImageName       string                 `json:"virtualImageName"`
 }
 
-type ComputeList []ComputeRecord
-
 type OSUser struct {
 	GUID     string `json:"guid"`
 	Login    string `json:"login"`
@@ -286,3 +284,64 @@ type IOTune struct {
 	WriteIopsSec     int `json:"write_iops_sec"`
 	WriteIopsSecMax  int `json:"write_iops_sec_max"`
 }
+
+type ComputeItem struct {
+	ACL               []interface{}          `json:"ACL"`
+	AccountID         uint64                 `json:"accountId"`
+	AccountName       string                 `json:"accountName"`
+	AffinityLabel     string                 `json:"affinityLabel"`
+	AffinityRules     RuleList               `json:"affinityRules"`
+	AffinityWeight    uint64                 `json:"affinityWeight"`
+	AntiAffinityRules RuleList               `json:"antiAffinityRules"`
+	Architecture      string                 `json:"arch"`
+	BootOrder         []string               `json:"bootOrder"`
+	BootDiskSize      uint64                 `json:"bootdiskSize"`
+	CloneReference    uint64                 `json:"cloneReference"`
+	Clones            []uint64               `json:"clones"`
+	ComputeCIID       uint64                 `json:"computeciId"`
+	CPU               uint64                 `json:"cpus"`
+	CreatedBy         string                 `json:"createdBy"`
+	CreatedTime       uint64                 `json:"createdTime"`
+	CustomFields      map[string]interface{} `json:"customFields"`
+	DeletedBy         string                 `json:"deletedBy"`
+	DeletedTime       uint64                 `json:"deletedTime"`
+	Description       string                 `json:"desc"`
+	Devices           interface{}            `json:"devices"`
+	Disks             []uint64               `json:"disks"`
+	Driver            string                 `json:"driver"`
+	GID               uint64                 `json:"gid"`
+	GUID              uint64                 `json:"guid"`
+	ID                uint64                 `json:"id"`
+	ImageID           uint64                 `json:"imageId"`
+	ImageName         string                 `json:"imageName"`
+	Intefaces         IntefaceList           `json:"interfaces"`
+	LockStatus        string                 `json:"lockStatus"`
+	ManagerID         uint64                 `json:"managerId"`
+	ManagerType       string                 `json:"managerType"`
+	MigrationJob      uint64                 `json:"migrationjob"`
+	Milestones        uint64                 `json:"milestones"`
+	Name              string                 `json:"name"`
+	Pinned            bool                   `json:"pinned"`
+	RAM               uint64                 `json:"ram"`
+	ReferenceID       string                 `json:"referenceId"`
+	Registered        bool                   `json:"registered"`
+	ResName           string                 `json:"resName"`
+	RGID              uint64                 `json:"rgId"`
+	RGName            string                 `json:"rgName"`
+	SnapSets          SnapSetList            `json:"snapSets"`
+	StatelessSepID    uint64                 `json:"statelessSepId"`
+	StatelessSepType  string                 `json:"statelessSepType"`
+	Status            string                 `json:"status"`
+	Tags              map[string]string      `json:"tags"`
+	TechStatus        string                 `json:"techStatus"`
+	TotalDiskSize     uint64                 `json:"totalDisksSize"`
+	UpdatedBy         string                 `json:"updatedBy"`
+	UpdatedTime       uint64                 `json:"updatedTime"`
+	UserManaged       bool                   `json:"userManaged"`
+	Userdata          interface{}            `json:"userdata"`
+	VGPUs             []uint64               `json:"vgpus"`
+	VirtualImageID    uint64                 `json:"virtualImageId"`
+	VirtualImageName  string                 `json:"virtualImageName"`
+}
+
+type ComputeList []ComputeItem

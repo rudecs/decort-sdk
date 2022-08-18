@@ -18,6 +18,10 @@ type Client struct {
 }
 
 func New(cfg config.Config) *Client {
+	if cfg.Retries == 0 {
+		cfg.Retries = 5
+	}
+
 	return &Client{
 		decortUrl: cfg.DecortURL,
 		client:    client.NewHttpClient(cfg),
@@ -31,7 +35,10 @@ func (dc *Client) DecortApiCall(ctx context.Context, method, url string, params 
 	}
 
 	body := strings.NewReader(values.Encode())
-	req, _ := http.NewRequestWithContext(ctx, method, dc.decortUrl+"/restmachine"+url, body)
+	req, err := http.NewRequestWithContext(ctx, method, dc.decortUrl+"/restmachine"+url, body)
+	if err != nil {
+		return nil, err
+	}
 
 	resp, err := dc.client.Do(req)
 	if err != nil {

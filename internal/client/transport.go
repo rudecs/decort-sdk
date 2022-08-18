@@ -2,7 +2,7 @@ package client
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -31,7 +31,7 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 			return nil, fmt.Errorf("cannot get token: %v", err)
 		}
 
-		tokenBytes, _ := ioutil.ReadAll(resp.Body)
+		tokenBytes, _ := io.ReadAll(resp.Body)
 		resp.Body.Close()
 
 		if resp.StatusCode != 200 {
@@ -56,7 +56,7 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 			if resp.StatusCode == 200 {
 				return resp, nil
 			}
-			respBytes, _ := ioutil.ReadAll(resp.Body)
+			respBytes, _ := io.ReadAll(resp.Body)
 			err = fmt.Errorf("%s", respBytes)
 			resp.Body.Close()
 		}
