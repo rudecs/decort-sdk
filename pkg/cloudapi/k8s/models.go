@@ -83,10 +83,10 @@ type AclList []Acl
 type K8SItem struct {
 	AccountId      uint64         `json:"accountId"`
 	AccountName    string         `json:"accountName"`
-	Acl            string         `json:"acl"`
+	Acl            []interface{}  `json:"acl"`
 	BServiceId     uint64         `json:"bserviceId"`
 	CIId           uint64         `json:"ciId"`
-	Config         string         `json:"config"`
+	Config         interface{}    `json:"config"`
 	CreatedBy      string         `json:"createdBy"`
 	CreatedTime    uint64         `json:"createdTime"`
 	DeletedBy      string         `json:"deletedBy"`
