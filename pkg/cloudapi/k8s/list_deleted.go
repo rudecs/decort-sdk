@@ -9,8 +9,8 @@ import (
 )
 
 type ListDeletedRequest struct {
-	Page uint64 `json:"page"`
-	Size uint64 `json:"size"`
+	Page uint64 `url:"page"`
+	Size uint64 `url:"size"`
 }
 
 func (k8s K8S) ListDeleted(ctx context.Context, req ListDeletedRequest, options ...opts.DecortOpts) (K8SList, error) {

@@ -9,9 +9,9 @@ import (
 )
 
 type ListRequest struct {
-	IncludeDeleted bool   `json:"includedeleted"`
-	Page           uint64 `json:"page"`
-	Size           uint64 `json:"size"`
+	IncludeDeleted bool   `url:"includedeleted"`
+	Page           uint64 `url:"page"`
+	Size           uint64 `url:"size"`
 }
 
 func (k8s K8S) List(ctx context.Context, req ListRequest, options ...opts.DecortOpts) (K8SList, error) {
