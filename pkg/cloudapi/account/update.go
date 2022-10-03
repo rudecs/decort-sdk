@@ -3,50 +3,39 @@ package account
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type UpdateRequest struct {
-	AccountId              uint64 `url:"accountId"`
+	AccountID              uint64 `url:"accountId"`
 	Name                   string `url:"name,omitempty"`
-	MaxMemoryCapacity      uint   `url:"maxMemoryCapacity,omitempty"`
-	MaxVDiskCapacity       uint   `url:"maxVDiskCapacity,omitempty"`
-	MaxCPUCapacity         uint   `url:"maxCPUCapacity,omitempty"`
-	MaxNetworkPeerTransfer uint   `url:"maxNetworkPeerTransfer,omitempty"`
-	MaxNumPublicIP         uint   `url:"maxNumPublicIP,omitempty"`
+	MaxMemoryCapacity      uint64 `url:"maxMemoryCapacity,omitempty"`
+	MaxVDiskCapacity       uint64 `url:"maxVDiskCapacity,omitempty"`
+	MaxCPUCapacity         uint64 `url:"maxCPUCapacity,omitempty"`
+	MaxNetworkPeerTransfer uint64 `url:"maxNetworkPeerTransfer,omitempty"`
+	MaxNumPublicIP         uint64 `url:"maxNumPublicIP,omitempty"`
 	SendAccessEmails       bool   `url:"sendAccessEmails,omitempty"`
-	GpuUnits               uint   `url:"gpu_units,omitempty"`
+	GPUUnits               uint64 `url:"gpu_units,omitempty"`
 }
 
 func (arq UpdateRequest) Validate() error {
-	if arq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if arq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (a Account) Update(ctx context.Context, req UpdateRequest, options ...opts.DecortOpts) (bool, error) {
+func (a Account) Update(ctx context.Context, req UpdateRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/account/update"
-	prefix := "/cloudapi"
+	url := "/cloudapi/account/update"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

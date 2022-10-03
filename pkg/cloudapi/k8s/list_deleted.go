@@ -3,9 +3,7 @@ package k8s
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListDeletedRequest struct {
@@ -13,19 +11,11 @@ type ListDeletedRequest struct {
 	Size uint64 `url:"size"`
 }
 
-func (k8s K8S) ListDeleted(ctx context.Context, req ListDeletedRequest, options ...opts.DecortOpts) (K8SList, error) {
+func (k8s K8S) ListDeleted(ctx context.Context, req ListDeletedRequest) (K8SList, error) {
 
-	url := "/k8s/listDeleted"
-	prefix := "/cloudapi"
+	url := "/cloudapi/k8s/listDeleted"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := k8s.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := k8s.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

@@ -4,10 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"net/http"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
@@ -43,13 +42,13 @@ func (frq CreateRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (*FlipGroupRecord, error) {
+func (f FlipGroup) Create(ctx context.Context, req CreateRequest) (*FlipGroupRecord, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/flipgroup/create"
-	fgRaw, err := f.client.DecortApiCall(ctx, typed.POST, url, req)
+	fgRaw, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

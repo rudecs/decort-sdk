@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
@@ -21,13 +19,13 @@ func (frq GetRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*FlipGroupItem, error) {
+func (f FlipGroup) Get(ctx context.Context, req GetRequest) (*FlipGroupItem, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/flipgroup/get"
-	res, err := f.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

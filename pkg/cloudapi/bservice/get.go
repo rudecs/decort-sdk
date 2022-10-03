@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
@@ -21,13 +19,13 @@ func (bsrq GetRequest) Validate() error {
 	return nil
 }
 
-func (b BService) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*BasicService, error) {
+func (b BService) Get(ctx context.Context, req GetRequest) (*BasicService, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/bservice/get"
-	bsRaw, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	bsRaw, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

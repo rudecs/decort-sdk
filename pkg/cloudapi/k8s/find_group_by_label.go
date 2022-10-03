@@ -4,20 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type FindGroupByLabelRequest struct {
-	K8SId  uint64   `url:"k8sId"`
+	K8SID  uint64   `url:"k8sId"`
 	Labels []string `url:"labels"`
 	Strict bool     `url:"strict"`
 }
 
 func (krq FindGroupByLabelRequest) Validate() error {
-	if krq.K8SId == 0 {
-		return errors.New("validation-error: field K8SId can not be empty or equal to 0")
+	if krq.K8SID == 0 {
+		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
 
 	if len(krq.Labels) == 0 {
@@ -27,23 +25,15 @@ func (krq FindGroupByLabelRequest) Validate() error {
 	return nil
 }
 
-func (k8s K8S) FindGroupByLabel(ctx context.Context, req FindGroupByLabelRequest, options ...opts.DecortOpts) (K8SGroupList, error) {
+func (k8s K8S) FindGroupByLabel(ctx context.Context, req FindGroupByLabelRequest) (K8SGroupList, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/k8s/findGroupByLabel"
-	prefix := "/cloudapi"
+	url := "/cloudapi/k8s/findGroupByLabel"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := k8s.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := k8s.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

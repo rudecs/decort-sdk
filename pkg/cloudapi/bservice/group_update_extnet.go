@@ -3,19 +3,17 @@ package bservice
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
-type GroupUpdateExtnetRequest struct {
+type GroupUpdateExtNetRequest struct {
 	ServiceID   uint64   `url:"serviceId"`
 	CompGroupID uint64   `url:"compgroupId"`
-	Extnets     []uint64 `url:"extnets,omitempty"`
+	ExtNets     []uint64 `url:"extnets,omitempty"`
 }
 
-func (bsrq GroupUpdateExtnetRequest) Validate() error {
+func (bsrq GroupUpdateExtNetRequest) Validate() error {
 	if bsrq.ServiceID == 0 {
 		return errors.New("field ServiceID can not be empty or equal to 0")
 	}
@@ -27,13 +25,13 @@ func (bsrq GroupUpdateExtnetRequest) Validate() error {
 	return nil
 }
 
-func (b BService) GroupUpdateExtnet(ctx context.Context, req GroupUpdateExtnetRequest, options ...opts.DecortOpts) (bool, error) {
+func (b BService) GroupUpdateExtNet(ctx context.Context, req GroupUpdateExtNetRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/bservice/groupUpdateExtnet"
-	res, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

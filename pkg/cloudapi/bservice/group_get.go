@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GroupGetRequest struct {
@@ -26,13 +24,13 @@ func (bsrq GroupGetRequest) Validate() error {
 	return nil
 }
 
-func (b BService) GroupGet(ctx context.Context, req GroupGetRequest, options ...opts.DecortOpts) (*Group, error) {
+func (b BService) GroupGet(ctx context.Context, req GroupGetRequest) (*Group, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/bservice/groupGet"
-	groupRaw, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	groupRaw, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

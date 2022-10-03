@@ -3,9 +3,7 @@ package account
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListDeletedRequest struct {
@@ -13,19 +11,10 @@ type ListDeletedRequest struct {
 	Size uint64 `url:"size"`
 }
 
-func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest, options ...opts.DecortOpts) (AccountCloudApiList, error) {
-	url := "/account/listDeleted"
-	prefix := "/cloudapi"
+func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest) (AccountCloudApiList, error) {
+	url := "/cloudapi/account/listDeleted"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

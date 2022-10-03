@@ -3,22 +3,20 @@ package vins
 import (
 	"context"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type IPReserveRequest struct {
-	VinsId    uint64 `url:"vinsId"`
+	VINSID    uint64 `url:"vinsId"`
 	Type      string `url:"type"`
 	IPAddr    string `url:"ipAddr,omitempty"`
 	MAC       string `url:"mac,omitempty"`
-	ComputeId uint64 `url:"computeId,omitempty"`
+	ComputeID uint64 `url:"computeId,omitempty"`
 }
 
 func (vrq IPReserveRequest) Validate() error {
-	if vrq.VinsId == 0 {
-		return errors.New("validation-error: field VinsId can not be empty or equal to 0")
+	if vrq.VINSID == 0 {
+		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
 
 	if vrq.Type == "" {
@@ -28,24 +26,15 @@ func (vrq IPReserveRequest) Validate() error {
 	return nil
 }
 
-func (v Vins) IPReserve(ctx context.Context, req IPReserveRequest, options ...opts.DecortOpts) (string, error) {
+func (v VINS) IPReserve(ctx context.Context, req IPReserveRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/vins/ipReserve"
-	prefix := "/cloudapi"
+	url := "/cloudapi/vins/ipReserve"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := v.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}

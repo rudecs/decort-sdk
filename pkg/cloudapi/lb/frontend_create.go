@@ -3,10 +3,8 @@ package lb
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type FrontendCreateRequest struct {
@@ -31,24 +29,15 @@ func (lbrq FrontendCreateRequest) Validate() error {
 	return nil
 }
 
-func (l LB) FrontendCreate(ctx context.Context, req FrontendCreateRequest, options ...opts.DecortOpts) (bool, error) {
+func (l LB) FrontendCreate(ctx context.Context, req FrontendCreateRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/lb/frontendCreate"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/frontendCreate"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

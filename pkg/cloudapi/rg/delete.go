@@ -3,10 +3,8 @@ package rg
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type DeleteRequest struct {
@@ -24,13 +22,13 @@ func (rgrq DeleteRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Delete(ctx context.Context, req DeleteRequest, options ...opts.DecortOpts) (bool, error) {
+func (r RG) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/rg/delete"
-	res, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

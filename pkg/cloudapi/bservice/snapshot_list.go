@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type SnapshotListRequest struct {
@@ -21,13 +19,13 @@ func (bsrq SnapshotListRequest) Validate() error {
 	return nil
 }
 
-func (b BService) SnapshotList(ctx context.Context, req SnapshotListRequest, options ...opts.DecortOpts) ([]Snapshot, error) {
+func (b BService) SnapshotList(ctx context.Context, req SnapshotListRequest) ([]Snapshot, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/bservice/snapshotList"
-	snapshotListRaw, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	snapshotListRaw, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

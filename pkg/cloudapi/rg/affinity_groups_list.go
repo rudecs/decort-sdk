@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type AffinityGroupsListRequest struct {
@@ -21,13 +19,13 @@ func (rgrq AffinityGroupsListRequest) Validate() error {
 	return nil
 }
 
-func (r RG) AffinityGroupsList(ctx context.Context, req AffinityGroupsListRequest, options ...opts.DecortOpts) (map[string][]uint64, error) {
+func (r RG) AffinityGroupsList(ctx context.Context, req AffinityGroupsListRequest) (map[string][]uint64, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/affinityGroupsList"
-	agListRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	agListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

@@ -3,10 +3,8 @@ package bservice
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type SnapshotCreateRequest struct {
@@ -26,13 +24,13 @@ func (bsrq SnapshotCreateRequest) Validate() error {
 	return nil
 }
 
-func (b BService) SnapshotCreate(ctx context.Context, req SnapshotCreateRequest, options ...opts.DecortOpts) (bool, error) {
+func (b BService) SnapshotCreate(ctx context.Context, req SnapshotCreateRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/bservice/snapshotCreate"
-	res, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

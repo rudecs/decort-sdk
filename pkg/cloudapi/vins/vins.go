@@ -4,12 +4,12 @@ import (
 	"github.com/rudecs/decort-sdk/interfaces"
 )
 
-type Vins struct {
+type VINS struct {
 	client interfaces.Caller
 }
 
-func New(client interfaces.Caller) *Vins {
-	return &Vins{
+func New(client interfaces.Caller) *VINS {
+	return &VINS{
 		client,
 	}
 }

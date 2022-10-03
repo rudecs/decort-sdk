@@ -3,20 +3,18 @@ package image
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type RenameRequest struct {
-	ImageId uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId"`
 	Name    string `url:"name"`
 }
 
 func (irq RenameRequest) Validate() error {
-	if irq.ImageId == 0 {
-		return errors.New("validation-error: field ImageId can not be empty or equal to 0")
+	if irq.ImageID == 0 {
+		return errors.New("validation-error: field ImageID can not be empty or equal to 0")
 	}
 
 	if irq.Name == "" {
@@ -26,24 +24,15 @@ func (irq RenameRequest) Validate() error {
 	return nil
 }
 
-func (i Image) Rename(ctx context.Context, req RenameRequest, options ...opts.DecortOpts) (bool, error) {
+func (i Image) Rename(ctx context.Context, req RenameRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/image/rename"
-	prefix := "/cloudapi"
+	url := "/cloudapi/image/rename"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := i.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := i.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

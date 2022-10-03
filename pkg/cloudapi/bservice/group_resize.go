@@ -3,11 +3,10 @@ package bservice
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type GroupResizeRequest struct {
@@ -37,13 +36,13 @@ func (bsrq GroupResizeRequest) Validate() error {
 	return nil
 }
 
-func (b BService) GroupResize(ctx context.Context, req GroupResizeRequest, options ...opts.DecortOpts) (uint64, error) {
+func (b BService) GroupResize(ctx context.Context, req GroupResizeRequest) (uint64, error) {
 	if err := req.Validate(); err != nil {
 		return 0, err
 	}
 
 	url := "/cloudapi/bservice/groupResize"
-	res, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

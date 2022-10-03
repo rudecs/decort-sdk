@@ -3,44 +3,34 @@ package k8s
 import (
 	"context"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetNodeTaintsRequest struct {
-	K8SId  uint64 `url:"k8sId"`
-	NodeId uint64 `url:"nodeId"`
+	K8SID  uint64 `url:"k8sId"`
+	NodeID uint64 `url:"nodeId"`
 }
 
 func (krq GetNodeTaintsRequest) Validate() error {
-	if krq.K8SId == 0 {
-		return errors.New("validation-error: field K8SId can not be empty or equal to 0")
+	if krq.K8SID == 0 {
+		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
-	if krq.NodeId == 0 {
-		return errors.New("validation-error: field NodeId can not be empty or equal to 0")
+	if krq.NodeID == 0 {
+		return errors.New("validation-error: field NodeID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (k8s K8S) GetNodeTaints(ctx context.Context, req GetNodeTaintsRequest, options ...opts.DecortOpts) (string, error) {
+func (k8s K8S) GetNodeTaints(ctx context.Context, req GetNodeTaintsRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/k8s/getNodeTaints"
-	prefix := "/cloudapi"
+	url := "/cloudapi/k8s/getNodeTaints"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := k8s.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := k8s.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}

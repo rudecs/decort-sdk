@@ -3,10 +3,8 @@ package flipgroup
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type EditRequest struct {
@@ -23,13 +21,13 @@ func (frq EditRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) Edit(ctx context.Context, req EditRequest, options ...opts.DecortOpts) (bool, error) {
+func (f FlipGroup) Edit(ctx context.Context, req EditRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/flipgroup/edit"
-	res, err := f.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

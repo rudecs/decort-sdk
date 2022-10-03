@@ -11,24 +11,24 @@ import (
 type transport struct {
 	base         http.RoundTripper
 	retries      uint64
-	clientId     string
+	clientID     string
 	clientSecret string
 	token        string
-	ssoUrl       string
+	SSOURL       string
 	expiryTime   time.Time
 }
 
 func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if t.token == "" || time.Now().After(t.expiryTime) {
-		body := fmt.Sprintf("grant_type=client_credentials&client_id=%s&client_secret=%s&response_type=id_token", t.clientId, t.clientSecret)
+		body := fmt.Sprintf("grant_type=client_credentials&client_id=%s&client_secret=%s&response_type=id_token", t.clientID, t.clientSecret)
 		bodyReader := strings.NewReader(body)
 
-		req, _ := http.NewRequest("POST", t.ssoUrl+"/v1/oauth/access_token", bodyReader)
+		req, _ := http.NewRequestWithContext(req.Context(), "POST", t.SSOURL+"/v1/oauth/access_token", bodyReader)
 		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 		resp, err := t.base.RoundTrip(req)
 		if err != nil {
-			return nil, fmt.Errorf("cannot get token: %v", err)
+			return nil, fmt.Errorf("cannot get token: %w", err)
 		}
 
 		tokenBytes, _ := io.ReadAll(resp.Body)
@@ -63,5 +63,5 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 		//logrus.Errorf("Could not execute request: %v. Retrying %d/%d", err, i+1, t.retries)
 		time.Sleep(time.Second * 5)
 	}
-	return nil, fmt.Errorf("could not execute request: %v", err)
+	return nil, fmt.Errorf("could not execute request: %w", err)
 }

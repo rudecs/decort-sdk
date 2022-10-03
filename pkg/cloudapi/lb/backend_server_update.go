@@ -3,10 +3,8 @@ package lb
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type BackendServerUpdateRequest struct {
@@ -50,24 +48,15 @@ func (lbrq BackendServerUpdateRequest) Validate() error {
 	return nil
 }
 
-func (l LB) BackendServerUpdate(ctx context.Context, req BackendServerUpdateRequest, options ...opts.DecortOpts) (bool, error) {
+func (l LB) BackendServerUpdate(ctx context.Context, req BackendServerUpdateRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/lb/backendServerUpdate"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/backendServerUpdate"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

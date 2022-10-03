@@ -4,52 +4,41 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
-	VinsId uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId"`
 }
 
 func (vrq GetRequest) Validate() error {
-	if vrq.VinsId == 0 {
-		return errors.New("validation-error: field VinsId can not be empty or equal to 0")
+	if vrq.VINSID == 0 {
+		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (v Vins) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*VinsDetailed, error) {
+func (v VINS) Get(ctx context.Context, req GetRequest) (*VINSDetailed, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/vins/get"
-	prefix := "/cloudapi"
+	url := "/cloudapi/vins/get"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := v.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	vins := &VinsDetailed{}
+	VINS := &VINSDetailed{}
 
-	err = json.Unmarshal(res, vins)
+	err = json.Unmarshal(res, VINS)
 	if err != nil {
 		return nil, err
 	}
 
-	return vins, nil
+	return VINS, nil
 
 }

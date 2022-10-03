@@ -3,10 +3,8 @@ package bservice
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type GroupAddRequest struct {
@@ -20,7 +18,7 @@ type GroupAddRequest struct {
 	Driver       string   `url:"driver"`
 	Role         string   `url:"role,omitempty"`
 	VINSes       []uint64 `url:"vinses,omitempty"`
-	Extnets      []uint64 `url:"extnets,omitempty"`
+	ExtNets      []uint64 `url:"extnets,omitempty"`
 	TimeoutStart uint64   `url:"timeoutStart"`
 }
 
@@ -60,13 +58,13 @@ func (bsrq GroupAddRequest) Validate() error {
 	return nil
 }
 
-func (b BService) GroupAdd(ctx context.Context, req GroupAddRequest, options ...opts.DecortOpts) (uint64, error) {
+func (b BService) GroupAdd(ctx context.Context, req GroupAddRequest) (uint64, error) {
 	if err := req.Validate(); err != nil {
 		return 0, err
 	}
 
 	url := "/cloudapi/bservice/groupAdd"
-	res, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

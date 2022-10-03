@@ -2,15 +2,15 @@ package k8s
 
 type K8SGroup struct {
 	Annotations  []string         `json:"annotations"`
-	CPU          uint             `json:"cpu"`
+	CPU          uint64           `json:"cpu"`
 	DetailedInfo DetailedInfoList `json:"detailedInfo"`
-	Disk         uint             `json:"disk"`
+	Disk         uint64           `json:"disk"`
 	GUID         string           `json:"guid"`
 	ID           uint64           `json:"id"`
 	Labels       []string         `json:"labels"`
 	Name         string           `json:"name"`
-	Num          uint             `json:"num"`
-	RAM          uint             `json:"ram"`
+	Num          uint64           `json:"num"`
+	RAM          uint64           `json:"ram"`
 	Taints       []string         `json:"taints"`
 }
 
@@ -27,10 +27,10 @@ type DetailedInfoList []DetailedInfo
 
 type K8SRecord struct {
 	ACL         ACLGroup  `json:"ACL"`
-	AccountId   uint64    `json:"accountId"`
+	AccountID   uint64    `json:"accountId"`
 	AccountName string    `json:"accountName"`
-	BServiceId  uint64    `json:"bserviceId"`
-	CIId        uint64    `json:"ciId"`
+	BServiceID  uint64    `json:"bserviceId"`
+	CIID        uint64    `json:"ciId"`
 	CreatedBy   string    `json:"createdBy"`
 	CreatedTime uint64    `json:"createdTime"`
 	DeletedBy   string    `json:"deletedBy"`
@@ -38,7 +38,7 @@ type K8SRecord struct {
 	ID          uint64    `json:"id"`
 	K8CIName    string    `json:"k8ciName"`
 	K8SGroups   K8SGroups `json:"k8sGroups"`
-	LBId        uint64    `json:"lbId"`
+	LBID        uint64    `json:"lbId"`
 	Name        string    `json:"name"`
 	RGID        uint64    `json:"rgId"`
 	RGName      string    `json:"rgName"`
@@ -54,49 +54,49 @@ type K8SGroups struct {
 }
 
 type MasterGroup struct {
-	CPU          uint             `json:"cpu"`
+	CPU          uint64           `json:"cpu"`
 	DetailedInfo DetailedInfoList `json:"detailedInfo"`
-	Disk         uint             `json:"disk"`
+	Disk         uint64           `json:"disk"`
 	ID           uint64           `json:"id"`
 	Name         string           `json:"name"`
-	Num          uint             `json:"num"`
-	RAM          uint             `json:"ram"`
+	Num          uint64           `json:"num"`
+	RAM          uint64           `json:"ram"`
 }
 
 type ACLGroup struct {
-	AccountAcl AclList `json:"accountAcl"`
-	K8SAcl     AclList `json:"k8sAcl"`
-	RGAcl      AclList `json:"rgAcl"`
+	AccountACL ACLList `json:"accountAcl"`
+	K8SACL     ACLList `json:"k8sAcl"`
+	RGACL      ACLList `json:"rgAcl"`
 }
 
-type Acl struct {
+type ACL struct {
 	Explicit    bool   `json:"explicit"`
 	GUID        string `json:"guid"`
 	Right       string `json:"right"`
 	Status      string `json:"status"`
 	Type        string `json:"type"`
-	UserGroupId string `json:"userGroupId"`
+	UserGroupID string `json:"userGroupId"`
 }
 
-type AclList []Acl
+type ACLList []ACL
 
 type K8SItem struct {
-	AccountId      uint64         `json:"accountId"`
+	AccountID      uint64         `json:"accountId"`
 	AccountName    string         `json:"accountName"`
-	Acl            []interface{}  `json:"acl"`
-	BServiceId     uint64         `json:"bserviceId"`
-	CIId           uint64         `json:"ciId"`
+	ACL            []interface{}  `json:"acl"`
+	BServiceID     uint64         `json:"bserviceId"`
+	CIID           uint64         `json:"ciId"`
 	Config         interface{}    `json:"config"`
 	CreatedBy      string         `json:"createdBy"`
 	CreatedTime    uint64         `json:"createdTime"`
 	DeletedBy      string         `json:"deletedBy"`
 	DeletedTime    uint64         `json:"deletedTime"`
 	Description    string         `json:"desc"`
-	ExtnetId       uint64         `json:"extnetId"`
+	ExtNetID       uint64         `json:"extnetId"`
 	GID            uint64         `json:"gid"`
 	GUID           uint64         `json:"guid"`
 	ID             uint64         `json:"id"`
-	LBId           uint64         `json:"lbId"`
+	LBID           uint64         `json:"lbId"`
 	Milestones     uint64         `json:"milestones"`
 	Name           string         `json:"name"`
 	RGID           uint64         `json:"rgId"`
@@ -106,7 +106,7 @@ type K8SItem struct {
 	TechStatus     string         `json:"techStatus"`
 	UpdatedBy      string         `json:"updatedBy"`
 	UpdatedTime    uint64         `json:"updatedTime"`
-	VinsId         uint64         `json:"vinsId"`
+	VINSID         uint64         `json:"vinsId"`
 	WorkersGroup   K8SGroupList   `json:"workersGroups"`
 }
 

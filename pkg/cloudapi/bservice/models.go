@@ -60,7 +60,7 @@ type Group struct {
 	DeletedTime  uint64         `json:"deletedTime"`
 	Disk         uint64         `json:"disk"`
 	Driver       string         `json:"driver"`
-	Extnets      []uint64       `json:"extnets"`
+	ExtNets      []uint64       `json:"extnets"`
 	GID          uint64         `json:"gid"`
 	GUID         uint64         `json:"guid"`
 	ID           uint64         `json:"id"`

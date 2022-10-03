@@ -3,15 +3,14 @@ package disks
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
-	AccountId   uint64 `url:"accountId"`
+	AccountID   uint64 `url:"accountId"`
 	GID         uint64 `url:"gid"`
 	Name        string `url:"name"`
 	Description string `url:"description,omitempty"`
@@ -19,16 +18,16 @@ type CreateRequest struct {
 	Type        string `url:"type"`
 	SSDSize     uint64 `url:"ssdSize,omitempty"`
 	IOps        uint64 `url:"iops"`
-	SepId       uint64 `url:"sep_id,omitempty"`
+	SepID       uint64 `url:"sep_id,omitempty"`
 	Pool        string `url:"pool,omitempty"`
 }
 
 func (drq CreateRequest) Validate() error {
-	if drq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if drq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 	if drq.GID == 0 {
-		return errors.New("validation-error: field Gid can not be empty or equal to 0")
+		return errors.New("validation-error: field GID can not be empty or equal to 0")
 	}
 	if drq.Name == "" {
 		return errors.New("validation-error: field Name can not be empty")
@@ -46,24 +45,15 @@ func (drq CreateRequest) Validate() error {
 	return nil
 }
 
-func (d Disks) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (uint64, error) {
+func (d Disks) Create(ctx context.Context, req CreateRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
 	}
 
-	url := "/disks/create"
-	prefix := "/cloudapi"
+	url := "/cloudapi/disks/create"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := d.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := d.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

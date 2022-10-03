@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListPFWRequest struct {
@@ -21,13 +19,13 @@ func (rgrq ListPFWRequest) Validate() error {
 	return nil
 }
 
-func (r RG) ListPFW(ctx context.Context, req ListPFWRequest, options ...opts.DecortOpts) (PortForwardList, error) {
+func (r RG) ListPFW(ctx context.Context, req ListPFWRequest) (PortForwardList, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/listPFW"
-	pfwListRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	pfwListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

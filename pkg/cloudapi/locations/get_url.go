@@ -2,24 +2,15 @@ package locations
 
 import (
 	"context"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
-func (l Locations) GetUrl(ctx context.Context, options ...opts.DecortOpts) (string, error) {
+func (l Locations) GetUrl(ctx context.Context) (string, error) {
 	url := "/locations/getUrl"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, nil)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, nil)
 	if err != nil {
 		return "", err
 	}

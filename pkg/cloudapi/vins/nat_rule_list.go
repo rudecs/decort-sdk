@@ -3,41 +3,30 @@ package vins
 import (
 	"context"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type NatRuleListRequest struct {
-	VinsId uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId"`
 }
 
 func (vrq NatRuleListRequest) Validate() error {
-	if vrq.VinsId == 0 {
-		return errors.New("validation-error: field VinsId can not be empty or equal to 0")
+	if vrq.VINSID == 0 {
+		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (v Vins) NatRuleList(ctx context.Context, req NatRuleListRequest, options ...opts.DecortOpts) (string, error) {
+func (v VINS) NatRuleList(ctx context.Context, req NatRuleListRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/vins/natRuleList"
-	prefix := "/cloudapi"
+	url := "/cloudapi/vins/natRuleList"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := v.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}

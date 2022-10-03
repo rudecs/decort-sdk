@@ -4,41 +4,31 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
-	ImageId uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId"`
 	ShowAll bool   `url:"show_all,omitempty"`
 }
 
 func (irq GetRequest) Validate() error {
-	if irq.ImageId == 0 {
-		return errors.New("validation-error: field ImageId can not be empty or equal to 0")
+	if irq.ImageID == 0 {
+		return errors.New("validation-error: field ImageID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (i Image) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*ImageExtend, error) {
+func (i Image) Get(ctx context.Context, req GetRequest) (*ImageExtend, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/image/get"
-	prefix := "/cloudapi"
+	url := "/cloudapi/image/get"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := i.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := i.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

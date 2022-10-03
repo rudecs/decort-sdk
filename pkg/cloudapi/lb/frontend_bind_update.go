@@ -3,10 +3,8 @@ package lb
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strings"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type FrontendBindUpdateRequest struct {
@@ -33,24 +31,15 @@ func (lbrq FrontendBindUpdateRequest) Validate() error {
 	return nil
 }
 
-func (l LB) FrontendBindUpdate(ctx context.Context, req FrontendBindUpdateRequest, options ...opts.DecortOpts) (string, error) {
+func (l LB) FrontendBindUpdate(ctx context.Context, req FrontendBindUpdateRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/lb/frontendBindingUpdate"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/frontendBindingUpdate"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}

@@ -1,38 +1,38 @@
 package extnet
 
-type ExtnetRecord struct {
-	ID     int    `json:"id"`
+type ExtNetRecord struct {
+	ID     uint64 `json:"id"`
 	IPCidr string `json:"ipcidr"`
 	Name   string `json:"name"`
 }
-type ExtnetExtend struct {
-	ExtnetRecord
+type ExtNetExtend struct {
+	ExtNetRecord
 	IPAddr string `json:"ipaddr"`
 }
 
-type ExtnetList []ExtnetRecord
-type ExtnetExtendList []ExtnetExtend
+type ExtNetList []ExtNetRecord
+type ExtNetExtendList []ExtNetExtend
 
-type ExtnetComputes struct {
-	AccountId   int              `json:"accountId"`
+type ExtNetComputes struct {
+	AccountID   uint64           `json:"accountId"`
 	AccountName string           `json:"accountName"`
-	Extnets     ExtnetExtendList `json:"extnets"`
-	ID          int              `json:"id"`
+	ExtNets     ExtNetExtendList `json:"extnets"`
+	ID          uint64           `json:"id"`
 	Name        string           `json:"name"`
-	RGID        int              `json:"rgId"`
+	RGID        uint64           `json:"rgId"`
 	RGName      string           `json:"rgName"`
 }
 
-type ExtnetComputesList []ExtnetComputes
+type ExtNetComputesList []ExtNetComputes
 
-type ExtnetQos struct {
-	ERate   int    `json:"eRate"`
+type ExtNetQos struct {
+	ERate   uint64 `json:"eRate"`
 	GUID    string `json:"guid"`
-	InBurst int    `json:"inBurst"`
-	InRate  int    `json:"inRate"`
+	InBurst uint64 `json:"inBurst"`
+	InRate  uint64 `json:"inRate"`
 }
 
-type ExtnetReservation struct {
+type ExtNetReservation struct {
 	ClientType  string `json:"clientType"`
 	Description string `json:"desc"`
 	DomainName  string `json:"domainname"`
@@ -40,41 +40,41 @@ type ExtnetReservation struct {
 	IP          string `json:"ip"`
 	MAC         string `json:"mac"`
 	Type        string `json:"type"`
-	VMID        int    `json:"vmId"`
+	VMID        uint64 `json:"vmId"`
 }
 
-type ExtnetReservations []ExtnetReservation
+type ExtNetReservations []ExtNetReservation
 
-type ExtnetVNFS struct {
-	DHCP int `json:"dhcp"`
+type ExtNetVNFS struct {
+	DHCP uint64 `json:"dhcp"`
 }
 
-type ExtnetDetailed struct {
+type ExtNetDetailed struct {
 	CKey               string             `json:"_ckey"`
 	Meta               []interface{}      `json:"_meta"`
 	CheckIPs           []string           `json:"checkIPs"`
 	CheckIps           []string           `json:"checkIps"`
 	Default            bool               `json:"default"`
-	DefaultQos         ExtnetQos          `json:"defaultQos"`
+	DefaultQos         ExtNetQos          `json:"defaultQos"`
 	Description        string             `json:"desc"`
 	Dns                []string           `json:"dns"`
 	Excluded           []string           `json:"excluded"`
-	FreeIps            int                `json:"free_ips"`
+	FreeIps            uint64             `json:"free_ips"`
 	Gateway            string             `json:"gateway"`
-	GID                int                `json:"gid"`
-	GUID               int                `json:"guid"`
-	ID                 int                `json:"id"`
+	GID                uint64             `json:"gid"`
+	GUID               uint64             `json:"guid"`
+	ID                 uint64             `json:"id"`
 	IPCidr             string             `json:"ipcidr"`
-	Milestones         int                `json:"milestones"`
+	Milestones         uint64             `json:"milestones"`
 	Name               string             `json:"name"`
 	Network            string             `json:"network"`
-	NetworkId          int                `json:"networkId"`
-	PreReservationsNum int                `json:"preReservationsNum"`
-	Prefix             int                `json:"prefix"`
-	PriVnfDevId        int                `json:"priVnfDevId"`
-	Reservations       ExtnetReservations `json:"reservations"`
-	SharedWith         []int              `json:"sharedWith"`
+	NetworkID          uint64             `json:"networkId"`
+	PreReservationsNum uint64             `json:"preReservationsNum"`
+	Prefix             uint64             `json:"prefix"`
+	PriVNFDevID        uint64             `json:"priVnfDevId"`
+	Reservations       ExtNetReservations `json:"reservations"`
+	SharedWith         []uint64           `json:"sharedWith"`
 	Status             string             `json:"status"`
-	VlanID             int                `json:"vlanId"`
-	VNFS               ExtnetVNFS         `json:"vnfs"`
+	VlanID             uint64             `json:"vlanId"`
+	VNFS               ExtNetVNFS         `json:"vnfs"`
 }

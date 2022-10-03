@@ -3,10 +3,8 @@ package kvmx86
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
@@ -48,7 +46,7 @@ func (krq CreateRequest) Validate() error {
 	return nil
 }
 
-func (k KVMX86) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (uint64, error) {
+func (k KVMX86) Create(ctx context.Context, req CreateRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
@@ -57,15 +55,8 @@ func (k KVMX86) Create(ctx context.Context, req CreateRequest, options ...opts.D
 	url := "/kvmx86/create"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	res, err := k.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
@@ -22,13 +20,13 @@ func (rgrq GetRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*ResourceGroup, error) {
+func (r RG) Get(ctx context.Context, req GetRequest) (*ResourceGroup, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/get"
-	rgRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	rgRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

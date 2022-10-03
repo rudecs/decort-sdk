@@ -3,9 +3,7 @@ package flipgroup
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListRequest struct {
@@ -13,9 +11,9 @@ type ListRequest struct {
 	Size uint64 `url:"size,omitempty"`
 }
 
-func (f FlipGroup) List(ctx context.Context, req ListRequest, options ...opts.DecortOpts) (FlipGroupList, error) {
+func (f FlipGroup) List(ctx context.Context, req ListRequest) (FlipGroupList, error) {
 	url := "/cloudapi/flipgroup/list"
-	fgListRaw, err := f.client.DecortApiCall(ctx, typed.POST, url, req)
+	fgListRaw, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

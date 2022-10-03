@@ -3,15 +3,13 @@ package vins
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateInAccountRequest struct {
 	Name               string `url:"name"`
-	AccountId          uint64 `url:"accountId"`
+	AccountID          uint64 `url:"accountId"`
 	GID                uint64 `url:"gid,omitempty"`
 	IPCidr             string `url:"ipcidr,omitempty"`
 	Description        string `url:"desc,omitempty"`
@@ -23,31 +21,22 @@ func (vrq CreateInAccountRequest) Validate() error {
 		return errors.New("validation-error: field Name can not be empty")
 	}
 
-	if vrq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if vrq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (v Vins) CreateInAccount(ctx context.Context, req CreateInAccountRequest, options ...opts.DecortOpts) (uint64, error) {
+func (v VINS) CreateInAccount(ctx context.Context, req CreateInAccountRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
 	}
 
-	url := "/vins/createInAccount"
-	prefix := "/cloudapi"
+	url := "/cloudapi/vins/createInAccount"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := v.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

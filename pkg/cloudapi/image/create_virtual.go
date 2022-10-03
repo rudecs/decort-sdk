@@ -3,15 +3,13 @@ package image
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateVirtualRequest struct {
 	Name     string `url:"name"`
-	TargetId uint64 `url:"targetId"`
+	TargetID uint64 `url:"targetId"`
 }
 
 func (irq CreateVirtualRequest) Validate() error {
@@ -19,31 +17,22 @@ func (irq CreateVirtualRequest) Validate() error {
 		return errors.New("validation-error: field Name can not be empty")
 	}
 
-	if irq.TargetId == 0 {
-		return errors.New("validation-error: field TargetId can not be empty or equal to 0")
+	if irq.TargetID == 0 {
+		return errors.New("validation-error: field TargetID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (i Image) CreateVirtual(ctx context.Context, req CreateVirtualRequest, options ...opts.DecortOpts) (uint64, error) {
+func (i Image) CreateVirtual(ctx context.Context, req CreateVirtualRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
 	}
 
-	url := "/image/createVirtual"
-	prefix := "/cloudapi"
+	url := "/cloudapi/image/createVirtual"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := i.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := i.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

@@ -4,24 +4,22 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
-	AuditId string `url:"auditId"`
+	AuditID string `url:"auditId"`
 }
 
 func (trq GetRequest) Validate() error {
-	if trq.AuditId == "" {
-		return errors.New("validation-error: field AuditId can not be empty")
+	if trq.AuditID == "" {
+		return errors.New("validation-error: field AuditID can not be empty")
 	}
 
 	return nil
 }
 
-func (t Tasks) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*AsyncTask, error) {
+func (t Tasks) Get(ctx context.Context, req GetRequest) (*AsyncTask, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
@@ -30,15 +28,8 @@ func (t Tasks) Get(ctx context.Context, req GetRequest, options ...opts.DecortOp
 	url := "/tasks/get"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	taskRaw, err := t.client.DecortApiCall(ctx, typed.POST, url, req)
+	taskRaw, err := t.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

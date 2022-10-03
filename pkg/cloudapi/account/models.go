@@ -1,6 +1,6 @@
 package account
 
-type AccountAclRecord struct {
+type AccountACLRecord struct {
 	IsExplicit   bool   `json:"explicit"`
 	GUID         string `json:"guid"`
 	Rights       string `json:"right"`
@@ -16,55 +16,55 @@ type ResourceLimits struct {
 	CUI      float64 `json:"CU_I"`
 	CUM      float64 `json:"CU_M"`
 	CUNP     float64 `json:"CU_NP"`
-	GpuUnits float64 `json:"gpu_units"`
+	GPUUnits float64 `json:"gpu_units"`
 }
 
 type AccountRecord struct {
 	DCLocation        string             `json:"DCLocation"`
 	CKey              string             `jspn:"_ckey"`
 	Meta              []interface{}      `json:"_meta"`
-	Acl               []AccountAclRecord `json:"acl"`
+	ACL               []AccountACLRecord `json:"acl"`
 	Company           string             `json:"company"`
-	CompanyUrl        string             `json:"companyurl"`
+	CompanyURL        string             `json:"companyurl"`
 	CreatedBy         string             `jspn:"createdBy"`
-	CreatedTime       int                `json:"createdTime"`
+	CreatedTime       uint64             `json:"createdTime"`
 	DeactiovationTime float64            `json:"deactivationTime"`
 	DeletedBy         string             `json:"deletedBy"`
-	DeletedTime       int                `json:"deletedTime"`
+	DeletedTime       uint64             `json:"deletedTime"`
 	DisplayName       string             `json:"displayname"`
-	GUID              int                `json:"guid"`
-	ID                int                `json:"id"`
+	GUID              uint64             `json:"guid"`
+	ID                uint64             `json:"id"`
 	Name              string             `json:"name"`
 	ResourceLimits    ResourceLimits     `json:"resourceLimits"`
 	SendAccessEmails  bool               `json:"sendAccessEmails"`
 	ServiceAccount    bool               `json:"serviceAccount"`
 	Status            string             `json:"status"`
-	UpdatedTime       int                `json:"updatedTime"`
-	Version           int                `json:"version"`
-	Vins              []int              `json:"vins"`
+	UpdatedTime       uint64             `json:"updatedTime"`
+	Version           uint64             `json:"version"`
+	VINS              []uint64           `json:"vins"`
 }
 
 type AccountList []AccountRecord
 
 type AccountCloudApi struct {
-	Acl         []AccountAclRecord `json:"acl"`
-	CreatedTime int                `json:"createdTime"`
-	DeletedTime int                `json:"deletedTime"`
-	ID          int                `json:"id"`
+	ACL         []AccountACLRecord `json:"acl"`
+	CreatedTime uint64             `json:"createdTime"`
+	DeletedTime uint64             `json:"deletedTime"`
+	ID          uint64             `json:"id"`
 	Name        string             `json:"name"`
 	Status      string             `json:"status"`
-	UpdatedTime int                `json:"updatedTime"`
+	UpdatedTime uint64             `json:"updatedTime"`
 }
 
 type AccountCloudApiList []AccountCloudApi
 
 type Resource struct {
-	CPU        int `json:"cpu"`
-	Disksize   int `json:"disksize"`
-	Extips     int `json:"extips"`
-	Exttraffic int `json:"exttraffic"`
-	GPU        int `json:"gpu"`
-	RAM        int `json:"ram"`
+	CPU        int64 `json:"cpu"`
+	DiskSize   int64 `json:"disksize"`
+	ExtIPs     int64 `json:"extips"`
+	ExtTraffic int64 `json:"exttraffic"`
+	GPU        int64 `json:"gpu"`
+	RAM        int64 `json:"ram"`
 }
 
 type Resources struct {
@@ -73,13 +73,13 @@ type Resources struct {
 }
 
 type Computes struct {
-	Started int `json:"started"`
-	Stopped int `json:"stopped"`
+	Started uint64 `json:"started"`
+	Stopped uint64 `json:"stopped"`
 }
 
 type Machines struct {
-	Running int `json:"running"`
-	Halted  int `json:"halted"`
+	Running uint64 `json:"running"`
+	Halted  uint64 `json:"halted"`
 }
 
 type AccountWithResources struct {
@@ -87,71 +87,71 @@ type AccountWithResources struct {
 	Resources Resources `json:"Resources"`
 	Computes  Computes  `json:"computes"`
 	Machines  Machines  `json:"machines"`
-	Vinses    int       `json:"vinses"`
+	VINSes    uint64    `json:"vinses"`
 }
 
 type AccountCompute struct {
-	AccountId      int    `json:"accountId"`
+	AccountID      uint64 `json:"accountId"`
 	AccountName    string `json:"accountName"`
-	CPUs           int    `json:"cpus"`
+	CPUs           uint64 `json:"cpus"`
 	CreatedBy      string `json:"createdBy"`
-	CreatedTime    int    `json:"createdTime"`
+	CreatedTime    uint64 `json:"createdTime"`
 	DeletedBy      string `json:"deletedBy"`
-	DeletedTime    int    `json:"deletedTime"`
-	ComputeId      int    `json:"id"`
+	DeletedTime    uint64 `json:"deletedTime"`
+	ComputeID      uint64 `json:"id"`
 	ComputeName    string `json:"name"`
-	RAM            int    `json:"ram"`
+	RAM            uint64 `json:"ram"`
 	Registered     bool   `json:"registered"`
-	RGId           int    `json:"rgId"`
+	RGID           uint64 `json:"rgId"`
 	RGName         string `json:"rgName"`
 	Status         string `json:"status"`
 	TechStatus     string `json:"techStatus"`
-	TotalDisksSize int    `json:"totalDisksSize"`
+	TotalDisksSize uint64 `json:"totalDisksSize"`
 	UpdatedBy      string `json:"updatedBy"`
-	UpdatedTime    int    `json:"updatedTime"`
+	UpdatedTime    uint64 `json:"updatedTime"`
 	UserManaged    bool   `json:"userManaged"`
-	VinsConnected  int    `json:"vinsConnected"`
+	VINSConnected  uint64 `json:"vinsConnected"`
 }
 
 type AccountComputesList []AccountCompute
 
 type AccountDisk struct {
-	ID      int    `json:"id"`
+	ID      uint64 `json:"id"`
 	Name    string `json:"name"`
 	Pool    string `json:"pool"`
-	SepId   int    `json:"sepId"`
-	SizeMax int    `json:"sizeMax"`
+	SepID   uint64 `json:"sepId"`
+	SizeMax uint64 `json:"sizeMax"`
 	Type    string `json:"type"`
 }
 
 type AccountDisksList []AccountDisk
 
-type AccountVin struct {
-	AccountId   int    `json:"accountId"`
+type AccountVIN struct {
+	AccountID   uint64 `json:"accountId"`
 	AccountName string `json:"accountName"`
-	Computes    int    `json:"computes"`
+	Computes    uint64 `json:"computes"`
 	CreatedBy   string `json:"createdBy"`
-	CreatedTime int    `json:"createdTime"`
+	CreatedTime uint64 `json:"createdTime"`
 	DeletedBy   string `json:"deletedBy"`
-	DeletedTime int    `json:"deletedTime"`
+	DeletedTime uint64 `json:"deletedTime"`
 	ExternalIP  string `json:"externalIP"`
-	ID          int    `json:"id"`
+	ID          uint64 `json:"id"`
 	Name        string `json:"name"`
 	Network     string `json:"network"`
-	PriVnfDevId int    `json:"priVnfDevId"`
-	RGId        int    `json:"rgId"`
+	PriVnfDevID uint64 `json:"priVnfDevId"`
+	RGID        uint64 `json:"rgId"`
 	RGName      string `json:"rgName"`
 	Status      string `json:"status"`
 	UpdatedBy   string `json:"updatedBy"`
-	UpdatedTime int    `json:"updatedTime"`
+	UpdatedTime uint64 `json:"updatedTime"`
 }
 
-type AccountVinsList []AccountVin
+type AccountVINSList []AccountVIN
 
 type AccountAudit struct {
 	Call         string  `json:"call"`
 	ResponseTime float64 `json:"responsetime"`
-	StatusCode   int     `json:"statuscode"`
+	StatusCode   uint64  `json:"statuscode"`
 	Timestamp    float64 `json:"timestamp"`
 	User         string  `json:"user"`
 }
@@ -159,8 +159,8 @@ type AccountAudit struct {
 type AccountAuditsList []AccountAudit
 
 type AccountRGComputes struct {
-	Started int `json:"Started"`
-	Stopped int `json:"Stopped"`
+	Started uint64 `json:"Started"`
+	Stopped uint64 `json:"Stopped"`
 }
 
 type AccountRGResources struct {
@@ -173,28 +173,28 @@ type AccountRG struct {
 	Computes    AccountRGComputes  `json:"Computes"`
 	Resources   AccountRGResources `json:"Resources"`
 	CreatedBy   string             `json:"createdBy"`
-	CreatedTime int                `json:"createdTime"`
+	CreatedTime uint64             `json:"createdTime"`
 	DeletedBy   string             `json:"deletedBy"`
-	DeletedTime int                `json:"deletedTime"`
-	RGID        int                `json:"id"`
-	Milestones  int                `json:"milestones"`
+	DeletedTime uint64             `json:"deletedTime"`
+	RGID        uint64             `json:"id"`
+	Milestones  uint64             `json:"milestones"`
 	RGName      string             `json:"name"`
 	Status      string             `json:"status"`
 	UpdatedBy   string             `json:"updatedBy"`
-	UpdatedTime int                `json:"updatedTime"`
-	Vinses      int                `json:"vinses"`
+	UpdatedTime uint64             `json:"updatedTime"`
+	VINSes      uint64             `json:"vinses"`
 }
 
 type AccountRGList []AccountRG
 
 type AccountTemplate struct {
 	UNCPath     string `json:"UNCPath"`
-	AccountId   int    `json:"accountId"`
+	AccountID   uint64 `json:"accountId"`
 	Description string `json:"desc"`
-	ID          int    `json:"id"`
+	ID          uint64 `json:"id"`
 	Name        string `json:"name"`
 	Public      bool   `json:"public"`
-	Size        int    `json:"size"`
+	Size        uint64 `json:"size"`
 	Status      string `json:"status"`
 	Type        string `json:"type"`
 	Username    string `json:"username"`
@@ -203,27 +203,27 @@ type AccountTemplate struct {
 type AccountTemplatesList []AccountTemplate
 
 type AccountFlipGroup struct {
-	AccountId   int    `json:"accountId"`
+	AccountID   uint64 `json:"accountId"`
 	ClientType  string `json:"clientType"`
 	ConnType    string `json:"connType"`
 	CreatedBy   string `json:"createdBy"`
-	CreatedTime int    `json:"createdTime"`
+	CreatedTime uint64 `json:"createdTime"`
 	DefaultGW   string `json:"defaultGW"`
 	DeletedBy   string `json:"deletedBy"`
-	DeletedTime int    `json:"deletedTime"`
+	DeletedTime uint64 `json:"deletedTime"`
 	Description string `json:"desc"`
-	GID         int    `json:"gid"`
-	GUID        int    `json:"guid"`
-	ID          int    `json:"id"`
+	GID         uint64 `json:"gid"`
+	GUID        uint64 `json:"guid"`
+	ID          uint64 `json:"id"`
 	IP          string `json:"ip"`
-	Milestones  int    `json:"milestones"`
+	Milestones  uint64 `json:"milestones"`
 	Name        string `json:"name"`
-	NetID       int    `json:"netId"`
+	NetID       uint64 `json:"netId"`
 	NetType     string `json:"netType"`
-	NetMask     int    `json:"netmask"`
+	NetMask     uint64 `json:"netmask"`
 	Status      string `json:"status"`
 	UpdatedBy   string `json:"updatedBy"`
-	UpdatedTime int    `json:"updatedTime"`
+	UpdatedTime uint64 `json:"updatedTime"`
 }
 
 type AccountFlipGroupsList []AccountFlipGroup

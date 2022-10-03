@@ -3,10 +3,8 @@ package bservice
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
@@ -28,13 +26,13 @@ func (bsrq CreateRequest) Validate() error {
 	return nil
 }
 
-func (b BService) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (uint64, error) {
+func (b BService) Create(ctx context.Context, req CreateRequest) (uint64, error) {
 	if err := req.Validate(); err != nil {
 		return 0, err
 	}
 
 	url := "/cloudapi/bservice/create"
-	res, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

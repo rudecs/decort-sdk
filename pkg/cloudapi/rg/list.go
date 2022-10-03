@@ -3,9 +3,7 @@ package rg
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListRequest struct {
@@ -14,9 +12,9 @@ type ListRequest struct {
 	Size           uint64 `url:"size,omitempty"`
 }
 
-func (r RG) List(ctx context.Context, req ListRequest, options ...opts.DecortOpts) (ResourceGroupList, error) {
+func (r RG) List(ctx context.Context, req ListRequest) (ResourceGroupList, error) {
 	url := "/cloudapi/rg/list"
-	rgListRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	rgListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

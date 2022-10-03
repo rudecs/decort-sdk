@@ -3,10 +3,8 @@ package bservice
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type GroupRemoveRequest struct {
@@ -26,13 +24,13 @@ func (bsrq GroupRemoveRequest) Validate() error {
 	return nil
 }
 
-func (b BService) GroupRemove(ctx context.Context, req GroupRemoveRequest, options ...opts.DecortOpts) (bool, error) {
+func (b BService) GroupRemove(ctx context.Context, req GroupRemoveRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/bservice/groupRemove"
-	res, err := b.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 

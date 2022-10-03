@@ -3,10 +3,8 @@ package flipgroup
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type DeleteRequest struct {
@@ -21,13 +19,13 @@ func (frq DeleteRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) Delete(ctx context.Context, req DeleteRequest, options ...opts.DecortOpts) (bool, error) {
+func (f FlipGroup) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/flipgroup/delete"
-	res, err := f.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

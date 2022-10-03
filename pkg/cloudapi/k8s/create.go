@@ -3,16 +3,14 @@ package k8s
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strings"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
 	Name            string   `url:"name"`
 	RGID            uint64   `url:"rgId"`
-	K8SCIId         uint64   `url:"k8ciId"`
+	K8SCIID         uint64   `url:"k8ciId"`
 	WorkerGroupName string   `url:"workerGroupName"`
 	Labels          []string `url:"labels,omitempty"`
 	Taints          []string `url:"taints,omitempty"`
@@ -25,7 +23,7 @@ type CreateRequest struct {
 	WorkerCPU       uint     `url:"workerCPU,omitempty"`
 	WorkerRAM       uint     `url:"workerRam,omitempty"`
 	WorkerDisk      uint     `url:"workerDisk,omitempty"`
-	ExtnetId        uint64   `url:"extnetId,omitempty"`
+	ExtNetID        uint64   `url:"extnetId,omitempty"`
 	WithLB          bool     `url:"withLB,omitempty"`
 	Description     string   `url:"desc, omitempty"`
 }
@@ -35,10 +33,10 @@ func (krq CreateRequest) Validate() error {
 		return errors.New("validation-error: field Name can not be empty")
 	}
 	if krq.RGID == 0 {
-		return errors.New("validation-error: field RgId can not be empty or equal to 0")
+		return errors.New("validation-error: field RGID can not be empty or equal to 0")
 	}
-	if krq.K8SCIId == 0 {
-		return errors.New("validation-error: field K8SCIId can not be empty or equal to 0")
+	if krq.K8SCIID == 0 {
+		return errors.New("validation-error: field K8SCIID can not be empty or equal to 0")
 	}
 
 	if krq.WorkerGroupName == "" {
@@ -48,24 +46,15 @@ func (krq CreateRequest) Validate() error {
 	return nil
 }
 
-func (k8s K8S) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (string, error) {
+func (k8s K8S) Create(ctx context.Context, req CreateRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/k8s/create"
-	prefix := "/cloudapi"
+	url := "/cloudapi/k8s/create"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := k8s.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := k8s.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}

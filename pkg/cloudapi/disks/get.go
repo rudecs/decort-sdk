@@ -4,41 +4,30 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
-	DiskId uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId"`
 }
 
 func (drq GetRequest) Validate() error {
-	if drq.DiskId == 0 {
-		return errors.New("validation-error: field DiskId can not be empty or equal to 0")
+	if drq.DiskID == 0 {
+		return errors.New("validation-error: field DiskID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (d Disks) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*DiskRecord, error) {
+func (d Disks) Get(ctx context.Context, req GetRequest) (*DiskRecord, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/disks/get"
-	prefix := "/cloudapi"
+	url := "/cloudapi/disks/get"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := d.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := d.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

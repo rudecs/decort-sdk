@@ -3,9 +3,7 @@ package vins
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListDeletedRequest struct {
@@ -13,29 +11,20 @@ type ListDeletedRequest struct {
 	Size uint64 `url:"size"`
 }
 
-func (v Vins) ListDeleted(ctx context.Context, req ListDeletedRequest, options ...opts.DecortOpts) (VinsList, error) {
-	url := "/vins/listDeleted"
-	prefix := "/cloudapi"
+func (v VINS) ListDeleted(ctx context.Context, req ListDeletedRequest) (VINSList, error) {
+	url := "/cloudapi/vins/listDeleted"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	vinsListRaw, err := v.client.DecortApiCall(ctx, typed.POST, url, req)
+	VINSListRaw, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	vinsList := VinsList{}
-	err = json.Unmarshal(vinsListRaw, &vinsList)
+	VINSList := VINSList{}
+	err = json.Unmarshal(VINSListRaw, &VINSList)
 	if err != nil {
 		return nil, err
 	}
 
-	return vinsList, nil
+	return VINSList, nil
 
 }

@@ -3,17 +3,15 @@ package vins
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateInRGRequest struct {
 	Name               string `url:"name"`
 	RGID               uint64 `url:"rgId"`
 	IPCidr             string `url:"ipcidr,omitempty"`
-	ExtNetId           uint64 `url:"extNetId,omitempty"`
+	ExtNetID           uint64 `url:"extNetId,omitempty"`
 	ExtIP              string `url:"extIp,omitempty"`
 	Description        string `url:"desc,omitempty"`
 	PreReservationsNum uint   `url:"preReservationsNum,omitempty"`
@@ -31,24 +29,15 @@ func (vrq CreateInRGRequest) Validate() error {
 	return nil
 }
 
-func (v Vins) CreateInRG(ctx context.Context, req CreateInRGRequest, options ...opts.DecortOpts) (uint64, error) {
+func (v VINS) CreateInRG(ctx context.Context, req CreateInRGRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
 	}
 
-	url := "/vins/createInRG"
-	prefix := "/cloudapi"
+	url := "/cloudapi/vins/createInRG"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := v.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

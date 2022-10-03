@@ -3,28 +3,17 @@ package disks
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListUnattachedRequest struct {
-	AccountId uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId"`
 }
 
-func (d Disks) ListUnattached(ctx context.Context, req ListUnattachedRequest, options ...opts.DecortOpts) (DiskList, error) {
-	url := "/disks/listUnattached"
-	prefix := "/cloudapi"
+func (d Disks) ListUnattached(ctx context.Context, req ListUnattachedRequest) (DiskList, error) {
+	url := "/cloudapi/disks/listUnattached"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := d.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := d.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

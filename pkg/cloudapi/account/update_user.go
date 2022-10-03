@@ -3,26 +3,25 @@ package account
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type UpdateUserRequest struct {
-	AccountId  uint64 `url:"accountId"`
-	UserId     string `url:"userId"`
+	AccountID  uint64 `url:"accountId"`
+	UserID     string `url:"userId"`
 	AccessType string `url:"accesstype"`
 }
 
 func (arq UpdateUserRequest) Validate() error {
-	if arq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if arq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 
-	if arq.UserId == "" {
-		return errors.New("validation-error: field UserId can not be empty")
+	if arq.UserID == "" {
+		return errors.New("validation-error: field UserID can not be empty")
 	}
 
 	if arq.AccessType == "" {
@@ -37,24 +36,15 @@ func (arq UpdateUserRequest) Validate() error {
 	return nil
 }
 
-func (a Account) UpdateUser(ctx context.Context, req UpdateUserRequest, options ...opts.DecortOpts) (bool, error) {
+func (a Account) UpdateUser(ctx context.Context, req UpdateUserRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/account/updateUser"
-	prefix := "/cloudapi"
+	url := "/cloudapi/account/updateUser"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

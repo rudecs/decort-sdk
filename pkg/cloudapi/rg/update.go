@@ -3,10 +3,8 @@ package rg
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type UpdateRequest struct {
@@ -30,13 +28,13 @@ func (rgrq UpdateRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Update(ctx context.Context, req UpdateRequest, options ...opts.DecortOpts) (bool, error) {
+func (r RG) Update(ctx context.Context, req UpdateRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/rg/update"
-	res, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

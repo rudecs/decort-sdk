@@ -1,6 +1,6 @@
 package compute
 
-//ACL for compute
+// ACL for compute
 type UserList struct {
 	AccountACL ACLList `json:"accountACL"`
 	ComputeACL ACLList `json:"computeACL"`
@@ -10,10 +10,10 @@ type UserList struct {
 type ACL struct {
 	Explicit    bool   `json:"explicit"`
 	GUID        string `json:"guid"`
-	Rigth       string `json:"right"`
+	Right       string `json:"right"`
 	Status      string `json:"status"`
 	Type        string `json:"type"`
-	UserGroupId string `json:"userGroupId"`
+	UserGroupID string `json:"userGroupId"`
 }
 
 type ACLList []ACL
@@ -141,11 +141,11 @@ type ComputeRecord struct {
 	MigrationJob           uint64                 `json:"migrationjob"`
 	Milestones             uint64                 `json:"milestones"`
 	Name                   string                 `json:"name"`
-	NatableVinsID          uint64                 `json:"natableVinsId"`
-	NatableVinsIP          string                 `json:"natableVinsIp"`
-	NatableVinsName        string                 `json:"natableVinsName"`
-	NatableVinsNetwork     string                 `json:"natableVinsNetwork"`
-	NatableVinsNetworkName string                 `json:"natableVinsNetworkName"`
+	NatableVINSID          uint64                 `json:"natableVinsId"`
+	NatableVINSIP          string                 `json:"natableVinsIp"`
+	NatableVINSName        string                 `json:"natableVinsName"`
+	NatableVINSNetwork     string                 `json:"natableVinsNetwork"`
+	NatableVINSNetworkName string                 `json:"natableVinsNetworkName"`
 	OSUsers                OSUserList             `json:"osUsers"`
 	Pinned                 bool                   `json:"pinned"`
 	RAM                    uint64                 `json:"ram"`
@@ -188,16 +188,16 @@ type SnapSet struct {
 type SnapSetList []SnapSet
 
 type VNFInterface struct {
-	ConnId      uint64   `json:"connId"`
+	ConnID      uint64   `json:"connId"`
 	ConnType    string   `json:"connType"`
 	DefGW       string   `json:"defGw"`
-	FlipGroupId uint64   `json:"flipgroupId"`
+	FlipGroupID uint64   `json:"flipgroupId"`
 	GUID        string   `json:"guid"`
 	IPAddress   string   `json:"ipAddress"`
 	ListenSSH   bool     `json:"listenSsh"`
 	MAC         string   `json:"mac"`
 	Name        string   `json:"name"`
-	NetId       uint64   `json:"netId"`
+	NetID       uint64   `json:"netId"`
 	NetMask     uint64   `json:"netMask"`
 	NetType     string   `json:"netType"`
 	PCISlot     uint64   `json:"pciSlot"`
@@ -220,8 +220,8 @@ type ComputeDiskList []ComputeDisk
 
 type ComputeDisk struct {
 	Ckey                string                 `json:"_ckey"`
-	Acl                 map[string]interface{} `json:"acl"`
-	AccountID           int                    `json:"accountId"`
+	ACL                 map[string]interface{} `json:"acl"`
+	AccountID           uint64                 `json:"accountId"`
 	Bootpartition       uint64                 `json:"bootPartition"`
 	CreatedTime         uint64                 `json:"createdTime"`
 	DeletedTime         uint64                 `json:"deletedTime"`
@@ -248,20 +248,20 @@ type ComputeDisk struct {
 	RealityDeviceNumber uint64                 `json:"realityDeviceNumber"`
 	ResID               string                 `json:"resId"`
 	Role                string                 `json:"role"`
-	SepID               int                    `json:"sepId"` // NOTE: absent from compute/get output
-	SizeMax             int                    `json:"sizeMax"`
-	SizeUsed            int                    `json:"sizeUsed"` // sum over all snapshots of this disk to report total consumed space
+	SepID               uint64                 `json:"sepId"` // NOTE: absent from compute/get output
+	SizeMax             uint64                 `json:"sizeMax"`
+	SizeUsed            uint64                 `json:"sizeUsed"` // sum over all snapshots of this disk to report total consumed space
 	Snapshots           SnapshotExtendList     `json:"snapshots"`
 	Status              string                 `json:"status"`
 	TechStatus          string                 `json:"techStatus"`
 	Type                string                 `json:"type"`
-	VMID                int                    `json:"vmid"`
+	VMID                uint64                 `json:"vmid"`
 }
 
 type SnapshotExtend struct {
 	Guid        string `json:"guid"`
 	Label       string `json:"label"`
-	ResId       string `json:"resId"`
+	ResID       string `json:"resId"`
 	SnapSetGuid string `json:"snapSetGuid"`
 	SnapSetTime uint64 `json:"snapSetTime"`
 	TimeStamp   uint64 `json:"timestamp"`
@@ -270,19 +270,19 @@ type SnapshotExtend struct {
 type SnapshotExtendList []SnapshotExtend
 
 type IOTune struct {
-	ReadBytesSec     int `json:"read_bytes_sec"`
-	ReadBytesSecMax  int `json:"read_bytes_sec_max"`
-	ReadIopsSec      int `json:"read_iops_sec"`
-	ReadIopsSecMax   int `json:"read_iops_sec_max"`
-	SizeIopsSec      int `json:"size_iops_sec"`
-	TotalBytesSec    int `json:"total_bytes_sec"`
-	TotalBytesSecMax int `json:"total_bytes_sec_max"`
-	TotalIopsSec     int `json:"total_iops_sec"`
-	TotalIopsSecMax  int `json:"total_iops_sec_max"`
-	WriteBytesSec    int `json:"write_bytes_sec"`
-	WriteBytesSecMax int `json:"write_bytes_sec_max"`
-	WriteIopsSec     int `json:"write_iops_sec"`
-	WriteIopsSecMax  int `json:"write_iops_sec_max"`
+	ReadBytesSec     uint64 `json:"read_bytes_sec"`
+	ReadBytesSecMax  uint64 `json:"read_bytes_sec_max"`
+	ReadIopsSec      uint64 `json:"read_iops_sec"`
+	ReadIopsSecMax   uint64 `json:"read_iops_sec_max"`
+	SizeIopsSec      uint64 `json:"size_iops_sec"`
+	TotalBytesSec    uint64 `json:"total_bytes_sec"`
+	TotalBytesSecMax uint64 `json:"total_bytes_sec_max"`
+	TotalIopsSec     uint64 `json:"total_iops_sec"`
+	TotalIopsSecMax  uint64 `json:"total_iops_sec_max"`
+	WriteBytesSec    uint64 `json:"write_bytes_sec"`
+	WriteBytesSecMax uint64 `json:"write_bytes_sec_max"`
+	WriteIopsSec     uint64 `json:"write_iops_sec"`
+	WriteIopsSecMax  uint64 `json:"write_iops_sec_max"`
 }
 
 type ComputeItem struct {

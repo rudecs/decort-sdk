@@ -3,23 +3,21 @@ package account
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
 	Name                   string `url:"name"`
 	Username               string `url:"username"`
 	EmailAddress           string `url:"emailaddress,omitempty"`
-	MaxMemoryCapacity      uint   `url:"maxMemoryCapacity,omitempty"`
-	MaxVDiskCapacity       uint   `url:"maxVDiskCapacity,omitempty"`
-	MaxCPUCapacity         uint   `url:"maxCPUCapacity,omitempty"`
-	MaxNetworkPeerTransfer uint   `url:"maxNetworkPeerTransfer,omitempty"`
-	MaxNumPublicIP         uint   `url:"maxNumPublicIP,omitempty"`
+	MaxMemoryCapacity      uint64 `url:"maxMemoryCapacity,omitempty"`
+	MaxVDiskCapacity       uint64 `url:"maxVDiskCapacity,omitempty"`
+	MaxCPUCapacity         uint64 `url:"maxCPUCapacity,omitempty"`
+	MaxNetworkPeerTransfer uint64 `url:"maxNetworkPeerTransfer,omitempty"`
+	MaxNumPublicIP         uint64 `url:"maxNumPublicIP,omitempty"`
 	SendAccessEmails       bool   `url:"sendAccessEmails,omitempty"`
-	GpuUnits               uint   `url:"gpu_units,omitempty"`
+	GPUUnits               uint64 `url:"gpu_units,omitempty"`
 }
 
 func (arq CreateRequest) Validate() error {
@@ -34,24 +32,15 @@ func (arq CreateRequest) Validate() error {
 	return nil
 }
 
-func (a Account) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (uint64, error) {
+func (a Account) Create(ctx context.Context, req CreateRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
 	}
 
-	url := "/account/create"
-	prefix := "/cloudapi"
+	url := "/cloudbroker/account/create"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

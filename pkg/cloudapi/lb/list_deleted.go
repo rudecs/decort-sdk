@@ -3,9 +3,7 @@ package lb
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListDeletedRequest struct {
@@ -13,19 +11,10 @@ type ListDeletedRequest struct {
 	Size uint64 `url:"size"`
 }
 
-func (l LB) ListDeleted(ctx context.Context, req ListDeletedRequest, options ...opts.DecortOpts) (LBList, error) {
-	url := "/lb/listDeleted"
-	prefix := "/cloudapi"
+func (l LB) ListDeleted(ctx context.Context, req ListDeletedRequest) (LBList, error) {
+	url := "/cloudapi/lb/listDeleted"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	lbListRaw, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	lbListRaw, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

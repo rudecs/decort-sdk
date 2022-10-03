@@ -3,10 +3,8 @@ package lb
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type DeleteRequest struct {
@@ -22,24 +20,15 @@ func (lbrq DeleteRequest) Validate() error {
 	return nil
 }
 
-func (l LB) Delete(ctx context.Context, req DeleteRequest, options ...opts.DecortOpts) (bool, error) {
+func (l LB) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/lb/delete"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/delete"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

@@ -3,10 +3,8 @@ package lb
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type RestoreRequest struct {
@@ -21,24 +19,15 @@ func (lbrq RestoreRequest) Validate() error {
 	return nil
 }
 
-func (l LB) Restore(ctx context.Context, req RestoreRequest, options ...opts.DecortOpts) (bool, error) {
+func (l LB) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/lb/restore"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/restore"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

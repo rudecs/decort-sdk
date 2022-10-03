@@ -3,10 +3,8 @@ package rg
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type DisableRequest struct {
@@ -22,13 +20,13 @@ func (rgrq DisableRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Disable(ctx context.Context, req DisableRequest, options ...opts.DecortOpts) (bool, error) {
+func (r RG) Disable(ctx context.Context, req DisableRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/rg/disable"
-	res, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

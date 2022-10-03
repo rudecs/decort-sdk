@@ -4,41 +4,30 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListComputesRequest struct {
-	AccountId uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId"`
 }
 
 func (erq ListComputesRequest) Validate() error {
-	if erq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if erq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (e Extnet) ListComputes(ctx context.Context, req ListComputesRequest, options ...opts.DecortOpts) (ExtnetComputesList, error) {
-	url := "/extnet/listComputes"
-	prefix := "/cloudapi"
+func (e ExtNet) ListComputes(ctx context.Context, req ListComputesRequest) (ExtNetComputesList, error) {
+	url := "/cloudapi/extnet/listComputes"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	extnetComputesListRaw, err := e.client.DecortApiCall(ctx, typed.POST, url, req)
+	extnetComputesListRaw, err := e.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	extnetComputesList := ExtnetComputesList{}
+	extnetComputesList := ExtNetComputesList{}
 	err = json.Unmarshal(extnetComputesListRaw, &extnetComputesList)
 	if err != nil {
 		return nil, err

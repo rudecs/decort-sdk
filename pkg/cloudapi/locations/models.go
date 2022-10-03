@@ -1,9 +1,9 @@
 package locations
 
 type Location struct {
-	GID          int           `json:"gid"`
-	Id           int           `json:"id"`
-	Guid         int           `json:"guid"`
+	GID          uint64        `json:"gid"`
+	ID           uint64        `json:"id"`
+	GUID         uint64        `json:"guid"`
 	LocationCode string        `json:"locationCode"`
 	Name         string        `json:"name"`
 	Flag         string        `json:"flag"`

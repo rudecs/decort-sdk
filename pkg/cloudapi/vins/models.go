@@ -1,46 +1,46 @@
 package vins
 
-type VinsRecord struct {
-	AccountId   int    `json:"accountId"`
+type VINSRecord struct {
+	AccountID   uint64 `json:"accountId"`
 	AccountName string `json:"accountName"`
 	CreatedBy   string `json:"createdBy"`
-	CreatedTime int    `json:"createdTime"`
+	CreatedTime uint64 `json:"createdTime"`
 	DeletedBy   string `json:"deletedBy"`
-	DeletedTime int    `json:"deletedTime"`
+	DeletedTime uint64 `json:"deletedTime"`
 	ExternalIP  string `json:"externalIP"`
-	ID          int    `json:"id"`
+	ID          uint64 `json:"id"`
 	Name        string `json:"name"`
 	Network     string `json:"network"`
-	RGID        int    `json:"rgId"`
+	RGID        uint64 `json:"rgId"`
 	RGName      string `json:"rgName"`
 	Status      string `json:"status"`
 	UpdatedBy   string `json:"updatedBy"`
-	UpdatedTime int    `json:"updatedTime"`
-	VXLanID     int    `json:"vxlanId"`
+	UpdatedTime uint64 `json:"updatedTime"`
+	VXLANID     uint64 `json:"vxlanId"`
 }
 
-type VinsList []VinsRecord
+type VINSList []VINSRecord
 
-type VinsAudits struct {
+type VINSAudits struct {
 	Call         string  `json:"call"`
 	ResponseTime float64 `json:"responsetime"`
-	StatusCode   int     `json:"statuscode"`
+	StatusCode   uint64  `json:"statuscode"`
 	Timestamp    float64 `json:"timestamp"`
 	User         string  `json:"user"`
 }
 
-type VinsAuditsList []VinsAudits
+type VINSAuditsList []VINSAudits
 
-type VinsExtnet struct {
+type VINSExtNet struct {
 	DefaultGW  string `json:"default_gw"`
 	ExtNetID   uint64 `json:"ext_net_id"`
 	IP         string `json:"ip"`
-	PrefixLen  uint   `json:"prefixlen"`
+	PrefixLen  uint64 `json:"prefixlen"`
 	Status     string `json:"status"`
 	TechStatus string `json:"techStatus"`
 }
 
-type ExtnetList []VinsExtnet
+type ExtNetList []VINSExtNet
 
 type IP struct {
 	ClientType string `json:"clientType"`
@@ -49,14 +49,14 @@ type IP struct {
 	IP         string `json:"ip"`
 	MAC        string `json:"mac"`
 	Type       string `json:"type"`
-	VMId       uint64 `json:"vmId"`
+	VMID       uint64 `json:"vmId"`
 }
 
 type IPList []IP
 
 type VNFDev struct {
 	CKey            string           `json:"_ckey"`
-	AccountId       uint64           `json:"accountId"`
+	AccountID       uint64           `json:"accountId"`
 	Capabilities    []string         `json:"capabilities"`
 	Config          VNFConfig        `json:"config"`
 	ConfigSaved     bool             `json:"configSaved"`
@@ -72,7 +72,7 @@ type VNFDev struct {
 	Status          string           `json:"status"`
 	TechStatus      string           `json:"techStatus"`
 	Type            string           `json:"type"`
-	Vins            []uint64         `json:"vins"`
+	VINS            []uint64         `json:"vins"`
 }
 
 type VNFConfig struct {
@@ -90,21 +90,21 @@ type VNFConfigMGMT struct {
 type VNFConfigResources struct {
 	CPU     uint64 `json:"cpu"`
 	RAM     uint64 `json:"ram"`
-	StackId uint64 `json:"stackId"`
+	StackID uint64 `json:"stackId"`
 	UUID    string `json:"uuid"`
 }
 
 type VNFInterface struct {
-	ConnId      uint64   `json:"connId"`
+	ConnID      uint64   `json:"connId"`
 	ConnType    string   `json:"connType"`
 	DefGW       string   `json:"defGw"`
-	FlipGroupId uint64   `json:"flipgroupId"`
+	FlipGroupID uint64   `json:"flipgroupId"`
 	GUID        string   `json:"guid"`
 	IPAddress   string   `json:"ipAddress"`
 	ListenSSH   bool     `json:"listenSsh"`
 	MAC         string   `json:"mac"`
 	Name        string   `json:"name"`
-	NetId       uint64   `json:"netId"`
+	NetID       uint64   `json:"netId"`
 	NetMask     uint64   `json:"netMask"`
 	NetType     string   `json:"netType"`
 	PCISlot     uint64   `json:"pciSlot"`
@@ -138,7 +138,7 @@ type VNFS struct {
 
 type NAT struct {
 	CKey        string  `json:"_ckey"`
-	AccountId   uint64  `json:"accountId"`
+	AccountID   uint64  `json:"accountId"`
 	CreatedTime uint64  `json:"createdTime"`
 	Devices     Devices `json:"devices"`
 	GID         uint64  `json:"gid"`
@@ -146,7 +146,7 @@ type NAT struct {
 	ID          uint64  `json:"id"`
 	LockStatus  string  `json:"lockStatus"`
 	Milestones  uint64  `json:"milestones"`
-	OwnerId     uint64  `json:"ownerId"`
+	OwnerID     uint64  `json:"ownerId"`
 	OwnerType   string  `json:"ownerType"`
 	PureVirtual bool    `json:"pureVirtual"`
 	Status      string  `json:"status"`
@@ -162,7 +162,7 @@ type NATConfig struct {
 
 type GW struct {
 	CKey        string   `json:"_ckey"`
-	AccountId   uint64   `json:"accountId"`
+	AccountID   uint64   `json:"accountId"`
 	Config      GWConfig `json:"config"`
 	CreatedTime uint64   `json:"createdTime"`
 	Devices     Devices  `json:"devices"`
@@ -171,7 +171,7 @@ type GW struct {
 	ID          uint64   `json:"id"`
 	LockStatus  string   `json:"lockStatus"`
 	Milestones  uint64   `json:"milestones"`
-	OwnerId     uint64   `json:"ownerId"`
+	OwnerID     uint64   `json:"ownerId"`
 	OwnerType   string   `json:"ownerType"`
 	PureVirtual bool     `json:"pureVirtual"`
 	Status      string   `json:"status"`
@@ -181,8 +181,8 @@ type GW struct {
 
 type GWConfig struct {
 	DefaultGW  string `json:"default_gw"`
-	ExtNetId   uint64 `json:"ext_net_id"`
-	ExtNetIp   string `json:"ext_net_ip"`
+	ExtNetID   uint64 `json:"ext_net_id"`
+	ExtNetIP   string `json:"ext_net_ip"`
 	ExtNetMask uint64 `json:"ext_netmask"`
 	QOS        QOS    `json:"qos"`
 }
@@ -192,14 +192,14 @@ type Devices struct {
 }
 
 type DevicePrimary struct {
-	DevId   uint64 `json:"devId"`
+	DevID   uint64 `json:"devId"`
 	IFace01 string `json:"iface01"`
 	IFace02 string `json:"iface02"`
 }
 
 type DHCP struct {
 	CKey        string     `json:"_ckey"`
-	AccountId   uint64     `json:"accountId"`
+	AccountID   uint64     `json:"accountId"`
 	Config      DHCPConfig `json:"config"`
 	CreatedTime uint64     `json:"createdTime"`
 	Devices     Devices    `json:"devices"`
@@ -208,7 +208,7 @@ type DHCP struct {
 	ID          uint64     `json:"id"`
 	LockStatus  string     `json:"lockStatus"`
 	Milestones  uint64     `json:"milestones"`
-	OwnerId     uint64     `json:"ownerId"`
+	OwnerID     uint64     `json:"ownerId"`
 	OwnerType   string     `json:"ownerType"`
 	PureVirtual bool       `json:"pureVirtual"`
 	Status      string     `json:"status"`
@@ -227,10 +227,10 @@ type DHCPConfig struct {
 	Reservations ReservationList `json:"reservations"`
 }
 
-type VinsDetailed struct {
+type VINSDetailed struct {
 	VNFDev            VNFDev          `json:"VNFDev"`
 	CKey              string          `json:"_ckey"`
-	AccountId         uint64          `json:"accountId"`
+	AccountID         uint64          `json:"accountId"`
 	AccountName       string          `json:"accountName"`
 	Computes          VINSComputeList `json:"computes"`
 	DefaultGW         string          `json:"defaultGW"`
@@ -240,7 +240,7 @@ type VinsDetailed struct {
 	GUID              uint64          `json:"guid"`
 	ID                uint64          `json:"id"`
 	LockStatus        string          `json:"lockStatus"`
-	ManagerId         uint64          `json:"managerId"`
+	ManagerID         uint64          `json:"managerId"`
 	ManagerType       string          `json:"managerType"`
 	Milestones        uint64          `json:"milestones"`
 	Name              string          `json:"name"`
@@ -250,11 +250,11 @@ type VinsDetailed struct {
 	Redundant         bool            `json:"redundant"`
 	RGID              uint64          `json:"rgId"`
 	RGName            string          `json:"rgName"`
-	SecVNFDevId       uint64          `json:"secVnfDevId"`
+	SecVNFDevID       uint64          `json:"secVnfDevId"`
 	Status            string          `json:"status"`
 	UserManaged       bool            `json:"userManaged"`
 	VNFS              VNFS            `json:"vnfs"`
-	VXLanId           uint64          `json:"vxlanId"`
+	VXLanID           uint64          `json:"vxlanId"`
 }
 
 type Reservation struct {

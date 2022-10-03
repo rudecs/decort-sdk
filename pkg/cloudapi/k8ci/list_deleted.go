@@ -3,9 +3,7 @@ package k8ci
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListDeletedRequest struct {
@@ -13,9 +11,9 @@ type ListDeletedRequest struct {
 	Size uint64 `url:"size,omitempty"`
 }
 
-func (k K8CI) ListDeleted(ctx context.Context, req ListDeletedRequest, options ...opts.DecortOpts) (K8CIList, error) {
+func (k K8CI) ListDeleted(ctx context.Context, req ListDeletedRequest) (K8CIList, error) {
 	url := "/cloudapi/k8ci/listDeleted"
-	k8ciListRaw, err := k.client.DecortApiCall(ctx, typed.POST, url, req)
+	k8ciListRaw, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

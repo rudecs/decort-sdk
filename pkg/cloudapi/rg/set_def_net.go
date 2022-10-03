@@ -3,11 +3,10 @@ package rg
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type SetDefNetRequest struct {
@@ -29,13 +28,13 @@ func (rgrq SetDefNetRequest) Validate() error {
 	return nil
 }
 
-func (r RG) SetDefNet(ctx context.Context, req SetDefNetRequest, options ...opts.DecortOpts) (uint64, error) {
+func (r RG) SetDefNet(ctx context.Context, req SetDefNetRequest) (uint64, error) {
 	if err := req.Validate(); err != nil {
 		return 0, err
 	}
 
 	url := "/cloudapi/rg/setDefNet"
-	res, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

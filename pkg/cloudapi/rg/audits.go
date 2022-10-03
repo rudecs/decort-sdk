@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type AuditsRequest struct {
@@ -21,13 +19,13 @@ func (rgrq AuditsRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Audits(ctx context.Context, req AuditsRequest, options ...opts.DecortOpts) (AuditList, error) {
+func (r RG) Audits(ctx context.Context, req AuditsRequest) (AuditList, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/audits"
-	auditListRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	auditListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

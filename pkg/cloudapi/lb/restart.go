@@ -3,10 +3,8 @@ package lb
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type RestartRequest struct {
@@ -21,24 +19,15 @@ func (lbrq RestartRequest) Validate() error {
 	return nil
 }
 
-func (l LB) Restart(ctx context.Context, req RestartRequest, options ...opts.DecortOpts) (bool, error) {
+func (l LB) Restart(ctx context.Context, req RestartRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/lb/restart"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/restart"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

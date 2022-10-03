@@ -3,14 +3,12 @@ package compute
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type MoveToRGRequest struct {
-	ComputeId uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId"`
 	RGID      uint64 `url:"rgId"`
 	Name      string `url:"name,omitempty"`
 	Autostart bool   `url:"autostart,omitempty"`
@@ -18,8 +16,8 @@ type MoveToRGRequest struct {
 }
 
 func (crq MoveToRGRequest) Validate() error {
-	if crq.ComputeId == 0 {
-		return errors.New("validation-error: field ComputeId can not be empty or equal to 0")
+	if crq.ComputeID == 0 {
+		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
 	if crq.RGID == 0 {
 		return errors.New("validation-error: field RGID can not be empty or equal to 0")
@@ -28,23 +26,15 @@ func (crq MoveToRGRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) MoveToRG(ctx context.Context, req MoveToRGRequest, options ...opts.DecortOpts) (bool, error) {
+func (c Compute) MoveToRG(ctx context.Context, req MoveToRGRequest) (bool, error) {
 	err := req.Validate()
 	if err != nil {
 		return false, err
 	}
 
-	url := "/compute/moveToRg"
-	prefix := "/cloudapi"
+	url := "/cloudapi/compute/moveToRg"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := c.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

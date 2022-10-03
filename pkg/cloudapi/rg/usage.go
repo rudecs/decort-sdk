@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type UsageRequest struct {
@@ -22,13 +20,13 @@ func (rgrq UsageRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Usage(ctx context.Context, req UpdateRequest, options ...opts.DecortOpts) (*ResourceUsage, error) {
+func (r RG) Usage(ctx context.Context, req UpdateRequest) (*ResourceUsage, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/usage"
-	usageRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	usageRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

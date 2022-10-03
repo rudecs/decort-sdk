@@ -3,20 +3,18 @@ package account
 import (
 	"context"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetConsumtionRequest struct {
-	AccountId uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId"`
 	Start     uint64 `url:"start"`
 	End       uint64 `url:"end"`
 }
 
 func (arq GetConsumtionRequest) Validate() error {
-	if arq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if arq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 
 	if arq.Start == 0 {
@@ -30,24 +28,15 @@ func (arq GetConsumtionRequest) Validate() error {
 	return nil
 }
 
-func (a Account) GetConsumtion(ctx context.Context, req GetConsumtionRequest, options ...opts.DecortOpts) (string, error) {
+func (a Account) GetConsumtion(ctx context.Context, req GetConsumtionRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/account/getConsumtion"
-	prefix := "/cloudapi"
+	url := "/cloudapi/account/getConsumtion"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}
@@ -56,7 +45,7 @@ func (a Account) GetConsumtion(ctx context.Context, req GetConsumtionRequest, op
 
 }
 
-func (a Account) GetConsumtionGet(ctx context.Context, req GetConsumtionRequest, options ...opts.DecortOpts) (string, error) {
+func (a Account) GetConsumtionGet(ctx context.Context, req GetConsumtionRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
@@ -65,15 +54,8 @@ func (a Account) GetConsumtionGet(ctx context.Context, req GetConsumtionRequest,
 	url := "/account/getConsumtion"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.GET, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodGet, url, req)
 	if err != nil {
 		return "", err
 	}

@@ -3,9 +3,7 @@ package tasks
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListRequest struct {
@@ -13,19 +11,12 @@ type ListRequest struct {
 	Size uint64 `url:"size"`
 }
 
-func (t Tasks) List(ctx context.Context, req ListRequest, options ...opts.DecortOpts) (TasksList, error) {
+func (t Tasks) List(ctx context.Context, req ListRequest) (TasksList, error) {
 	url := "/tasks/list"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	taskListRaw, err := t.client.DecortApiCall(ctx, typed.POST, url, req)
+	taskListRaw, err := t.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

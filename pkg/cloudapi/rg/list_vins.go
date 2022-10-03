@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListVINSRequest struct {
@@ -22,21 +20,21 @@ func (rgrq ListVINSRequest) Validate() error {
 	return nil
 }
 
-func (r RG) ListVINS(ctx context.Context, req ListVINSRequest, options ...opts.DecortOpts) (VINSList, error) {
+func (r RG) ListVINS(ctx context.Context, req ListVINSRequest) (VINSList, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/listVins"
-	vinsListRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	VINSListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	vinsList := VINSList{}
-	if err := json.Unmarshal(vinsListRaw, &vinsList); err != nil {
+	VINSList := VINSList{}
+	if err := json.Unmarshal(VINSListRaw, &VINSList); err != nil {
 		return nil, err
 	}
 
-	return vinsList, nil
+	return VINSList, nil
 }

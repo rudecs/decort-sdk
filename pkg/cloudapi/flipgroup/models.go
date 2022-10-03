@@ -11,7 +11,7 @@ type FlipGroupRecord struct {
 type FlipGroupItem struct {
 	AccountID   uint64   `json:"accountId"`
 	AccountName string   `json:"accountName"`
-	ClientIds   []uint64 `json:"clientIds"`
+	ClientIDs   []uint64 `json:"clientIds"`
 	ClientType  string   `json:"clientType"`
 	ConnID      uint64   `json:"connId"`
 	ConnType    string   `json:"connType"`

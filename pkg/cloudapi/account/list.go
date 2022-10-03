@@ -3,9 +3,7 @@ package account
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListRequest struct {
@@ -13,19 +11,10 @@ type ListRequest struct {
 	Size uint64 `url:"size"`
 }
 
-func (a Account) List(ctx context.Context, req ListRequest, options ...opts.DecortOpts) (AccountCloudApiList, error) {
-	url := "/account/list"
-	prefix := "/cloudapi"
+func (a Account) List(ctx context.Context, req ListRequest) (AccountCloudApiList, error) {
+	url := "/cloudapi/account/list"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

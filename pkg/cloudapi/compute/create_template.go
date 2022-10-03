@@ -3,22 +3,20 @@ package compute
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 	"strings"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateTemplateRequest struct {
-	ComputeId uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId"`
 	Name      string `url:"name"`
 	Async     bool   `url:"async"`
 }
 
 func (crq CreateTemplateRequest) Validate() error {
-	if crq.ComputeId == 0 {
-		return errors.New("validation-error: field ComputeId can not be empty or equal to 0")
+	if crq.ComputeID == 0 {
+		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
 
 	if crq.Name == "" {
@@ -28,7 +26,7 @@ func (crq CreateTemplateRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) CreateTemplate(ctx context.Context, req CreateTemplateRequest, options ...opts.DecortOpts) (uint64, error) {
+func (c Compute) CreateTemplate(ctx context.Context, req CreateTemplateRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
@@ -36,30 +34,22 @@ func (c Compute) CreateTemplate(ctx context.Context, req CreateTemplateRequest, 
 
 	req.Async = false
 
-	url := "/compute/createTemplate"
-	prefix := "/cloudapi"
+	url := "/cloudapi/compute/createTemplate"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := c.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}
 
 	result, err := strconv.ParseUint(string(res), 10, 64)
 	if err != nil {
-		return 0, nil
+		return 0, err
 	}
 
 	return result, nil
 }
 
-func (c Compute) CreateTemplateAsync(ctx context.Context, req CreateTemplateRequest, options ...opts.DecortOpts) (string, error) {
+func (c Compute) CreateTemplateAsync(ctx context.Context, req CreateTemplateRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
@@ -67,17 +57,9 @@ func (c Compute) CreateTemplateAsync(ctx context.Context, req CreateTemplateRequ
 
 	req.Async = true
 
-	url := "/compute/createTemplate"
-	prefix := "/cloudapi"
+	url := "/cloudapi/compute/createTemplate"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := c.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}

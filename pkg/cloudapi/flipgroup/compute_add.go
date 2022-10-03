@@ -3,10 +3,8 @@ package flipgroup
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type ComputeAddRequest struct {
@@ -25,20 +23,20 @@ func (frq ComputeAddRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) ComputeAdd(ctx context.Context, req ComputeAddRequest, options ...opts.DecortOpts) (bool, error) {
+func (f FlipGroup) ComputeAdd(ctx context.Context, req ComputeAddRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/flipgroup/computeAdd"
-	res, err := f.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}
 
 	result, err := strconv.ParseBool(string(res))
 	if err != nil {
-		return false, nil
+		return false, err
 	}
 
 	return result, nil

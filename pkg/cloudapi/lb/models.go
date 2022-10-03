@@ -10,12 +10,12 @@ type LoadBalancer struct {
 	DeletedTime   uint64      `json:"deletedTime"`
 	Description   string      `json:"desc"`
 	DPAPIUser     string      `json:"dpApiUser"`
-	ExtnetId      uint64      `json:"extnetId"`
+	ExtNetID      uint64      `json:"extnetId"`
 	Frontends     []Frontend  `json:"frontends"`
 	GID           uint64      `json:"gid"`
 	GUID          uint64      `json:"guid"`
 	ID            uint64      `json:"id"`
-	ImageId       uint64      `json:"imageId"`
+	ImageID       uint64      `json:"imageId"`
 	Milestones    uint64      `json:"milestones"`
 	Name          string      `json:"name"`
 	PrimaryNode   Node        `json:"primaryNode"`
@@ -26,7 +26,7 @@ type LoadBalancer struct {
 	TechStatus    string      `json:"techStatus"`
 	UpdatedBy     string      `json:"updatedBy"`
 	UpdatedTime   uint64      `json:"updatedTime"`
-	VinsId        uint64      `json:"vinsId"`
+	VINSID        uint64      `json:"vinsId"`
 }
 
 type LoadBalancerDetailed struct {
@@ -48,12 +48,12 @@ type ServerSettings struct {
 	Inter     uint64 `json:"inter"`
 	GUID      string `json:"guid"`
 	DownInter uint64 `json:"downinter"`
-	Rise      uint   `json:"rise"`
-	Fall      uint   `json:"fall"`
+	Rise      uint64 `json:"rise"`
+	Fall      uint64 `json:"fall"`
 	SlowStart uint64 `json:"slowstart"`
-	MaxConn   uint   `json:"maxconn"`
-	MaxQueue  uint   `json:"maxqueue"`
-	Weight    uint   `json:"weight"`
+	MaxConn   uint64 `json:"maxconn"`
+	MaxQueue  uint64 `json:"maxqueue"`
+	Weight    uint64 `json:"weight"`
 }
 
 type Server struct {
@@ -61,17 +61,17 @@ type Server struct {
 	Check          string         `json:"check"`
 	GUID           string         `json:"guid"`
 	Name           string         `json:"name"`
-	Port           uint           `json:"port"`
+	Port           uint64         `json:"port"`
 	ServerSettings ServerSettings `json:"serverSettings"`
 }
 
 type Node struct {
-	BackendIp  string `json:"backendIp"`
-	ComputeId  uint64 `json:"computeId"`
-	FrontendIp string `json:"frontendIp"`
+	BackendIP  string `json:"backendIp"`
+	ComputeID  uint64 `json:"computeId"`
+	FrontendIP string `json:"frontendIp"`
 	GUID       string `json:"guid"`
-	MGMTIp     string `json:"mgmtIp"`
-	NetworkId  uint64 `json:"networkId"`
+	MGMTIP     string `json:"mgmtIp"`
+	NetworkID  uint64 `json:"networkId"`
 }
 
 type Frontend struct {
@@ -85,5 +85,5 @@ type Binding struct {
 	Address string `json:"address"`
 	GUID    string `json:"guid"`
 	Name    string `json:"name"`
-	Port    uint   `json:"port"`
+	Port    uint64 `json:"port"`
 }

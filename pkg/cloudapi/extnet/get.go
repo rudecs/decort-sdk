@@ -4,45 +4,34 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
-	NetId uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id"`
 }
 
 func (erq GetRequest) Validate() error {
-	if erq.NetId == 0 {
-		return errors.New("validation-error: field NetId can not be empty or equal to 0")
+	if erq.NetID == 0 {
+		return errors.New("validation-error: field NetID can not be empty or equal to 0")
 	}
 	return nil
 }
 
-func (e Extnet) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*ExtnetDetailed, error) {
+func (e ExtNet) Get(ctx context.Context, req GetRequest) (*ExtNetDetailed, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/extnet/get"
-	prefix := "/cloudapi"
+	url := "/cloudapi/extnet/get"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	extnetRaw, err := e.client.DecortApiCall(ctx, typed.POST, url, req)
+	extnetRaw, err := e.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	extnet := &ExtnetDetailed{}
+	extnet := &ExtNetDetailed{}
 	err = json.Unmarshal(extnetRaw, &extnet)
 	if err != nil {
 		return nil, err

@@ -3,11 +3,10 @@ package rg
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type AccessGrantRequest struct {
@@ -33,13 +32,13 @@ func (rgrq AccessGrantRequest) Validate() error {
 	return nil
 }
 
-func (r RG) AccessGrant(ctx context.Context, req AccessGrantRequest, options ...opts.DecortOpts) (bool, error) {
+func (r RG) AccessGrant(ctx context.Context, req AccessGrantRequest) (bool, error) {
 	if err := req.Validate(); err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/rg/accessGrant"
-	res, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}

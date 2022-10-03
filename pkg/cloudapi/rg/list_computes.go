@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListComputesRequest struct {
@@ -22,13 +20,13 @@ func (rgrq ListComputesRequest) Validate() error {
 	return nil
 }
 
-func (r RG) ListComputes(ctx context.Context, req ListComputesRequest, options ...opts.DecortOpts) (ComputeList, error) {
+func (r RG) ListComputes(ctx context.Context, req ListComputesRequest) (ComputeList, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/rg/listComputes"
-	computeListRaw, err := r.client.DecortApiCall(ctx, typed.POST, url, req)
+	computeListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

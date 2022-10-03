@@ -3,10 +3,8 @@ package kvmppc
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateBlankRequest struct {
@@ -49,7 +47,7 @@ func (krq CreateBlankRequest) Validate() error {
 	return nil
 }
 
-func (k KVMPPC) CreateBlank(ctx context.Context, req CreateBlankRequest, options ...opts.DecortOpts) (uint64, error) {
+func (k KVMPPC) CreateBlank(ctx context.Context, req CreateBlankRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
@@ -58,15 +56,8 @@ func (k KVMPPC) CreateBlank(ctx context.Context, req CreateBlankRequest, options
 	url := "/kvmppc/createBlank"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	res, err := k.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

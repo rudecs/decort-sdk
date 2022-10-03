@@ -4,12 +4,12 @@ import (
 	"github.com/rudecs/decort-sdk/interfaces"
 )
 
-type Extnet struct {
+type ExtNet struct {
 	client interfaces.Caller
 }
 
-func New(client interfaces.Caller) *Extnet {
-	return &Extnet{
+func New(client interfaces.Caller) *ExtNet {
+	return &ExtNet{
 		client,
 	}
 }

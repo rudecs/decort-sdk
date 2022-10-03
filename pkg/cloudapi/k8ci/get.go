@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
@@ -21,13 +19,13 @@ func (krq GetRequest) Validate() error {
 	return nil
 }
 
-func (k K8CI) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*K8CIRecord, error) {
+func (k K8CI) Get(ctx context.Context, req GetRequest) (*K8CIRecord, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	url := "/cloudapi/k8ci/get"
-	k8ciRaw, err := k.client.DecortApiCall(ctx, typed.POST, url, req)
+	k8ciRaw, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

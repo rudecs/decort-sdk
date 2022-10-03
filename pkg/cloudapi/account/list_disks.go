@@ -4,41 +4,30 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListDisksRequest struct {
-	AccountId uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId"`
 }
 
 func (arq ListDisksRequest) Validate() error {
-	if arq.AccountId == 0 {
-		return errors.New("validation-error: field AccountId can not be empty or equal to 0")
+	if arq.AccountID == 0 {
+		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (a Account) ListDisks(ctx context.Context, req ListDisksRequest, options ...opts.DecortOpts) (AccountDisksList, error) {
+func (a Account) ListDisks(ctx context.Context, req ListDisksRequest) (AccountDisksList, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/account/listDisks"
-	prefix := "/cloudapi"
+	url := "/cloudapi/account/listDisks"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := a.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

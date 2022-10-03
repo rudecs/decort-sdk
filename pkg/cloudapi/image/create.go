@@ -3,11 +3,10 @@ package image
 import (
 	"context"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/rudecs/decort-sdk/internal/validators"
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
 )
 
 type CreateRequest struct {
@@ -19,10 +18,10 @@ type CreateRequest struct {
 	Hotresize    bool     `url:"hotresize,omitempty"`
 	Username     string   `url:"username,omitempty"`
 	Password     string   `url:"password,omitempty"`
-	AccountId    uint64   `url:"accountId,omitempty"`
+	AccountID    uint64   `url:"accountId,omitempty"`
 	UsernameDL   string   `url:"usernameDL,omitempty"`
 	PasswordDL   string   `url:"passwordDL,omitempty"`
-	SepId        uint64   `url:"sepId,omitempty"`
+	SepID        uint64   `url:"sepId,omitempty"`
 	Pool         string   `url:"poolName,omitempty"`
 	Architecture string   `url:"architecture,omitempty"`
 	Drivers      []string `url:"drivers"`
@@ -51,7 +50,7 @@ func (irq CreateRequest) Validate() error {
 		return errors.New("validation-error: field ImageType can not be empty")
 	}
 
-	validate = validators.StringInSlice(irq.ImageType, []string{"bios", "uefi"})
+	validate = validators.StringInSlice(irq.ImageType, []string{"windows", "linux", "other"})
 	if !validate {
 		return errors.New("validation-error: field ImageType can be windows, linux or other")
 	}
@@ -70,24 +69,15 @@ func (irq CreateRequest) Validate() error {
 	return nil
 }
 
-func (i Image) Create(ctx context.Context, req CreateRequest, options ...opts.DecortOpts) (uint64, error) {
+func (i Image) Create(ctx context.Context, req CreateRequest) (uint64, error) {
 	err := req.Validate()
 	if err != nil {
 		return 0, err
 	}
 
-	url := "/image/create"
-	prefix := "/cloudapi"
+	url := "/cloudapi/image/create"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := i.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := i.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return 0, err
 	}

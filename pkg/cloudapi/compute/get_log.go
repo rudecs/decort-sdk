@@ -3,19 +3,17 @@ package compute
 import (
 	"context"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetLogRequest struct {
-	ComputeId uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId"`
 	Path      string `url:"path"`
 }
 
 func (crq GetLogRequest) Validate() error {
-	if crq.ComputeId == 0 {
-		return errors.New("validation-error: field ComputeId can not be empty or equal to 0")
+	if crq.ComputeID == 0 {
+		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
 
 	if crq.Path == "" {
@@ -25,23 +23,15 @@ func (crq GetLogRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) GetLog(ctx context.Context, req GetLogRequest, options ...opts.DecortOpts) (string, error) {
+func (c Compute) GetLog(ctx context.Context, req GetLogRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/compute/getLog"
-	prefix := "/cloudapi"
+	url := "/cloudapi/compute/getLog"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	res, err := c.client.DecortApiCall(ctx, typed.POST, url, req)
+	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return "", err
 	}
@@ -49,7 +39,7 @@ func (c Compute) GetLog(ctx context.Context, req GetLogRequest, options ...opts.
 	return string(res), nil
 }
 
-func (c Compute) GetLogGet(ctx context.Context, req GetLogRequest, options ...opts.DecortOpts) (string, error) {
+func (c Compute) GetLogGet(ctx context.Context, req GetLogRequest) (string, error) {
 	err := req.Validate()
 	if err != nil {
 		return "", err
@@ -58,14 +48,8 @@ func (c Compute) GetLogGet(ctx context.Context, req GetLogRequest, options ...op
 	url := "/compute/getLog"
 	prefix := "/cloudapi"
 
-	option := opts.New(options)
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
 	url = prefix + url
-	res, err := c.client.DecortApiCall(ctx, typed.GET, url, req)
+	res, err := c.client.DecortApiCall(ctx, http.MethodGet, url, req)
 	if err != nil {
 		return "", err
 	}

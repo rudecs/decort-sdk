@@ -3,9 +3,7 @@ package k8ci
 import (
 	"context"
 	"encoding/json"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type ListRequest struct {
@@ -14,9 +12,9 @@ type ListRequest struct {
 	Size            uint64 `url:"size,omitempty"`
 }
 
-func (k K8CI) List(ctx context.Context, req ListRequest, options ...opts.DecortOpts) (K8CIList, error) {
+func (k K8CI) List(ctx context.Context, req ListRequest) (K8CIList, error) {
 	url := "/cloudapi/k8ci/list"
-	k8ciListRaw, err := k.client.DecortApiCall(ctx, typed.POST, url, req)
+	k8ciListRaw, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}

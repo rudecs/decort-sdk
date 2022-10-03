@@ -4,18 +4,20 @@ linters:
     - decorder
     - dogsled
     - errorlint
+    - exhaustive
     - exportloopref
-    - gocognit
+    - exhaustive
+    #- gocognit
     - goconst
-    - gocyclo
+    #- gocyclo
     - gosec
-    - ifshort
     - makezero
-    - nestif
+    #- nestif
     - nilerr
     - prealloc
     - unconvert
     - unparam
+    - noctx
 
 issues:
   max-same-issues: 0

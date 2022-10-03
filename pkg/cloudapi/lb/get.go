@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
-	"github.com/rudecs/decort-sdk/opts"
-	"github.com/rudecs/decort-sdk/typed"
+	"net/http"
 )
 
 type GetRequest struct {
@@ -21,24 +19,15 @@ func (lbrq GetRequest) Validate() error {
 	return nil
 }
 
-func (l LB) Get(ctx context.Context, req GetRequest, options ...opts.DecortOpts) (*LoadBalancer, error) {
+func (l LB) Get(ctx context.Context, req GetRequest) (*LoadBalancer, error) {
 	err := req.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/lb/get"
-	prefix := "/cloudapi"
+	url := "/cloudapi/lb/get"
 
-	option := opts.New(options)
-
-	if option != nil {
-		if option.IsAdmin {
-			prefix = "/" + option.AdminValue
-		}
-	}
-	url = prefix + url
-	lbRaw, err := l.client.DecortApiCall(ctx, typed.POST, url, req)
+	lbRaw, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
