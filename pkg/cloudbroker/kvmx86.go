@@ -1,7 +1,7 @@
 package cloudbroker
 
 import (
-	"github.com/rudecs/decort-sdk/pkg/cloudapi/kvmx86"
+	"github.com/rudecs/decort-sdk/pkg/cloudbroker/kvmx86"
 )
 
 func (cb *CloudBroker) KVMX86() *kvmx86.KVMX86 {

@@ -17,6 +17,12 @@ func NewHttpClient(cfg config.Config) *http.Client {
 		},
 	}
 
+	var expiredTime time.Time
+
+	if cfg.Token != "" {
+		expiredTime = time.Now().AddDate(0, 0, 1)
+	}
+
 	return &http.Client{
 		Transport: &transport{
 			base:         transCfg,
@@ -24,6 +30,8 @@ func NewHttpClient(cfg config.Config) *http.Client {
 			clientID:     cfg.AppID,
 			clientSecret: cfg.AppSecret,
 			SSOURL:       cfg.SSOURL,
+			token:        cfg.Token,
+			expiryTime:   expiredTime,
 			//TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		},
 
