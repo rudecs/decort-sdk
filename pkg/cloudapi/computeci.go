@@ -4,6 +4,7 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/computeci"
 )
 
-func (ca *CloudApi) ComputeCI() *computeci.ComputeCI {
+// Accessing the ComputeCI method group
+func (ca *CloudAPI) ComputeCI() *computeci.ComputeCI {
 	return computeci.New(ca.client)
 }

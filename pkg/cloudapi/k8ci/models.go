@@ -1,15 +1,28 @@
 package k8ci
 
-type K8CIItem struct {
+// Detailed information about K8CI
+type ItemK8CI struct {
+	// Created time
 	CreatedTime uint64 `json:"createdTime"`
-	K8CIRecord
+
+	// Main information about K8CI
+	RecordK8CI
 }
 
-type K8CIList []K8CIItem
+// List of K8CI
+type ListK8CI []ItemK8CI
 
-type K8CIRecord struct {
+// Main information about K8CI
+type RecordK8CI struct {
+	// Description
 	Description string `json:"desc"`
-	ID          uint64 `json:"id"`
-	Name        string `json:"name"`
-	Version     string `json:"version"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Version
+	Version string `json:"version"`
 }

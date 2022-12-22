@@ -7,13 +7,22 @@ import (
 	"net/http"
 )
 
+// Request struct for get list stack
 type ListStacksRequest struct {
+	// Image ID
+	// Required: true
 	ImageID uint64 `url:"imageId"`
-	Page    uint64 `url:"page,omitempty"`
-	Size    uint64 `url:"size,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (irq ListStacksRequest) Validate() error {
+func (irq ListStacksRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -21,8 +30,9 @@ func (irq ListStacksRequest) Validate() error {
 	return nil
 }
 
+// ListStacks gets list stack by image ID
 func (i Image) ListStacks(ctx context.Context, req ListStacksRequest) (ListStacks, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}

@@ -6,23 +6,32 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of accounts
 type ListRequest struct {
-	Page uint64 `url:"page,omitempty"`
-	Size uint64 `url:"size,omitempty"`
+	// Page number
+	// Required: false
+	Page uint64 `url:"page"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size"`
 }
 
-func (a Account) List(ctx context.Context, req ListRequest) (ListInfoResponse, error) {
+// List gets list all accounts the user has access to
+func (a Account) List(ctx context.Context, req ListRequest) (ListAccounts, error) {
 	url := "/cloudbroker/account/list"
 
-	result := ListInfoResponse{}
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
-		return ListInfoResponse{}, err
-	}
-	err = json.Unmarshal(res, &result)
-	if err != nil {
-		return ListInfoResponse{}, err
+		return nil, err
 	}
 
-	return result, nil
+	list := ListAccounts{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
+		return nil, err
+	}
+
+	return list, nil
 }

@@ -7,17 +7,38 @@ import (
 	"strconv"
 )
 
+// Request struct for edit image
 type EditRequest struct {
-	ImageID   uint64 `url:"imageId"`
-	Name      string `url:"name,omitempty"`
-	Username  string `url:"username,omitempty"`
-	Password  string `url:"password,omitempty"`
+	// ID of the image to edit
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// Name for the image
+	// Required: false
+	Name string `url:"name,omitempty"`
+
+	// Username for the image
+	// Required: false
+	Username string `url:"username,omitempty"`
+
+	// Password for the image
+	// Required: false
+	Password string `url:"password,omitempty"`
+
+	// Account ID to make the image exclusive
+	// Required: false
 	AccountID uint64 `url:"accountId,omitempty"`
-	HotResize bool   `url:"hotresize,omitempty"`
-	Bootable  bool   `url:"bootable,omitempty"`
+
+	// Does this machine supports hot resize
+	// Required: false
+	HotResize bool `url:"hotresize,omitempty"`
+
+	// Does this image boot OS
+	// Required: false
+	Bootable bool `url:"bootable,omitempty"`
 }
 
-func (irq EditRequest) Validate() error {
+func (irq EditRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -25,8 +46,9 @@ func (irq EditRequest) Validate() error {
 	return nil
 }
 
+// Edit edits an existing image
 func (i Image) Edit(ctx context.Context, req EditRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

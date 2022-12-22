@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for clear affinity rules
 type AffinityRulesClearRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq AffinityRulesClearRequest) Validate() error {
+func (crq AffinityRulesClearRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq AffinityRulesClearRequest) Validate() error {
 	return nil
 }
 
+// AffinityRulesClear clear affinity rules
 func (c Compute) AffinityRulesClear(ctx context.Context, req AffinityRulesClearRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

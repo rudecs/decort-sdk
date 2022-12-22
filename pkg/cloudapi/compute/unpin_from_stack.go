@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for unpin from stack
 type UnpinFromStackRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq UnpinFromStackRequest) Validate() error {
+func (crq UnpinFromStackRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq UnpinFromStackRequest) Validate() error {
 	return nil
 }
 
+// UnpinFromStack unpin compute from current stack
 func (c Compute) UnpinFromStack(ctx context.Context, req UnpinFromStackRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (c Compute) UnpinFromStack(ctx context.Context, req UnpinFromStackRequest) 
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

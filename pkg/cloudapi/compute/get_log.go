@@ -6,16 +6,21 @@ import (
 	"net/http"
 )
 
+// Request struct for get compute logs
 type GetLogRequest struct {
+	// ID of compute instance to get log for
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Path      string `url:"path"`
+
+	// Path to log file
+	// Required: true
+	Path string `url:"path"`
 }
 
-func (crq GetLogRequest) Validate() error {
+func (crq GetLogRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.Path == "" {
 		return errors.New("validation-error: field Path can not be empty")
 	}
@@ -23,8 +28,9 @@ func (crq GetLogRequest) Validate() error {
 	return nil
 }
 
+// GetLog gets compute's log file by path
 func (c Compute) GetLog(ctx context.Context, req GetLogRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}
@@ -39,16 +45,15 @@ func (c Compute) GetLog(ctx context.Context, req GetLogRequest) (string, error) 
 	return string(res), nil
 }
 
+// GetLogGet gets compute's log file by path
 func (c Compute) GetLogGet(ctx context.Context, req GetLogRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/compute/getLog"
-	prefix := "/cloudapi"
+	url := "/cloudapi//compute/getLog"
 
-	url = prefix + url
 	res, err := c.client.DecortApiCall(ctx, http.MethodGet, url, req)
 	if err != nil {
 		return "", err

@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for enable resource group
 type EnableRequest struct {
-	RGID   uint64 `url:"rgId"`
-	Reason string `url:"reason"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq EnableRequest) Validate() error {
+func (rgrq EnableRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -20,8 +26,9 @@ func (rgrq EnableRequest) Validate() error {
 	return nil
 }
 
+// Enable enables resource group by ID
 func (r RG) Enable(ctx context.Context, req EnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

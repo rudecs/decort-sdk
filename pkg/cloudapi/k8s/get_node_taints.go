@@ -6,12 +6,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get node taints
 type GetNodeTaintsRequest struct {
-	K8SID  uint64 `url:"k8sId"`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// Node ID
+	// Required: false
 	NodeID uint64 `url:"nodeId"`
 }
 
-func (krq GetNodeTaintsRequest) Validate() error {
+func (krq GetNodeTaintsRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -22,8 +28,9 @@ func (krq GetNodeTaintsRequest) Validate() error {
 	return nil
 }
 
+// GetNodeTaints gets kubernetes cluster worker node taints
 func (k8s K8S) GetNodeTaints(ctx context.Context, req GetNodeTaintsRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}

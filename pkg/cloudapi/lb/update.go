@@ -7,12 +7,19 @@ import (
 	"strconv"
 )
 
+// Request struct for update load balancer
 type UpdateRequest struct {
-	LBID        uint64 `url:"lbId"`
+	// ID of the load balancer to update
+	// Required: true
+	LBID uint64 `url:"lbId"`
+
+	// New description of this load balancer.
+	// If omitted, current description is retained
+	// Required: true
 	Description string `url:"desc"`
 }
 
-func (lbrq UpdateRequest) Validate() error {
+func (lbrq UpdateRequest) validate() error {
 	if lbrq.LBID == 0 {
 		return errors.New("validation-error: field LBID can not be empty or equal to 0")
 	}
@@ -23,8 +30,9 @@ func (lbrq UpdateRequest) Validate() error {
 	return nil
 }
 
+// Update updates some of load balancer attributes
 func (l LB) Update(ctx context.Context, req UpdateRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

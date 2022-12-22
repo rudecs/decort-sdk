@@ -6,13 +6,22 @@ import (
 	"net/http"
 )
 
+// Request struct for search
 type SearchRequest struct {
+	//  ID of the account to search for the Disk
+	// Required: false
 	AccountID uint64 `url:"accountId,omitempty"`
-	Name      string `url:"name,omitempty"`
-	ShowAll   bool   `url:"show_all,omitempty"`
+	// Name of the Disk to search for
+	// Required: false
+	Name string `url:"name,omitempty"`
+
+	// If false, then disks having one of the statuses are not listed
+	// Required: false
+	ShowAll bool `url:"show_all,omitempty"`
 }
 
-func (d Disks) Search(ctx context.Context, req SearchRequest) (DiskList, error) {
+// Search search disks
+func (d Disks) Search(ctx context.Context, req SearchRequest) (ListDisks, error) {
 	url := "/cloudapi/disks/search"
 
 	res, err := d.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -20,13 +29,12 @@ func (d Disks) Search(ctx context.Context, req SearchRequest) (DiskList, error) 
 		return nil, err
 	}
 
-	diskList := DiskList{}
+	list := ListDisks{}
 
-	err = json.Unmarshal(res, &diskList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return diskList, nil
-
+	return list, nil
 }

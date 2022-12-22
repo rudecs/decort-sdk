@@ -9,14 +9,30 @@ import (
 	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for attach network
 type NetAttachRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	NetType   string `url:"netType"`
-	NetID     uint64 `url:"netId"`
-	IPAddr    string `url:"ipAddr,omitempty"`
+
+	// Network type
+	// 'EXTNET' for connect to external network directly
+	// and 'VINS' for connect to ViNS
+	// Required: true
+	NetType string `url:"netType"`
+
+	// Network ID for connect to
+	// For EXTNET - external network ID
+	// For VINS - VINS ID
+	// Required: true
+	NetID uint64 `url:"netId"`
+
+	// Directly required IP address for new network interface
+	// Required: true
+	IPAddr string `url:"ipAddr,omitempty"`
 }
 
-func (crq NetAttachRequest) Validate() error {
+func (crq NetAttachRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -27,7 +43,6 @@ func (crq NetAttachRequest) Validate() error {
 	if !validator {
 		return errors.New("validation-error: field NetType can be only EXTNET or VINS")
 	}
-
 	if crq.NetID == 0 {
 		return errors.New("validation-error: field NetID can not be empty or equal to 0")
 	}
@@ -35,8 +50,9 @@ func (crq NetAttachRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) NetAttach(ctx context.Context, req NetAttachRequest) (*NetAttach, error) {
-	err := req.Validate()
+// NetAttach attach network to compute and gets info about network
+func (c Compute) NetAttach(ctx context.Context, req NetAttachRequest) (*RecordNetAttach, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -48,11 +64,12 @@ func (c Compute) NetAttach(ctx context.Context, req NetAttachRequest) (*NetAttac
 		return nil, err
 	}
 
-	netAttach := &NetAttach{}
-	err = json.Unmarshal(res, netAttach)
+	info := RecordNetAttach{}
+
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return netAttach, nil
+	return &info, nil
 }

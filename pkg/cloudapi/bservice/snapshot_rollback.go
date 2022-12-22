@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for rollback snapshot
 type SnapshotRollbackRequest struct {
+	// ID of the Basic Service
+	// Required: true
 	ServiceID uint64 `url:"serviceId"`
-	Label     string `url:"label"`
+
+	// Label of the snapshot
+	// Required: true
+	Label string `url:"label"`
 }
 
-func (bsrq SnapshotRollbackRequest) Validate() error {
+func (bsrq SnapshotRollbackRequest) validate() error {
 	if bsrq.ServiceID == 0 {
 		return errors.New("field ServiceID can not be empty or equal to 0")
 	}
-
 	if bsrq.Label == "" {
 		return errors.New("field Label can not be empty")
 	}
@@ -24,16 +29,24 @@ func (bsrq SnapshotRollbackRequest) Validate() error {
 	return nil
 }
 
+// SnapshotRollback rollback snapshot of the Basic Service
 func (b BService) SnapshotRollback(ctx context.Context, req SnapshotRollbackRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/bservice/snapshotRollback"
+
 	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}
 
-	return strconv.ParseBool(string(res))
+	result, err := strconv.ParseBool(string(res))
+	if err != nil {
+		return false, err
+	}
+
+	return result, nil
 }

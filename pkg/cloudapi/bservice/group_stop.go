@@ -7,17 +7,25 @@ import (
 	"strconv"
 )
 
+// Request struct for stop the specified Compute Group
 type GroupStopRequest struct {
-	ServiceID   uint64 `url:"serviceId"`
+	// ID of the Basic Service of Compute Group
+	// Required: true
+	ServiceID uint64 `url:"serviceId"`
+
+	// ID of the Compute Group to stop
+	// Required: true
 	CompGroupID uint64 `url:"compgroupId"`
-	Force       bool   `url:"force,omitempty"`
+
+	// Force stop Compute Group
+	// Required: true
+	Force bool `url:"force,omitempty"`
 }
 
-func (bsrq GroupStopRequest) Validate() error {
+func (bsrq GroupStopRequest) validate() error {
 	if bsrq.ServiceID == 0 {
 		return errors.New("field ServiceID can not be empty or equal to 0")
 	}
-
 	if bsrq.CompGroupID == 0 {
 		return errors.New("field CompGroupID can not be empty or equal to 0")
 	}
@@ -25,16 +33,24 @@ func (bsrq GroupStopRequest) Validate() error {
 	return nil
 }
 
+// GroupStop stops the specified Compute Group within BasicService
 func (b BService) GroupStop(ctx context.Context, req GroupStopRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/bservice/groupStop"
+
 	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}
 
-	return strconv.ParseBool(string(res))
+	result, err := strconv.ParseBool(string(res))
+	if err != nil {
+		return false, err
+	}
+
+	return result, nil
 }

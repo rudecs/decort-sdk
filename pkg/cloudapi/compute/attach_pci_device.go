@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
-type AttachPciDeviceRequest struct {
+// Request struct for atttach PCI device
+type AttachPCIDeviceRequest struct {
+	// Identifier compute
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	DeviceID  uint64 `url:"deviceId"`
+
+	// PCI device ID
+	// Required: true
+	DeviceID uint64 `url:"deviceId"`
 }
 
-func (crq AttachPciDeviceRequest) Validate() error {
+func (crq AttachPCIDeviceRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.DeviceID == 0 {
 		return errors.New("validation-error: field DeviceID can not be empty or equal to 0")
 	}
@@ -24,8 +29,9 @@ func (crq AttachPciDeviceRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) AttachPciDevice(ctx context.Context, req AttachPciDeviceRequest) (bool, error) {
-	err := req.Validate()
+// AttachPCIDevice attach PCI device
+func (c Compute) AttachPCIDevice(ctx context.Context, req AttachPCIDeviceRequest) (bool, error) {
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get list templates
 type ListTemplatesRequest struct {
-	AccountID      uint64 `url:"accountId"`
-	IncludeDeleted bool   `url:"includedeleted"`
+	// ID an account
+	// Required: true
+	AccountID uint64 `url:"accountId"`
+
+	// Include deleted images
+	// Required: false
+	IncludeDeleted bool `url:"includedeleted"`
 }
 
-func (arq ListTemplatesRequest) Validate() error {
+func (arq ListTemplatesRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -20,8 +26,9 @@ func (arq ListTemplatesRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListTemplates(ctx context.Context, req ListTemplatesRequest) (AccountTemplatesList, error) {
-	err := req.Validate()
+// ListTemplates gets list templates which can be managed by this account
+func (a Account) ListTemplates(ctx context.Context, req ListTemplatesRequest) (ListTemplates, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,13 +40,12 @@ func (a Account) ListTemplates(ctx context.Context, req ListTemplatesRequest) (A
 		return nil, err
 	}
 
-	accountTemplatesList := AccountTemplatesList{}
+	list := ListTemplates{}
 
-	err = json.Unmarshal(res, &accountTemplatesList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountTemplatesList, nil
-
+	return list, nil
 }

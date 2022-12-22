@@ -7,14 +7,20 @@ import (
 	"strconv"
 )
 
+// Request struct for add compute instance
 type ComputeAddRequest struct {
-	FlipGroupID uint64 `url:"flipgroupId"`
-	ComputeID   uint64 `url:"computeId"`
+	// ID of the Floating IP group to add compute instance to
+	// Required: true
+	FLIPGroupID uint64 `url:"flipgroupId"`
+
+	// ID of the compute instance to add to this group
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
 }
 
-func (frq ComputeAddRequest) Validate() error {
-	if frq.FlipGroupID == 0 {
-		return errors.New("field FlipGroupID can not be empty or equal to 0")
+func (frq ComputeAddRequest) validate() error {
+	if frq.FLIPGroupID == 0 {
+		return errors.New("field FLIPGroupID can not be empty or equal to 0")
 	}
 	if frq.ComputeID == 0 {
 		return errors.New("field ComputeID can not be empty or equal to 0")
@@ -23,12 +29,15 @@ func (frq ComputeAddRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) ComputeAdd(ctx context.Context, req ComputeAddRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+// ComputeAdd add compute instance to the Floating IP group
+func (f FLIPGroup) ComputeAdd(ctx context.Context, req ComputeAddRequest) (bool, error) {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/flipgroup/computeAdd"
+
 	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err

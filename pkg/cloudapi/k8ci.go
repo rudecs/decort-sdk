@@ -4,6 +4,7 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/k8ci"
 )
 
-func (ca *CloudApi) K8CI() *k8ci.K8CI {
+// Accessing the K8CI method group
+func (ca *CloudAPI) K8CI() *k8ci.K8CI {
 	return k8ci.New(ca.client)
 }

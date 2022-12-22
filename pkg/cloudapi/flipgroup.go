@@ -4,6 +4,7 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/flipgroup"
 )
 
-func (ca *CloudApi) FlipGroup() *flipgroup.FlipGroup {
+// Accessing the FLIPGroup method group
+func (ca *CloudAPI) FLIPGroup() *flipgroup.FLIPGroup {
 	return flipgroup.New(ca.client)
 }

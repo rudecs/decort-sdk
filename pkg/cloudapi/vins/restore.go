@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for restore
 type RestoreRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
 }
 
-func (vrq RestoreRequest) Validate() error {
+func (vrq RestoreRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (vrq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restores VINS from recycle bin
 func (v VINS) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +42,4 @@ func (v VINS) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
 	}
 
 	return result, nil
-
 }

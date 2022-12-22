@@ -7,13 +7,22 @@ import (
 	"strconv"
 )
 
+// Request struct for detach networ to compute
 type NetDetachRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	IPAddr    string `url:"ipAddr,omitempty"`
-	MAC       string `url:"mac,omitempty"`
+
+	// IP of the network interface
+	// Required: false
+	IPAddr string `url:"ipAddr,omitempty"`
+
+	// MAC of the network interface
+	// Required: false
+	MAC string `url:"mac,omitempty"`
 }
 
-func (crq NetDetachRequest) Validate() error {
+func (crq NetDetachRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -21,8 +30,9 @@ func (crq NetDetachRequest) Validate() error {
 	return nil
 }
 
+// NetDetach detach network to compute
 func (c Compute) NetDetach(ctx context.Context, req NetDetachRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +48,6 @@ func (c Compute) NetDetach(ctx context.Context, req NetDetachRequest) (bool, err
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

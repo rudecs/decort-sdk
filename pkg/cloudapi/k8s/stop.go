@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for stop kubernetes cluster
 type StopRequest struct {
+	// Kubernetes cluster ID
+	// Required: true
 	K8SID uint64 `url:"k8sId"`
 }
 
-func (krq StopRequest) Validate() error {
+func (krq StopRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (krq StopRequest) Validate() error {
 	return nil
 }
 
+// Stop stops kubernetes cluster by ID
 func (k8s K8S) Stop(ctx context.Context, req StopRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (k8s K8S) Stop(ctx context.Context, req StopRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

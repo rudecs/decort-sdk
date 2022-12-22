@@ -7,14 +7,20 @@ import (
 	"strconv"
 )
 
+// Request struct for remove compute instance
 type ComputeRemoveRequest struct {
-	FlipGroupID uint64 `url:"flipgroupId"`
-	ComputeID   uint64 `url:"computeId"`
+	// ID of the Floating IP group to remove compute instance from
+	// Required: true
+	FLIPGroupID uint64 `url:"flipgroupId"`
+
+	// ID of the compute instance to remove
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
 }
 
-func (frq ComputeRemoveRequest) Validate() error {
-	if frq.FlipGroupID == 0 {
-		return errors.New("field FlipGroupID can not be empty or equal to 0")
+func (frq ComputeRemoveRequest) validate() error {
+	if frq.FLIPGroupID == 0 {
+		return errors.New("field FLIPGroupID can not be empty or equal to 0")
 	}
 	if frq.ComputeID == 0 {
 		return errors.New("field ComputeID can not be empty or equal to 0")
@@ -23,12 +29,15 @@ func (frq ComputeRemoveRequest) Validate() error {
 	return nil
 }
 
-func (f FlipGroup) ComputeRemove(ctx context.Context, req ComputeRemoveRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+// ComputeRemove remove compute instance from the Floating IP group
+func (f FLIPGroup) ComputeRemove(ctx context.Context, req ComputeRemoveRequest) (bool, error) {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/flipgroup/computeRemove"
+
 	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err

@@ -7,25 +7,32 @@ import (
 	"strconv"
 )
 
+// Request struct for delete images
 type DeleteImagesRequest struct {
-	ImageIDs    []uint64 `url:"imageIds"`
-	Reason      string   `url:"reason"`
-	Permanently bool     `url:"permanently"`
+	// List of images to be deleted
+	// Required: true
+	ImageIDs []uint64 `url:"imageIds"`
+
+	// Reason for action
+	// Required: true
+	Reason string `url:"reason,omitempty"`
+
+	// Whether to completely delete the images
+	// Required: true
+	Permanently bool `url:"permanently,omitempty"`
 }
 
-func (irq DeleteImagesRequest) Validate() error {
+func (irq DeleteImagesRequest) validate() error {
 	if len(irq.ImageIDs) == 0 {
 		return errors.New("validation-error: field ImageIDs must be set")
-	}
-	if irq.Reason == "" {
-		return errors.New("validation-error: field Reason must be set")
 	}
 
 	return nil
 }
 
+// DeleteImages deletes images
 func (i Image) DeleteImages(ctx context.Context, req DeleteImagesRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

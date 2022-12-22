@@ -6,8 +6,10 @@ import (
 	"strconv"
 )
 
+// Global variable for converting field to desired data type
 type TaskResult int
 
+// Method for convert field
 func (r *TaskResult) UnmarshalJSON(b []byte) error {
 	if b[0] == '"' {
 		b := b[1 : len(b)-1]
@@ -35,17 +37,35 @@ func (r *TaskResult) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-//AsyncTask represents a long task completion status
-type AsyncTask struct {
-	AuditID     string     `json:"auditId"`
-	Completed   bool       `json:"completed"`
-	Error       string     `json:"error"`
-	Log         []string   `json:"log"`
-	Result      TaskResult `json:"result"`
-	Stage       string     `json:"stage"`
-	Status      string     `json:"status"`
-	UpdateTime  uint64     `json:"updateTime"`
-	UpdatedTime uint64     `json:"updatedTime"`
+// Detailed information about task
+type RecordAsyncTask struct {
+	// Audit ID
+	AuditID string `json:"auditId"`
+
+	// Completed
+	Completed bool `json:"completed"`
+
+	// Error
+	Error string `json:"error"`
+
+	// List of logs
+	Log []string `json:"log"`
+
+	// Final result
+	Result TaskResult `json:"result"`
+
+	// Stage
+	Stage string `json:"stage"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Update time
+	UpdateTime uint64 `json:"updateTime"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
 }
 
-type TasksList []AsyncTask
+// List of tasks
+type ListTasks []RecordAsyncTask

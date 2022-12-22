@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list VINS
 type ListVINSRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListVINSRequest) Validate() error {
+func (arq ListVINSRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq ListVINSRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListVINS(ctx context.Context, req ListVINSRequest) (AccountVINSList, error) {
-	err := req.Validate()
+// ListVINS gets list all ViNSes under specified account, accessible by the user
+func (a Account) ListVINS(ctx context.Context, req ListVINSRequest) (ListVINS, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +36,12 @@ func (a Account) ListVINS(ctx context.Context, req ListVINSRequest) (AccountVINS
 		return nil, err
 	}
 
-	accountVINSList := AccountVINSList{}
+	list := ListVINS{}
 
-	err = json.Unmarshal(res, &accountVINSList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountVINSList, nil
-
+	return list, nil
 }

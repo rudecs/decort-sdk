@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
-type ListFlipGroupsRequest struct {
+// Request struct for get list FLIPGroups
+type ListFLIPGroupsRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListFlipGroupsRequest) Validate() error {
+func (arq ListFLIPGroupsRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
@@ -19,25 +22,26 @@ func (arq ListFlipGroupsRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListFlipGroups(ctx context.Context, req ListFlipGroupsRequest) (ListFlipGroups, error) {
-	err := req.Validate()
+// ListFLIPGroups gets list all FLIPGroups under specified account, accessible by the user
+func (a Account) ListFLIPGroups(ctx context.Context, req ListFLIPGroupsRequest) (ListFLIPGroups, error) {
+	err := req.validate()
 	if err != nil {
-		return ListFlipGroups{}, err
+		return nil, err
 	}
 
 	url := "/cloudbroker/account/listFlipGroups"
 
-	result := ListFlipGroups{}
-
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
-		return ListFlipGroups{}, err
+		return nil, err
 	}
 
-	err = json.Unmarshal(res, &result)
+	list := ListFLIPGroups{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
-		return ListFlipGroups{}, err
+		return nil, err
 	}
 
-	return result, nil
+	return list, nil
 }

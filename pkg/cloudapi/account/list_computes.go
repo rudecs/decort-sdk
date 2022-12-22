@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for a get list compute instances
 type ListComputesRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListComputesRequest) Validate() error {
+func (arq ListComputesRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq ListComputesRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListComputes(ctx context.Context, req ListComputesRequest) (AccountComputesList, error) {
-	err := req.Validate()
+// ListComputes gets list all compute instances under specified account, accessible by the user
+func (a Account) ListComputes(ctx context.Context, req ListComputesRequest) (ListComputes, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +36,12 @@ func (a Account) ListComputes(ctx context.Context, req ListComputesRequest) (Acc
 		return nil, err
 	}
 
-	accountComputesList := AccountComputesList{}
+	list := ListComputes{}
 
-	err = json.Unmarshal(res, &accountComputesList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountComputesList, nil
-
+	return list, nil
 }

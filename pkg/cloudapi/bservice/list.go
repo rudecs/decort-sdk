@@ -6,39 +6,59 @@ import (
 	"net/http"
 )
 
+// Request struct for get list/deleted list BasicService instances
 type ListRequest struct {
+	// ID of the account to query for BasicService instances
+	// Required: false
 	AccountID uint64 `url:"accountId,omitempty"`
-	RGID      uint64 `url:"rgId,omitempty"`
-	Page      uint64 `url:"page,omitempty"`
-	Size      uint64 `url:"size,omitempty"`
+
+	// ID of the resource group to query for BasicService instances
+	// Required: false
+	RGID uint64 `url:"rgId,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (b BService) List(ctx context.Context, req ListRequest) (BasicServiceList, error) {
+// List gets list BasicService instances associated with the specified Resource Group
+func (b BService) List(ctx context.Context, req ListRequest) (ListBasicServices, error) {
 	url := "/cloudapi/bservice/list"
-	bsListRaw, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
+
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	bsList := BasicServiceList{}
-	if err := json.Unmarshal(bsListRaw, &bsList); err != nil {
+	list := ListBasicServices{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
 		return nil, err
 	}
 
-	return bsList, nil
+	return list, nil
 }
 
-func (b BService) ListDeleted(ctx context.Context, req ListRequest) (BasicServiceList, error) {
+// ListDeleted gets list deleted BasicService instances associated with the specified Resource Group
+func (b BService) ListDeleted(ctx context.Context, req ListRequest) (ListBasicServices, error) {
 	url := "/cloudapi/bservice/listDeleted"
-	bsListRaw, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
+
+	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	bsList := BasicServiceList{}
-	if err := json.Unmarshal(bsListRaw, &bsList); err != nil {
+	list := ListBasicServices{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
 		return nil, err
 	}
 
-	return bsList, nil
+	return list, nil
 }

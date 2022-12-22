@@ -7,13 +7,22 @@ import (
 	"strconv"
 )
 
+// Request struct for update compute
 type UpdateRequest struct {
-	ComputeID   uint64 `url:"computeId"`
-	Name        string `url:"name,omitempty"`
+	// ID of the compute
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
+
+	// New name
+	// Required: false
+	Name string `url:"name,omitempty"`
+
+	// New description
+	// Required: false
 	Description string `url:"desc,omitempty"`
 }
 
-func (crq UpdateRequest) Validate() error {
+func (crq UpdateRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -21,8 +30,9 @@ func (crq UpdateRequest) Validate() error {
 	return nil
 }
 
+// Update updates some properties of the compute
 func (c Compute) Update(ctx context.Context, req UpdateRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +48,6 @@ func (c Compute) Update(ctx context.Context, req UpdateRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

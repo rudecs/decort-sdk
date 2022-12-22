@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for clear anti affinity rules
 type AntiAffinityRulesClearRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq AntiAffinityRulesClearRequest) Validate() error {
+func (crq AntiAffinityRulesClearRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq AntiAffinityRulesClearRequest) Validate() error {
 	return nil
 }
 
+// AntiAffinityRulesClear clear anti affinity rules
 func (c Compute) AntiAffinityRulesClear(ctx context.Context, req AntiAffinityRulesClearRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list snapshots
 type SnapshotListRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq SnapshotListRequest) Validate() error {
+func (crq SnapshotListRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq SnapshotListRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) SnapshotList(ctx context.Context, req SnapshotListRequest) (SnapshotList, error) {
-	err := req.Validate()
+// SnapshotList gets list compute snapshots
+func (c Compute) SnapshotList(ctx context.Context, req SnapshotListRequest) (ListSnapShots, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +36,12 @@ func (c Compute) SnapshotList(ctx context.Context, req SnapshotListRequest) (Sna
 		return nil, err
 	}
 
-	snapshotList := SnapshotList{}
+	list := ListSnapShots{}
 
-	err = json.Unmarshal(res, &snapshotList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return snapshotList, nil
+	return list, nil
 }

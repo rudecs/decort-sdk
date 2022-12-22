@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for start kubernetes cluster
 type StartRequest struct {
+	// Kubernetes cluster ID
+	// Required: true
 	K8SID uint64 `url:"k8sId"`
 }
 
-func (krq StartRequest) Validate() error {
+func (krq StartRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (krq StartRequest) Validate() error {
 	return nil
 }
 
+// Start starts kubernetes cluster by ID
 func (k8s K8S) Start(ctx context.Context, req StartRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (k8s K8S) Start(ctx context.Context, req StartRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

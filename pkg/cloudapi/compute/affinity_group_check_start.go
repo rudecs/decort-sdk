@@ -6,12 +6,18 @@ import (
 	"net/http"
 )
 
+// Request struct for check all computes with current affinity label can start
 type AffinityGroupCheckStartRequest struct {
-	RGID          uint64 `url:"rgId"`
+	// ID of the resource group
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Affinity group label
+	// Required: true
 	AffinityLabel string `url:"affinityLabel"`
 }
 
-func (crq AffinityGroupCheckStartRequest) Validate() error {
+func (crq AffinityGroupCheckStartRequest) validate() error {
 	if crq.RGID == 0 {
 		return errors.New("validation-error: field RGID can not be empty or equal to 0")
 	}
@@ -22,8 +28,9 @@ func (crq AffinityGroupCheckStartRequest) Validate() error {
 	return nil
 }
 
+// AffinityGroupCheckStart check all computes with current affinity label can start
 func (c Compute) AffinityGroupCheckStart(ctx context.Context, req AffinityGroupCheckStartRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}

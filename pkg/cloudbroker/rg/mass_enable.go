@@ -6,12 +6,18 @@ import (
 	"net/http"
 )
 
+// Request struct for enable several resource groups
 type MassEnableRequest struct {
-	RGIDs  []uint64 `url:"rgIds"`
-	Reason string   `url:"reason,omitempty"`
+	// IDs of the resource groups
+	// Required: true
+	RGIDs []uint64 `url:"rgIds"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq MassEnableRequest) Validate() error {
+func (rgrq MassEnableRequest) validate() error {
 	if len(rgrq.RGIDs) == 0 {
 		return errors.New("validation-error: field RGIDs must be set")
 	}
@@ -19,8 +25,9 @@ func (rgrq MassEnableRequest) Validate() error {
 	return nil
 }
 
+// MassEnable start jobs to enable several resource groups
 func (r RG) MassEnable(ctx context.Context, req MassEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

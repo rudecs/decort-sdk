@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get detailed information about image
 type GetRequest struct {
+	// ID of image to get
+	// Required: true
 	ImageID uint64 `url:"imageId"`
-	ShowAll bool   `url:"show_all,omitempty"`
+
+	// If set to False returns only images in status CREATED
+	// Required: false
+	ShowAll bool `url:"show_all,omitempty"`
 }
 
-func (irq GetRequest) Validate() error {
+func (irq GetRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID can not be empty or equal to 0")
 	}
@@ -20,8 +26,10 @@ func (irq GetRequest) Validate() error {
 	return nil
 }
 
-func (i Image) Get(ctx context.Context, req GetRequest) (*ImageExtend, error) {
-	err := req.Validate()
+// Get gets image by ID.
+// Returns image if user has rights on it
+func (i Image) Get(ctx context.Context, req GetRequest) (*RecordImage, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +41,12 @@ func (i Image) Get(ctx context.Context, req GetRequest) (*ImageExtend, error) {
 		return nil, err
 	}
 
-	imageInfo := &ImageExtend{}
+	info := RecordImage{}
 
-	err = json.Unmarshal(res, imageInfo)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return imageInfo, nil
+	return &info, nil
 }

@@ -6,19 +6,24 @@ import (
 	"net/http"
 )
 
+// Request struct for disable group accounts
 type DisableAccountsRequest struct {
+	// IDs of accounts
+	// Required: true
 	AccountIDs []uint64 `url:"accountIds,omitempty"`
 }
 
-func (arq DisableAccountsRequest) Validate() error {
-	if arq.AccountIDs == nil || len(arq.AccountIDs) == 0 {
+func (arq DisableAccountsRequest) validate() error {
+	if len(arq.AccountIDs) == 0 {
 		return errors.New("validation-error: field AccountIDs must be set")
 	}
+
 	return nil
 }
 
+// DisableAccounts disables accounts
 func (a Account) DisableAccounts(ctx context.Context, req DisableAccountsRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

@@ -1,210 +1,510 @@
 package compute
 
-// ACL for compute
-type UserList struct {
-	AccountACL ACLList `json:"accountACL"`
-	ComputeACL ACLList `json:"computeACL"`
-	RGACL      ACLList `json:"rgACL"`
+// Access Control List
+type RecordACL struct {
+	// Account ACL list
+	AccountACL ListACL `json:"accountACL"`
+
+	// Compute ACL list
+	ComputeACL ListACL `json:"computeACL"`
+
+	// Resource group ACL list
+	RGACL ListACL `json:"rgACL"`
 }
 
-type ACL struct {
-	Explicit    bool   `json:"explicit"`
-	GUID        string `json:"guid"`
-	Right       string `json:"right"`
-	Status      string `json:"status"`
-	Type        string `json:"type"`
+// ACL information
+type ItemACL struct {
+	// Explicit
+	Explicit bool `json:"explicit"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Right
+	Right string `json:"right"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Type
+	Type string `json:"type"`
+
+	// User group ID
 	UserGroupID string `json:"userGroupId"`
 }
 
-type ACLList []ACL
+// List ACL
+type ListACL []ItemACL
 
-type SnapshotUsage struct {
-	Count     uint64  `json:"count,omitempty"`
-	Stored    float64 `json:"stored"`
-	Label     string  `json:"label,omitempty"`
-	Timestamp uint64  `json:"timestamp,omitempty"`
+// Main information about usage snapshot
+type ItemUsageSnapshot struct {
+	// Count
+	Count uint64 `json:"count,omitempty"`
+
+	// Stored
+	Stored float64 `json:"stored"`
+
+	// Label
+	Label string `json:"label,omitempty"`
+
+	// Timestamp
+	Timestamp uint64 `json:"timestamp,omitempty"`
 }
 
-type SnapshotUsageList []SnapshotUsage
+// List of usage snapshot
+type ListUsageSnapshots []ItemUsageSnapshot
 
-type Snapshot struct {
-	Disks     []uint64 `json:"disks"`
-	GUID      string   `json:"guid"`
-	Label     string   `json:"label"`
-	Timestamp uint64   `json:"timestamp"`
+// Main information about snapshot
+type ItemSnapshot struct {
+	// List disk ID
+	Disks []uint64 `json:"disks"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Label
+	Label string `json:"label"`
+
+	// Timestamp
+	Timestamp uint64 `json:"timestamp"`
 }
 
-type SnapshotList []Snapshot
+// List of snapshots
+type ListSnapShots []ItemSnapshot
 
-type PFW struct {
-	ID              uint64 `json:"id"`
-	LocalIP         string `json:"localIp"`
-	LocalPort       uint64 `json:"localPort"`
-	Protocol        string `json:"protocol"`
-	PublicPortEnd   uint64 `json:"publicPortEnd"`
+// Main information about port forward
+type ItemPFW struct {
+	// ID
+	ID uint64 `json:"id"`
+
+	// Local IP
+	LocalIP string `json:"localIp"`
+
+	// Local port
+	LocalPort uint64 `json:"localPort"`
+
+	// Protocol
+	Protocol string `json:"protocol"`
+
+	// Public port end
+	PublicPortEnd uint64 `json:"publicPortEnd"`
+
+	// Public port start
 	PublicPortStart uint64 `json:"publicPortStart"`
-	VMID            uint64 `json:"vmId"`
+
+	// Virtuel machine ID
+	VMID uint64 `json:"vmId"`
 }
 
-type PFWList []PFW
+// List port forwards
+type ListPFWs []ItemPFW
 
-type AffinityRelations struct {
-	OtherNode             []interface{} `json:"otherNode"`
-	OtherNodeIndirect     []interface{} `json:"otherNodeIndirect"`
+// Main information about affinity relations
+type RecordAffinityRelations struct {
+	// Other node
+	OtherNode []interface{} `json:"otherNode"`
+
+	// Other node indirect
+	OtherNodeIndirect []interface{} `json:"otherNodeIndirect"`
+
+	// Other node indirect soft
 	OtherNodeIndirectSoft []interface{} `json:"otherNodeIndirectSoft"`
-	OtherNodeSoft         []interface{} `json:"otherNodeSoft"`
-	SameNode              []interface{} `json:"sameNode"`
-	SameNodeSoft          []interface{} `json:"sameNodeSoft"`
+
+	// Other node soft
+	OtherNodeSoft []interface{} `json:"otherNodeSoft"`
+
+	// Same node
+	SameNode []interface{} `json:"sameNode"`
+
+	// Same node soft
+	SameNodeSoft []interface{} `json:"sameNodeSoft"`
 }
 
-type NetAttach struct {
-	ConnID      uint64   `json:"connId"`
-	ConnType    string   `json:"connType"`
-	DefGW       string   `json:"defGw"`
-	FlipGroupID uint64   `json:"flipgroupId"`
-	GUID        string   `json:"guid"`
-	IPAddress   string   `json:"ipAddress"`
-	ListenSSH   bool     `json:"listenSsh"`
-	MAC         string   `json:"mac"`
-	Name        string   `json:"name"`
-	NetID       uint64   `json:"netId"`
-	NetMask     uint64   `json:"netMask"`
-	NetType     string   `json:"netType"`
-	PCISlot     uint64   `json:"pciSlot"`
-	QOS         QOS      `json:"qos"`
-	Target      string   `json:"target"`
-	Type        string   `json:"type"`
-	VNFS        []uint64 `json:"vnfs"`
+// Main information about attached network
+type RecordNetAttach struct {
+	// Connection ID
+	ConnID uint64 `json:"connId"`
+
+	// Connection type
+	ConnType string `json:"connType"`
+
+	// Default GW
+	DefGW string `json:"defGw"`
+
+	// FLIPGroup ID
+	FLIPGroupID uint64 `json:"flipgroupId"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// IP address
+	IPAddress string `json:"ipAddress"`
+
+	// Listen SSH
+	ListenSSH bool `json:"listenSsh"`
+
+	// MAC
+	MAC string `json:"mac"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network ID
+	NetID uint64 `json:"netId"`
+
+	// Network mask
+	NetMask uint64 `json:"netMask"`
+
+	// Network type
+	NetType string `json:"netType"`
+
+	// PCI slot
+	PCISlot uint64 `json:"pciSlot"`
+
+	// QOS
+	QOS QOS `json:"qos"`
+
+	// Target
+	Target string `json:"target"`
+
+	// Type
+	Type string `json:"type"`
+
+	// List VNF IDs
+	VNFs []uint64 `json:"vnfs"`
 }
 
-type Audit struct {
-	Call         string  `json:"call"`
+// Detailed information about audit
+type ItemAudit struct {
+	// Call
+	Call string `json:"call"`
+
+	// Response time
 	ResponseTime float64 `json:"responsetime"`
-	StatusCode   uint64  `json:"statuscode"`
-	Timestamp    float64 `json:"timestamp"`
-	User         string  `json:"user"`
+
+	// Status code
+	StatusCode uint64 `json:"statuscode"`
+
+	// Timestamp
+	Timestamp float64 `json:"timestamp"`
+
+	// User
+	User string `json:"user"`
 }
 
-type AuditList []Audit
+// List Detailed audits
+type ListAudits []ItemAudit
 
-type AuditShort struct {
-	Epoch   float64 `json:"epoch"`
-	Message string  `json:"message"`
+// Short information about audit
+type ItemShortAudit struct {
+	// Epoch
+	Epoch float64 `json:"epoch"`
+
+	// Message
+	Message string `json:"message"`
 }
 
-type AuditShortList []AuditShort
+// List short audits
+type ListShortAudits []ItemShortAudit
 
-type Rule struct {
-	GUID     string `json:"guid"`
-	Key      string `json:"key"`
-	Mode     string `json:"mode"`
-	Policy   string `json:"policy"`
+// Main information about rule
+type ItemRule struct {
+	// GUID
+	GUID string `json:"guid"`
+
+	// Key
+	Key string `json:"key"`
+
+	// Mode
+	Mode string `json:"mode"`
+
+	// Policy
+	Policy string `json:"policy"`
+
+	// Topology
 	Topology string `json:"topology"`
-	Value    string `json:"value"`
+
+	// Value
+	Value string `json:"value"`
 }
 
-type RuleList []Rule
+// List rules
+type ListRules []ItemRule
 
-type ComputeRecord struct {
-	ACL                    UserList               `json:"ACL"`
-	AccountID              uint64                 `json:"accountId"`
-	AccountName            string                 `json:"accountName"`
-	AffinityLabel          string                 `json:"affinityLabel"`
-	AffinityRules          RuleList               `json:"affinityRules"`
-	AffinityWeight         uint64                 `json:"affinityWeight"`
-	AntiAffinityRules      RuleList               `json:"antiAffinityRules"`
-	Architecture           string                 `json:"arch"`
-	BootOrder              []string               `json:"bootOrder"`
-	BootDiskSize           uint64                 `json:"bootdiskSize"`
-	CloneReference         uint64                 `json:"cloneReference"`
-	Clones                 []uint64               `json:"clones"`
-	ComputeCIID            uint64                 `json:"computeciId"`
-	CPU                    uint64                 `json:"cpus"`
-	CreatedBy              string                 `json:"createdBy"`
-	CreatedTime            uint64                 `json:"createdTime"`
-	CustomFields           map[string]interface{} `json:"customFields"`
-	DeletedBy              string                 `json:"deletedBy"`
-	DeletedTime            uint64                 `json:"deletedTime"`
-	Description            string                 `json:"desc"`
-	Devices                interface{}            `json:"devices"`
-	Disks                  ComputeDiskList        `json:"disks"`
-	Driver                 string                 `json:"driver"`
-	GID                    uint64                 `json:"gid"`
-	GUID                   uint64                 `json:"guid"`
-	ID                     uint64                 `json:"id"`
-	ImageID                uint64                 `json:"imageId"`
-	ImageName              string                 `json:"imageName"`
-	Intefaces              IntefaceList           `json:"interfaces"`
-	LockStatus             string                 `json:"lockStatus"`
-	ManagerID              uint64                 `json:"managerId"`
-	ManagerType            string                 `json:"managerType"`
-	MigrationJob           uint64                 `json:"migrationjob"`
-	Milestones             uint64                 `json:"milestones"`
-	Name                   string                 `json:"name"`
-	NatableVINSID          uint64                 `json:"natableVinsId"`
-	NatableVINSIP          string                 `json:"natableVinsIp"`
-	NatableVINSName        string                 `json:"natableVinsName"`
-	NatableVINSNetwork     string                 `json:"natableVinsNetwork"`
-	NatableVINSNetworkName string                 `json:"natableVinsNetworkName"`
-	OSUsers                OSUserList             `json:"osUsers"`
-	Pinned                 bool                   `json:"pinned"`
-	RAM                    uint64                 `json:"ram"`
-	ReferenceID            string                 `json:"referenceId"`
-	Registered             bool                   `json:"registered"`
-	ResName                string                 `json:"resName"`
-	RGID                   uint64                 `json:"rgId"`
-	RGName                 string                 `json:"rgName"`
-	SnapSets               SnapSetList            `json:"snapSets"`
-	StatelessSepID         uint64                 `json:"statelessSepId"`
-	StatelessSepType       string                 `json:"statelessSepType"`
-	Status                 string                 `json:"status"`
-	Tags                   map[string]string      `json:"tags"`
-	TechStatus             string                 `json:"techStatus"`
-	UpdatedBy              string                 `json:"updatedBy"`
-	UpdatedTime            uint64                 `json:"updatedTime"`
-	UserManaged            bool                   `json:"userManaged"`
-	Userdata               interface{}            `json:"userdata"`
-	VGPUs                  []uint64               `json:"vgpus"`
-	VirtualImageID         uint64                 `json:"virtualImageId"`
-	VirtualImageName       string                 `json:"virtualImageName"`
+// Detailed information about compute
+type RecordCompute struct {
+	// Access Control List
+	ACL RecordACL `json:"ACL"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Affinity label
+	AffinityLabel string `json:"affinityLabel"`
+
+	// List affinity rules
+	AffinityRules ListRules `json:"affinityRules"`
+
+	// Affinity weight
+	AffinityWeight uint64 `json:"affinityWeight"`
+
+	// List anti affinity rules
+	AntiAffinityRules ListRules `json:"antiAffinityRules"`
+
+	// Architecture
+	Architecture string `json:"arch"`
+
+	// Boot order
+	BootOrder []string `json:"bootOrder"`
+
+	// Boot disk size
+	BootDiskSize uint64 `json:"bootdiskSize"`
+
+	// Clone reference
+	CloneReference uint64 `json:"cloneReference"`
+
+	// List clone IDs
+	Clones []uint64 `json:"clones"`
+
+	// Compute CI ID
+	ComputeCIID uint64 `json:"computeciId"`
+
+	//  Number of cores
+	CPU uint64 `json:"cpus"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Custom fields
+	CustomFields map[string]interface{} `json:"customFields"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Devices
+	Devices interface{} `json:"devices"`
+
+	// List disks in compute
+	Disks ListComputeDisks `json:"disks"`
+
+	// Driver
+	Driver string `json:"driver"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Image ID
+	ImageID uint64 `json:"imageId"`
+
+	// Image name
+	ImageName string `json:"imageName"`
+
+	// List interfaces
+	Interfaces ListInterfaces `json:"interfaces"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Manager ID
+	ManagerID uint64 `json:"managerId"`
+
+	// Manager type
+	ManagerType string `json:"managerType"`
+
+	// Migration job
+	MigrationJob uint64 `json:"migrationjob"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Natable VINS ID
+	NatableVINSID uint64 `json:"natableVinsId"`
+
+	// Natable VINS IP
+	NatableVINSIP string `json:"natableVinsIp"`
+
+	// Natable VINS Name
+	NatableVINSName string `json:"natableVinsName"`
+
+	// Natable VINS network
+	NatableVINSNetwork string `json:"natableVinsNetwork"`
+
+	// Natable VINS network name
+	NatableVINSNetworkName string `json:"natableVinsNetworkName"`
+
+	// List OS Users
+	OSUsers ListOSUser `json:"osUsers"`
+
+	// Pinned or not
+	Pinned bool `json:"pinned"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
+
+	// Reference ID
+	ReferenceID string `json:"referenceId"`
+
+	// Registered or not
+	Registered bool `json:"registered"`
+
+	// Resource name
+	ResName string `json:"resName"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// List snapsets
+	SnapSets ListSnapSets `json:"snapSets"`
+
+	// Stateless SepID
+	StatelessSepID uint64 `json:"statelessSepId"`
+
+	// Stateless SepType
+	StatelessSepType string `json:"statelessSepType"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tags
+	Tags map[string]string `json:"tags"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// User Managed or not
+	UserManaged bool `json:"userManaged"`
+
+	// Userdata
+	Userdata interface{} `json:"userdata"`
+
+	// vGPU IDs
+	VGPUs []uint64 `json:"vgpus"`
+
+	// Virtual image ID
+	VirtualImageID uint64 `json:"virtualImageId"`
+
+	// Virtual image name
+	VirtualImageName string `json:"virtualImageName"`
 }
 
-type OSUser struct {
-	GUID     string `json:"guid"`
-	Login    string `json:"login"`
+// Main information about OS user
+type ItemOSUser struct {
+	// GUID
+	GUID string `json:"guid"`
+
+	// Login
+	Login string `json:"login"`
+
+	// Password
 	Password string `json:"password"`
-	PubKey   string `json:"pubkey"`
+
+	// Public key
+	PubKey string `json:"pubkey"`
 }
 
-type OSUserList []OSUser
+// List OS users
+type ListOSUser []ItemOSUser
 
-type SnapSet struct {
-	Disks     []uint64 `json:"disks"`
-	GUID      string   `json:"guid"`
-	Label     string   `json:"label"`
-	Timestamp uint64   `json:"timestamp"`
+// Main information about snapsets
+type ItemSnapSet struct {
+	// List disk IDs
+	Disks []uint64 `json:"disks"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Label
+	Label string `json:"label"`
+
+	// Timestamp
+	Timestamp uint64 `json:"timestamp"`
 }
 
-type SnapSetList []SnapSet
+// List snapsets
+type ListSnapSets []ItemSnapSet
 
-type VNFInterface struct {
-	ConnID      uint64   `json:"connId"`
-	ConnType    string   `json:"connType"`
-	DefGW       string   `json:"defGw"`
-	FlipGroupID uint64   `json:"flipgroupId"`
-	GUID        string   `json:"guid"`
-	IPAddress   string   `json:"ipAddress"`
-	ListenSSH   bool     `json:"listenSsh"`
-	MAC         string   `json:"mac"`
-	Name        string   `json:"name"`
-	NetID       uint64   `json:"netId"`
-	NetMask     uint64   `json:"netMask"`
-	NetType     string   `json:"netType"`
-	PCISlot     uint64   `json:"pciSlot"`
-	QOS         QOS      `json:"qos"`
-	Target      string   `json:"target"`
-	Type        string   `json:"type"`
-	VNFS        []uint64 `json:"vnfs"`
+// Main information about VNF
+type ItemVNFInterface struct {
+	// Connection ID
+	ConnID uint64 `json:"connId"`
+
+	// Connection type
+	ConnType string `json:"connType"`
+
+	// Default GW
+	DefGW string `json:"defGw"`
+
+	// FLIPGroup ID
+	FLIPGroupID uint64 `json:"flipgroupId"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// IP address
+	IPAddress string `json:"ipAddress"`
+
+	// Listen SSH or not
+	ListenSSH bool `json:"listenSsh"`
+
+	// MAC
+	MAC string `json:"mac"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network ID
+	NetID uint64 `json:"netId"`
+
+	// Network mask
+	NetMask uint64 `json:"netMask"`
+
+	// Network type
+	NetType string `json:"netType"`
+
+	// PCI slot
+	PCISlot uint64 `json:"pciSlot"`
+
+	// QOS
+	QOS QOS `json:"qos"`
+
+	// Target
+	Target string `json:"target"`
+
+	// Type
+	Type string `json:"type"`
+
+	// List VNF IDs
+	VNFs []uint64 `json:"vnfs"`
 }
 
 type QOS struct {
@@ -214,134 +514,362 @@ type QOS struct {
 	InRate  uint64 `json:"inRate"`
 }
 
-type IntefaceList []VNFInterface
+// List VNF interfaces
+type ListInterfaces []ItemVNFInterface
 
-type ComputeDiskList []ComputeDisk
+// List compute disks
+type ListComputeDisks []ItemComputeDisk
 
-type ComputeDisk struct {
-	Ckey                string                 `json:"_ckey"`
-	ACL                 map[string]interface{} `json:"acl"`
-	AccountID           uint64                 `json:"accountId"`
-	Bootpartition       uint64                 `json:"bootPartition"`
-	CreatedTime         uint64                 `json:"createdTime"`
-	DeletedTime         uint64                 `json:"deletedTime"`
-	Description         string                 `json:"desc"`
-	DestructionTime     uint64                 `json:"destructionTime"`
-	DiskPath            string                 `json:"diskPath"`
-	GID                 uint64                 `json:"gid"`
-	GUID                uint64                 `json:"guid"`
-	ID                  uint64                 `json:"id"`
-	ImageID             uint64                 `json:"imageId"`
-	Images              []uint64               `json:"images"`
-	IOTune              IOTune                 `json:"iotune"`
-	IQN                 string                 `json:"iqn"`
-	Login               string                 `json:"login"`
-	Milestones          uint64                 `json:"milestones"`
-	Name                string                 `json:"name"`
-	Order               uint64                 `json:"order"`
-	Params              string                 `json:"params"`
-	ParentID            uint64                 `json:"parentId"`
-	Passwd              string                 `json:"passwd"`
-	PciSlot             uint64                 `json:"pciSlot"`
-	Pool                string                 `json:"pool"`
-	PurgeTime           uint64                 `json:"purgeTime"`
-	RealityDeviceNumber uint64                 `json:"realityDeviceNumber"`
-	ResID               string                 `json:"resId"`
-	Role                string                 `json:"role"`
-	SepID               uint64                 `json:"sepId"` // NOTE: absent from compute/get output
-	SizeMax             uint64                 `json:"sizeMax"`
-	SizeUsed            uint64                 `json:"sizeUsed"` // sum over all snapshots of this disk to report total consumed space
-	Snapshots           SnapshotExtendList     `json:"snapshots"`
-	Status              string                 `json:"status"`
-	TechStatus          string                 `json:"techStatus"`
-	Type                string                 `json:"type"`
-	VMID                uint64                 `json:"vmid"`
+// Main information about compute disk
+type ItemComputeDisk struct {
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Access Control List
+	ACL map[string]interface{} `json:"acl"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Boot partition
+	BootPartition uint64 `json:"bootPartition"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Destruction time
+	DestructionTime uint64 `json:"destructionTime"`
+
+	// Disk path
+	DiskPath string `json:"diskPath"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Image ID
+	ImageID uint64 `json:"imageId"`
+
+	// List image IDs
+	Images []uint64 `json:"images"`
+
+	// IO tune
+	IOTune IOTune `json:"iotune"`
+
+	// IQN
+	IQN string `json:"iqn"`
+
+	// Login
+	Login string `json:"login"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Order
+	Order uint64 `json:"order"`
+
+	// Params
+	Params string `json:"params"`
+
+	// Parent ID
+	ParentID uint64 `json:"parentId"`
+
+	// Password
+	Passwd string `json:"passwd"`
+
+	// PCI slot
+	PCISlot uint64 `json:"pciSlot"`
+
+	// Pool
+	Pool string `json:"pool"`
+
+	// Purge time
+	PurgeTime uint64 `json:"purgeTime"`
+
+	// Reality device number
+	RealityDeviceNumber uint64 `json:"realityDeviceNumber"`
+
+	// Resource ID
+	ResID string `json:"resId"`
+
+	// Role
+	Role string `json:"role"`
+
+	// SepID
+	SepID uint64 `json:"sepId"`
+
+	// Size max
+	SizeMax uint64 `json:"sizeMax"`
+
+	//Size used
+	SizeUsed uint64 `json:"sizeUsed"`
+
+	// List extend snapshots
+	Snapshots SnapshotExtendList `json:"snapshots"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Type
+	Type string `json:"type"`
+
+	// Virtual machine ID
+	VMID uint64 `json:"vmid"`
 }
 
+// Main information about snapshot extend
 type SnapshotExtend struct {
-	Guid        string `json:"guid"`
-	Label       string `json:"label"`
-	ResID       string `json:"resId"`
-	SnapSetGuid string `json:"snapSetGuid"`
+	// GUID
+	GUID string `json:"guid"`
+
+	// Label
+	Label string `json:"label"`
+
+	// Resource ID
+	ResID string `json:"resId"`
+
+	// SnapSetGUID
+	SnapSetGUID string `json:"snapSetGuid"`
+
+	// SnapSetTime
 	SnapSetTime uint64 `json:"snapSetTime"`
-	TimeStamp   uint64 `json:"timestamp"`
+
+	// TimeStamp
+	TimeStamp uint64 `json:"timestamp"`
 }
 
+// List Snapshot Extend
 type SnapshotExtendList []SnapshotExtend
 
+// Main information about IO tune
 type IOTune struct {
-	ReadBytesSec     uint64 `json:"read_bytes_sec"`
-	ReadBytesSecMax  uint64 `json:"read_bytes_sec_max"`
-	ReadIopsSec      uint64 `json:"read_iops_sec"`
-	ReadIopsSecMax   uint64 `json:"read_iops_sec_max"`
-	SizeIopsSec      uint64 `json:"size_iops_sec"`
-	TotalBytesSec    uint64 `json:"total_bytes_sec"`
+	// ReadBytesSec
+	ReadBytesSec uint64 `json:"read_bytes_sec"`
+
+	// ReadBytesSecMax
+	ReadBytesSecMax uint64 `json:"read_bytes_sec_max"`
+
+	// ReadIOPSSec
+	ReadIOPSSec uint64 `json:"read_iops_sec"`
+
+	// ReadIOPSSecMax
+	ReadIOPSSecMax uint64 `json:"read_iops_sec_max"`
+
+	// SizeIOPSSec
+	SizeIOPSSec uint64 `json:"size_iops_sec"`
+
+	// TotalBytesSec
+	TotalBytesSec uint64 `json:"total_bytes_sec"`
+
+	// TotalBytesSecMax
 	TotalBytesSecMax uint64 `json:"total_bytes_sec_max"`
-	TotalIopsSec     uint64 `json:"total_iops_sec"`
-	TotalIopsSecMax  uint64 `json:"total_iops_sec_max"`
-	WriteBytesSec    uint64 `json:"write_bytes_sec"`
+
+	// TotalIOPSSec
+	TotalIOPSSec uint64 `json:"total_iops_sec"`
+
+	// TotalIOPSSecMax
+	TotalIOPSSecMax uint64 `json:"total_iops_sec_max"`
+
+	// WriteBytesSec
+	WriteBytesSec uint64 `json:"write_bytes_sec"`
+
+	// WriteBytesSecMax
 	WriteBytesSecMax uint64 `json:"write_bytes_sec_max"`
-	WriteIopsSec     uint64 `json:"write_iops_sec"`
-	WriteIopsSecMax  uint64 `json:"write_iops_sec_max"`
+
+	// WriteIOPSSec
+	WriteIOPSSec uint64 `json:"write_iops_sec"`
+
+	// WriteIOPSSecMax
+	WriteIOPSSecMax uint64 `json:"write_iops_sec_max"`
 }
 
-type ComputeItem struct {
-	ACL               []interface{}          `json:"ACL"`
-	AccountID         uint64                 `json:"accountId"`
-	AccountName       string                 `json:"accountName"`
-	AffinityLabel     string                 `json:"affinityLabel"`
-	AffinityRules     RuleList               `json:"affinityRules"`
-	AffinityWeight    uint64                 `json:"affinityWeight"`
-	AntiAffinityRules RuleList               `json:"antiAffinityRules"`
-	Architecture      string                 `json:"arch"`
-	BootOrder         []string               `json:"bootOrder"`
-	BootDiskSize      uint64                 `json:"bootdiskSize"`
-	CloneReference    uint64                 `json:"cloneReference"`
-	Clones            []uint64               `json:"clones"`
-	ComputeCIID       uint64                 `json:"computeciId"`
-	CPU               uint64                 `json:"cpus"`
-	CreatedBy         string                 `json:"createdBy"`
-	CreatedTime       uint64                 `json:"createdTime"`
-	CustomFields      map[string]interface{} `json:"customFields"`
-	DeletedBy         string                 `json:"deletedBy"`
-	DeletedTime       uint64                 `json:"deletedTime"`
-	Description       string                 `json:"desc"`
-	Devices           interface{}            `json:"devices"`
-	Disks             []uint64               `json:"disks"`
-	Driver            string                 `json:"driver"`
-	GID               uint64                 `json:"gid"`
-	GUID              uint64                 `json:"guid"`
-	ID                uint64                 `json:"id"`
-	ImageID           uint64                 `json:"imageId"`
-	ImageName         string                 `json:"imageName"`
-	Intefaces         IntefaceList           `json:"interfaces"`
-	LockStatus        string                 `json:"lockStatus"`
-	ManagerID         uint64                 `json:"managerId"`
-	ManagerType       string                 `json:"managerType"`
-	MigrationJob      uint64                 `json:"migrationjob"`
-	Milestones        uint64                 `json:"milestones"`
-	Name              string                 `json:"name"`
-	Pinned            bool                   `json:"pinned"`
-	RAM               uint64                 `json:"ram"`
-	ReferenceID       string                 `json:"referenceId"`
-	Registered        bool                   `json:"registered"`
-	ResName           string                 `json:"resName"`
-	RGID              uint64                 `json:"rgId"`
-	RGName            string                 `json:"rgName"`
-	SnapSets          SnapSetList            `json:"snapSets"`
-	StatelessSepID    uint64                 `json:"statelessSepId"`
-	StatelessSepType  string                 `json:"statelessSepType"`
-	Status            string                 `json:"status"`
-	Tags              map[string]string      `json:"tags"`
-	TechStatus        string                 `json:"techStatus"`
-	TotalDiskSize     uint64                 `json:"totalDisksSize"`
-	UpdatedBy         string                 `json:"updatedBy"`
-	UpdatedTime       uint64                 `json:"updatedTime"`
-	UserManaged       bool                   `json:"userManaged"`
-	Userdata          interface{}            `json:"userdata"`
-	VGPUs             []uint64               `json:"vgpus"`
-	VirtualImageID    uint64                 `json:"virtualImageId"`
-	VirtualImageName  string                 `json:"virtualImageName"`
+// Main information about compute
+type ItemCompute struct {
+	// Access Control List
+	ACL []interface{} `json:"ACL"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Affinity label
+	AffinityLabel string `json:"affinityLabel"`
+
+	// List affinity rules
+	AffinityRules ListRules `json:"affinityRules"`
+
+	// Affinity weight
+	AffinityWeight uint64 `json:"affinityWeight"`
+
+	// List anti affinity rules
+	AntiAffinityRules ListRules `json:"antiAffinityRules"`
+
+	// Architecture
+	Architecture string `json:"arch"`
+
+	// Boot order
+	BootOrder []string `json:"bootOrder"`
+
+	// Boot disk size
+	BootDiskSize uint64 `json:"bootdiskSize"`
+
+	// Clone reference
+	CloneReference uint64 `json:"cloneReference"`
+
+	// List clone IDs
+	Clones []uint64 `json:"clones"`
+
+	// Compute CI ID
+	ComputeCIID uint64 `json:"computeciId"`
+
+	// Number of cores
+	CPU uint64 `json:"cpus"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Custom fields
+	CustomFields map[string]interface{} `json:"customFields"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Devices
+	Devices interface{} `json:"devices"`
+
+	// List disk IDs
+	Disks []uint64 `json:"disks"`
+
+	// Driver
+	Driver string `json:"driver"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Image ID
+	ImageID uint64 `json:"imageId"`
+
+	// Image name
+	ImageName string `json:"imageName"`
+
+	// List interfaces
+	Interfaces ListInterfaces `json:"interfaces"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Manager ID
+	ManagerID uint64 `json:"managerId"`
+
+	// Manager type
+	ManagerType string `json:"managerType"`
+
+	// Migration job
+	MigrationJob uint64 `json:"migrationjob"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Pinned or not
+	Pinned bool `json:"pinned"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
+
+	// Reference ID
+	ReferenceID string `json:"referenceId"`
+
+	// Registered
+	Registered bool `json:"registered"`
+
+	// Resource name
+	ResName string `json:"resName"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// List snapsets
+	SnapSets ListSnapSets `json:"snapSets"`
+
+	// Stateless SepID
+	StatelessSepID uint64 `json:"statelessSepId"`
+
+	// Stateless SepType
+	StatelessSepType string `json:"statelessSepType"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tags
+	Tags map[string]string `json:"tags"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Total disk size
+	TotalDiskSize uint64 `json:"totalDisksSize"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// User Managed or not
+	UserManaged bool `json:"userManaged"`
+
+	// Userdata
+	Userdata interface{} `json:"userdata"`
+
+	// List vGPU IDs
+	VGPUs []uint64 `json:"vgpus"`
+
+	// Virtual image ID
+	VirtualImageID uint64 `json:"virtualImageId"`
+
+	// Virtual image name
+	VirtualImageName string `json:"virtualImageName"`
 }
 
-type ComputeList []ComputeItem
+// List information about computes
+type ListComputes []ItemCompute

@@ -6,12 +6,19 @@ import (
 	"net/http"
 )
 
+// Request struct for get list deleted accounts
 type ListDeletedRequest struct {
+	// Page number
+	// Required: false
 	Page uint64 `url:"page"`
+
+	// Page size
+	// Required: false
 	Size uint64 `url:"size"`
 }
 
-func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest) (AccountCloudApiList, error) {
+// ListDeleted gets list all deleted accounts the user has access to
+func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListAccounts, error) {
 	url := "/cloudapi/account/listDeleted"
 
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -19,13 +26,12 @@ func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest) (Accou
 		return nil, err
 	}
 
-	accountList := AccountCloudApiList{}
+	list := ListAccounts{}
 
-	err = json.Unmarshal(res, &accountList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountList, nil
-
+	return list, nil
 }

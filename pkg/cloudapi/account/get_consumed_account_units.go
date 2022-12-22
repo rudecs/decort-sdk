@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for calculate the currently consumed units for all cloudspaces and resource groups in the account
 type GetConsumedAccountUnitsRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq GetConsumedAccountUnitsRequest) Validate() error {
+func (arq GetConsumedAccountUnitsRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,14 @@ func (arq GetConsumedAccountUnitsRequest) Validate() error {
 	return nil
 }
 
+// GetConsumedAccountUnits calculates the currently consumed units for all cloudspaces and resource groups in the account.
+// Calculated cloud units are returned in a dict which includes:
+//   - CU_M: consumed memory in MB
+//   - CU_C: number of cpu cores
+//   - CU_D: consumed vdisk storage in GB
+//   - CU_I: number of public IPs
 func (a Account) GetConsumedAccountUnits(ctx context.Context, req GetConsumedAccountUnitsRequest) (*ResourceLimits, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +41,12 @@ func (a Account) GetConsumedAccountUnits(ctx context.Context, req GetConsumedAcc
 		return nil, err
 	}
 
-	rl := &ResourceLimits{}
+	info := ResourceLimits{}
 
-	err = json.Unmarshal(res, &rl)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return rl, nil
-
+	return &info, nil
 }

@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for enable image
 type EnableRequest struct {
+	// ID of image to be enabled
+	// Required: true
 	ImageID uint64 `url:"imageId"`
 }
 
-func (irq EnableRequest) Validate() error {
+func (irq EnableRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must br set")
 	}
@@ -19,8 +22,9 @@ func (irq EnableRequest) Validate() error {
 	return nil
 }
 
+// Enable enables image
 func (i Image) Enable(ctx context.Context, req EnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

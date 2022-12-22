@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for unset compute CI
 type ComputeCIUnsetRequest struct {
+	// ID of the image
+	// Required: true
 	ImageID uint64 `url:"imageId"`
 }
 
-func (irq ComputeCIUnsetRequest) Validate() error {
+func (irq ComputeCIUnsetRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -19,8 +22,9 @@ func (irq ComputeCIUnsetRequest) Validate() error {
 	return nil
 }
 
+// ComputeCIUnset unset compute CI ID from image
 func (i Image) ComputeCIUnset(ctx context.Context, req ComputeCIUnsetRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

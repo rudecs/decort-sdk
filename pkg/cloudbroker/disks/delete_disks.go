@@ -7,14 +7,23 @@ import (
 	"strconv"
 )
 
+// Request struct for multiple disks
 type DeleteDisksRequest struct {
-	DiskIDS     []uint64 `url:"diskIds"`
-	Reason      string   `url:"reason"`
-	Permanently bool     `url:"permanently,omitempty"`
+	// List of disk ids to delete
+	// Required: true
+	DisksIDs []uint64 `url:"diskIds"`
+
+	// Reason for deleting the disks
+	// Required: true
+	Reason string `url:"reason"`
+
+	// Whether to completely delete the disks, works only with non attached disks
+	// Required: false
+	Permanently bool `url:"permanently,omitempty"`
 }
 
-func (drq DeleteDisksRequest) Validate() error {
-	if len(drq.DiskIDS) == 0 {
+func (drq DeleteDisksRequest) validate() error {
+	if len(drq.DisksIDs) == 0 {
 		return errors.New("validation-error: field DiskIDs must be set")
 	}
 	if drq.Reason == "" {
@@ -24,8 +33,9 @@ func (drq DeleteDisksRequest) Validate() error {
 	return nil
 }
 
+// DeleteDisks deletes multiple disks permanently
 func (d Disks) DeleteDisks(ctx context.Context, req DeleteDisksRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

@@ -7,35 +7,41 @@ import (
 	"net/http"
 )
 
+// Request struct for get information about account
 type GetRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq GetRequest) Validate() error {
+func (arq GetRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
+
 	return nil
 }
 
-func (a Account) Get(ctx context.Context, req GetRequest) (GetResponse, error) {
-	err := req.Validate()
+// Get gets information about account
+func (a Account) Get(ctx context.Context, req GetRequest) (*RecordAccount, error) {
+	err := req.validate()
 	if err != nil {
-		return GetResponse{}, err
+		return nil, err
 	}
 
 	url := "/cloudbroker/account/get"
 
-	result := GetResponse{}
+	info := RecordAccount{}
+
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
-		return GetResponse{}, err
+		return nil, err
 	}
 
-	err = json.Unmarshal(res, &result)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
-		return GetResponse{}, err
+		return nil, err
 	}
 
-	return result, nil
+	return &info, nil
 }

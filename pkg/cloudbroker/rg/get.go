@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get detailed information about resource group
 type GetRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq GetRequest) Validate() error {
+func (rgrq GetRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -20,8 +26,9 @@ func (rgrq GetRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Get(ctx context.Context, req GetRequest) (*ResourceGroup, error) {
-	err := req.Validate()
+// Get gets current configuration of the resource group
+func (r RG) Get(ctx context.Context, req GetRequest) (*RecordRG, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +40,12 @@ func (r RG) Get(ctx context.Context, req GetRequest) (*ResourceGroup, error) {
 		return nil, err
 	}
 
-	getResult := ResourceGroup{}
+	info := RecordRG{}
 
-	err = json.Unmarshal(res, &getResult)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return &getResult, nil
+	return &info, nil
 }

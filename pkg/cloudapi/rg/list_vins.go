@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get list VINSes
 type ListVINSRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq ListVINSRequest) Validate() error {
+func (rgrq ListVINSRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("field RGID can not be empty or equal to 0")
 	}
@@ -20,21 +26,26 @@ func (rgrq ListVINSRequest) Validate() error {
 	return nil
 }
 
-func (r RG) ListVINS(ctx context.Context, req ListVINSRequest) (VINSList, error) {
-	if err := req.Validate(); err != nil {
-		return nil, err
-	}
-
-	url := "/cloudapi/rg/listVins"
-	VINSListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+// ListVINS gets list all ViNSes under specified resource group, accessible by the user
+func (r RG) ListVINS(ctx context.Context, req ListVINSRequest) (ListVINS, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	VINSList := VINSList{}
-	if err := json.Unmarshal(VINSListRaw, &VINSList); err != nil {
+	url := "/cloudapi/rg/listVins"
+
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	if err != nil {
 		return nil, err
 	}
 
-	return VINSList, nil
+	list := ListVINS{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
+		return nil, err
+	}
+
+	return list, nil
 }

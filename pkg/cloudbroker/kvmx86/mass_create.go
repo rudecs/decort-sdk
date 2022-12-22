@@ -7,26 +7,83 @@ import (
 	"net/http"
 )
 
+// Request struct for mass create KVM x86
 type MassCreateRequest struct {
-	RGID     uint64 `url:"rgId"`
-	Name     string `url:"name"`
-	Count    uint64 `url:"count"`
-	CPU      uint64 `url:"cpu"`
-	RAM      uint64 `url:"ram"`
-	ImageID  uint64 `url:"imageId"`
-	BootDisk uint64 `url:"bootDisk,omitempty"`
-	SepID    uint64 `url:"sepId,omitempty"`
-	Pool     string `url:"pool,omitempty"`
-	NetType  string `url:"netType,omitempty"`
-	NetID    uint64 `url:"netId,omitempty"`
-	IPAddr   string `url:"ipAddr,omitempty"`
+	// ID of the resource group, which will own this VM
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Name of this VM.
+	// Must be unique among all VMs (including those in DELETED state) in target resource group
+	// Required: true
+	Name string `url:"name"`
+
+	// Number of VMs
+	// Required: true
+	Count uint64 `url:"count"`
+
+	// Number CPUs to allocate to this VM
+	// Required: true
+	CPU uint64 `url:"cpu"`
+
+	// Volume of RAM in MB to allocate to this VM
+	// Required: true
+	RAM uint64 `url:"ram"`
+
+	// Image ID
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// Size of the boot disk in GB
+	// Required: true
+	BootDisk uint64 `url:"bootDisk"`
+
+	// ID of SEP to create boot disk on.
+	// Uses images SEP ID if not set
+	// Required: true
+	SEPID uint64 `url:"sepId"`
+
+	// Pool to use if SEP ID is set, can be also empty if needed to be chosen by system
+	// Required: true
+	Pool string `url:"pool"`
+
+	// Network type
+	// Should be one of:
+	//	- VINS
+	//	- EXTNET
+	//	- NONE
+	// Required: false
+	NetType string `url:"netType,omitempty"`
+
+	// Network ID for connect to,
+	// for EXTNET - external network ID,
+	// for VINS - VINS ID,
+	// when network type is not "NONE"
+	// Required: false
+	NetID uint64 `url:"netId,omitempty"`
+
+	// IP address to assign to this VM when connecting to the specified network
+	// Required: false
+	IPAddr string `url:"ipAddr,omitempty"`
+
+	// User data
+	// Required: false
 	UserData string `url:"userdata,omitempty"`
-	Desc     string `url:"desc,omitempty"`
-	Start    bool   `url:"start,omitempty"`
-	Reason   string `url:"reason,omitempty"`
+
+	// Text description of this VM
+	// Required: false
+	Description string `url:"desc,omitempty"`
+
+	// Start after create of not
+	// Required: false
+	Start bool `url:"start,omitempty"`
+
+	// Reason to action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (krq MassCreateRequest) Validate() error {
+func (krq MassCreateRequest) validate() error {
 	if krq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -49,8 +106,9 @@ func (krq MassCreateRequest) Validate() error {
 	return nil
 }
 
+// MassCreate creates KVM x86 computes based on specified OS image
 func (k KVMX86) MassCreate(ctx context.Context, req MassCreateRequest) ([]uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}

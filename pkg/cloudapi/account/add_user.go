@@ -9,25 +9,34 @@ import (
 	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for adding permission to access to account for a user
 type AddUserRequest struct {
-	AccountID  uint64 `url:"accountId"`
-	UserID     string `url:"userId"`
+	// ID of account to add to
+	// Required: true
+	AccountID uint64 `url:"accountId"`
+
+	// Name of the user to be given rights
+	// Required: true
+	UserID string `url:"userId"`
+
+	// Account permission types:
+	//	- 'R' for read only access
+	//	- 'RCX' for Write
+	//	- 'ARCXDU' for Admin
+	// Required: true
 	AccessType string `url:"accesstype"`
 }
 
-func (arq AddUserRequest) Validate() error {
+func (arq AddUserRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
-
 	if arq.UserID == "" {
 		return errors.New("validation-error: field UserID can not be empty")
 	}
-
 	if arq.AccessType == "" {
 		return errors.New("validation-error: field AccessType can not be empty")
 	}
-
 	isValid := validators.StringInSlice(arq.AccessType, []string{"R", "RCX", "ARCXDU"})
 	if !isValid {
 		return errors.New("validation-error: field AccessType can be only R, RCX or ARCXDU")
@@ -36,8 +45,9 @@ func (arq AddUserRequest) Validate() error {
 	return nil
 }
 
+// AddUser gives a user access rights.
 func (a Account) AddUser(ctx context.Context, req AddUserRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for disconnect VINS from external network
 type ExtNetDisconnectRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
 }
 
-func (vrq ExtNetDisconnectRequest) Validate() error {
+func (vrq ExtNetDisconnectRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (vrq ExtNetDisconnectRequest) Validate() error {
 	return nil
 }
 
+// ExtNetDisconnect disconnect VINS from external network
 func (v VINS) ExtNetDisconnect(ctx context.Context, req ExtNetDisconnectRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

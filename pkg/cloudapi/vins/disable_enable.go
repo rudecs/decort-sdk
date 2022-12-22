@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for disable/enable VINS
 type DisableEnableRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
 }
 
-func (vrq DisableEnableRequest) Validate() error {
+func (vrq DisableEnableRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (vrq DisableEnableRequest) Validate() error {
 	return nil
 }
 
+// Disable disables VINS
 func (v VINS) Disable(ctx context.Context, req DisableEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -41,8 +45,9 @@ func (v VINS) Disable(ctx context.Context, req DisableEnableRequest) (bool, erro
 
 }
 
+// Enable enables VINS
 func (v VINS) Enable(ctx context.Context, req DisableEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

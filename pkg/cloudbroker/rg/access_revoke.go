@@ -7,17 +7,25 @@ import (
 	"strconv"
 )
 
+// Request struct for revoke access
 type AccessRevokeRequest struct {
-	RGID   uint64 `url:"rgId"`
-	User   string `url:"user"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// User or group name to revoke access
+	// Required: true
+	User string `url:"user"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq AccessRevokeRequest) Validate() error {
+func (rgrq AccessRevokeRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
-
 	if rgrq.User == "" {
 		return errors.New("validation-error: field User must be set")
 	}
@@ -25,8 +33,10 @@ func (rgrq AccessRevokeRequest) Validate() error {
 	return nil
 }
 
+// AccessRevoke revokes specified user or group access from the resource group
 func (r RG) AccessRevoke(ctx context.Context, req AccessRevokeRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 

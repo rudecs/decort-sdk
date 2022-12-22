@@ -9,15 +9,31 @@ import (
 	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for add port forward rule
 type PFWAddRequest struct {
-	ComputeID       uint64 `url:"computeId"`
+	// ID of compute instance
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
+
+	// External start port number for the rule
+	// Required: true
 	PublicPortStart uint64 `url:"publicPortStart"`
-	PublicPortEnd   uint64 `url:"publicPortEnd,omitempty"`
-	LocalBasePort   uint64 `url:"localBasePort"`
-	Proto           string `url:"proto"`
+
+	// End port number (inclusive) for the ranged rule
+	// Required: false
+	PublicPortEnd uint64 `url:"publicPortEnd,omitempty"`
+
+	// Internal base port number
+	// Required: true
+	LocalBasePort uint64 `url:"localBasePort"`
+
+	// Network protocol
+	// either "tcp" or "udp"
+	// Required: true
+	Proto string `url:"proto"`
 }
 
-func (crq PFWAddRequest) Validate() error {
+func (crq PFWAddRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -38,8 +54,9 @@ func (crq PFWAddRequest) Validate() error {
 	return nil
 }
 
+// PFWAdd add port forward rule
 func (c Compute) PFWAdd(ctx context.Context, req PFWAddRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}

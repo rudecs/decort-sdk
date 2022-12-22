@@ -6,19 +6,24 @@ import (
 	"net/http"
 )
 
+// Request for enable group accounts
 type EnableAccountsRequest struct {
+	// IDs od accounts
+	// Required: true
 	AccountIDs []uint64 `url:"accountIds"`
 }
 
-func (arq EnableAccountsRequest) Validate() error {
-	if arq.AccountIDs == nil || len(arq.AccountIDs) == 0 {
+func (arq EnableAccountsRequest) validate() error {
+	if len(arq.AccountIDs) == 0 {
 		return errors.New("validation-error: field AccountIDs must be set")
 	}
+
 	return nil
 }
 
+// EnableAccounts enables accounts
 func (a Account) EnableAccounts(ctx context.Context, req EnableAccountsRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

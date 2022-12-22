@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list port forward rules
 type ListPFWRequest struct {
+	// Resource group ID
+	// Required: true
 	RGID uint64 `url:"rgId"`
 }
 
-func (rgrq ListPFWRequest) Validate() error {
+func (rgrq ListPFWRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -19,25 +22,26 @@ func (rgrq ListPFWRequest) Validate() error {
 	return nil
 }
 
+// ListPFW gets list port forward rules for the specified resource group
 func (r RG) ListPFW(ctx context.Context, req ListPFWRequest) (ListPFW, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
 	url := "/cloudbroker/rg/listPFW"
 
-	pfwListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	pfwList := ListPFW{}
+	list := ListPFW{}
 
-	err = json.Unmarshal(pfwListRaw, &pfwList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return pfwList, nil
+	return list, nil
 }

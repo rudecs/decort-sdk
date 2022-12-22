@@ -6,14 +6,24 @@ import (
 	"net/http"
 )
 
+// Request struct for get list available computes
 type ListRequest struct {
-	IncludeDeleted bool   `url:"includedeleted,omitempty"`
-	Page           uint64 `url:"page,omitempty"`
-	Size           uint64 `url:"size,omitempty"`
+	// Include deleted computes
+	// Required: false
+	IncludeDeleted bool `url:"includedeleted,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (c Compute) List(ctx context.Context, req ListRequest) (ComputeList, error) {
-
+// List gets list of the available computes.
+// Filtering based on status is possible
+func (c Compute) List(ctx context.Context, req ListRequest) (ListComputes, error) {
 	url := "/cloudapi/compute/list"
 
 	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -21,12 +31,12 @@ func (c Compute) List(ctx context.Context, req ListRequest) (ComputeList, error)
 		return nil, err
 	}
 
-	computeList := ComputeList{}
+	list := ListComputes{}
 
-	err = json.Unmarshal(res, &computeList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return computeList, nil
+	return list, nil
 }

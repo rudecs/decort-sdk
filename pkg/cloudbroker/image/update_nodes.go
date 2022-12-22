@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for update nodes
 type UpdateNodesRequest struct {
-	ImageID       uint64   `url:"imageId"`
+	// Image ID
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// List of stacks
+	// Required: false
 	EnabledStacks []uint64 `url:"enabledStacks,omitempty"`
 }
 
-func (irq UpdateNodesRequest) Validate() error {
+func (irq UpdateNodesRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -20,8 +26,9 @@ func (irq UpdateNodesRequest) Validate() error {
 	return nil
 }
 
+// UpdateNodes udates image availability on nodes
 func (i Image) UpdateNodes(ctx context.Context, req UpdateNodesRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

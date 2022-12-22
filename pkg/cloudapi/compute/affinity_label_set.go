@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for set affinity label for compute
 type AffinityLabelSetRequest struct {
-	ComputeID     uint64 `url:"computeId"`
+	// ID of the compute instance
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
+
+	// Affinity group label
+	// Required: true
 	AffinityLabel string `url:"affinityLabel"`
 }
 
-func (crq AffinityLabelSetRequest) Validate() error {
+func (crq AffinityLabelSetRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -23,8 +29,9 @@ func (crq AffinityLabelSetRequest) Validate() error {
 	return nil
 }
 
+// AffinityLabelSet set affinity label for compute
 func (c Compute) AffinityLabelSet(ctx context.Context, req AffinityLabelSetRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

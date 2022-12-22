@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get information about disk
 type GetRequest struct {
+	// ID of the disk
+	// Required: true
 	DiskID uint64 `url:"diskId"`
 }
 
-func (drq GetRequest) Validate() error {
+func (drq GetRequest) validate() error {
 	if drq.DiskID == 0 {
 		return errors.New("validation-error: field DiskID must be set")
 	}
@@ -19,8 +22,10 @@ func (drq GetRequest) Validate() error {
 	return nil
 }
 
-func (d Disks) Get(ctx context.Context, req GetRequest) (*Disk, error) {
-	err := req.Validate()
+// Get gets  disk details
+// Notice: the devicename field is the name as it is passed to the kernel (kname in linux) for unattached disks this field has no relevant value
+func (d Disks) Get(ctx context.Context, req GetRequest) (*RecordDisk, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +37,12 @@ func (d Disks) Get(ctx context.Context, req GetRequest) (*Disk, error) {
 		return nil, err
 	}
 
-	disk := Disk{}
+	info := RecordDisk{}
 
-	err = json.Unmarshal(res, &disk)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return &disk, nil
+	return &info, nil
 }

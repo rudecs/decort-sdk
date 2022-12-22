@@ -7,14 +7,26 @@ import (
 	"strconv"
 )
 
+// Request for delete disk
 type DeleteRequest struct {
-	DiskID      uint64 `url:"diskId"`
-	Detach      bool   `url:"detach,omitempty"`
-	Permanently bool   `url:"permanently,omitempty"`
-	Reason      string `url:"reason,omitempty"`
+	// ID of disk to delete
+	// Required: true
+	DiskID uint64 `url:"diskId"`
+
+	// Detach disk from machine first
+	// Required: false
+	Detach bool `url:"detach,omitempty"`
+
+	// Whether to completely delete the disk, works only with non attached disks
+	// Required: false
+	Permanently bool `url:"permanently,omitempty"`
+
+	// Reason to delete
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (drq DeleteRequest) Validate() error {
+func (drq DeleteRequest) validate() error {
 	if drq.DiskID == 0 {
 		return errors.New("validation-error: field DiskID must be set")
 	}
@@ -22,8 +34,9 @@ func (drq DeleteRequest) Validate() error {
 	return nil
 }
 
+// Delete deletes disk by ID
 func (d Disks) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

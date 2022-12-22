@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for delete CD-ROM image
 type DeleteCDROMImageRequest struct {
-	ImageID     uint64 `url:"imageId"`
-	Permanently bool   `url:"permanently"`
+	// ID of the CD-ROM image to delete
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// Whether to completely delete the CD-ROM image, needs to be unused
+	// Required: true
+	Permanently bool `url:"permanently"`
 }
 
-func (irq DeleteCDROMImageRequest) Validate() error {
+func (irq DeleteCDROMImageRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -20,8 +26,9 @@ func (irq DeleteCDROMImageRequest) Validate() error {
 	return nil
 }
 
+// DeleteCDROMImage delete a CD-ROM image
 func (i Image) DeleteCDROMImage(ctx context.Context, req DeleteCDROMImageRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

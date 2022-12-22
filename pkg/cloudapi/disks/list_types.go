@@ -6,10 +6,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list types of disks
 type ListTypesRequest struct {
+	// Show detailed disk types by seps
+	// Required: false
 	Detailed bool `url:"detailed"`
 }
 
+// ListTypes gets list defined disk types
 func (d Disks) ListTypes(ctx context.Context, req ListTypesRequest) ([]interface{}, error) {
 	url := "/cloudapi/disks/listTypes"
 
@@ -18,13 +22,12 @@ func (d Disks) ListTypes(ctx context.Context, req ListTypesRequest) ([]interface
 		return nil, err
 	}
 
-	typesList := make([]interface{}, 0)
+	list := make([]interface{}, 0)
 
-	err = json.Unmarshal(res, &typesList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return typesList, nil
-
+	return list, nil
 }

@@ -8,17 +8,27 @@ import (
 	"strings"
 )
 
+// Request struct for create template
 type CreateTemplateRequest struct {
+	// ID of the compute to create template from
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Name      string `url:"name"`
-	Async     bool   `url:"async"`
+
+	// Name to assign to the template being created
+	// Required: true
+	Name string `url:"name"`
+
+	// Async API call
+	// For async call use CreateTemplateAsync
+	// For sync call use CreateTemplate
+	// Required: true
+	async bool `url:"async"`
 }
 
-func (crq CreateTemplateRequest) Validate() error {
+func (crq CreateTemplateRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.Name == "" {
 		return errors.New("validation-error: field Name can not be empty")
 	}
@@ -26,13 +36,14 @@ func (crq CreateTemplateRequest) Validate() error {
 	return nil
 }
 
+// CreateTemplate create template from compute instance
 func (c Compute) CreateTemplate(ctx context.Context, req CreateTemplateRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}
 
-	req.Async = false
+	req.async = false
 
 	url := "/cloudapi/compute/createTemplate"
 
@@ -49,13 +60,14 @@ func (c Compute) CreateTemplate(ctx context.Context, req CreateTemplateRequest) 
 	return result, nil
 }
 
+// CreateTemplateAsync create template from compute instance
 func (c Compute) CreateTemplateAsync(ctx context.Context, req CreateTemplateRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}
 
-	req.Async = true
+	req.async = true
 
 	url := "/cloudapi/compute/createTemplate"
 

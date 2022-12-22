@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for reboot VINSes primary VNF device
 type VNFDevRestartRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
 }
 
-func (vrq VNFDevRestartRequest) Validate() error {
+func (vrq VNFDevRestartRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (vrq VNFDevRestartRequest) Validate() error {
 	return nil
 }
 
+// VNFDevRestart reboot VINSes primary VNF device
 func (v VINS) VNFDevRestart(ctx context.Context, req VNFDevRestartRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +42,4 @@ func (v VINS) VNFDevRestart(ctx context.Context, req VNFDevRestartRequest) (bool
 	}
 
 	return result, nil
-
 }

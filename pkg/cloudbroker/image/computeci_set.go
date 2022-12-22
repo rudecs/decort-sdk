@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for set compute CI
 type ComputeCISetRequest struct {
-	ImageID     uint64 `url:"imageId"`
+	// ID of the image
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// ID of the compute CI
+	// Required: true
 	ComputeCIID uint64 `url:"computeciId"`
 }
 
-func (irq ComputeCISetRequest) Validate() error {
+func (irq ComputeCISetRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -23,8 +29,9 @@ func (irq ComputeCISetRequest) Validate() error {
 	return nil
 }
 
+// ComputeCISet set compute CI ID for image
 func (i Image) ComputeCISet(ctx context.Context, req ComputeCISetRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

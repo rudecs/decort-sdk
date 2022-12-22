@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list resource groups
 type ListRGRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListRGRequest) Validate() error {
+func (arq ListRGRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq ListRGRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListRG(ctx context.Context, req ListRGRequest) (AccountRGList, error) {
-	err := req.Validate()
+// ListRG gets list all resource groups under specified account, accessible by the user
+func (a Account) ListRG(ctx context.Context, req ListRGRequest) (ListRG, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +36,12 @@ func (a Account) ListRG(ctx context.Context, req ListRGRequest) (AccountRGList, 
 		return nil, err
 	}
 
-	accountRGList := AccountRGList{}
+	list := ListRG{}
 
-	err = json.Unmarshal(res, &accountRGList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountRGList, nil
-
+	return list, nil
 }

@@ -6,12 +6,18 @@ import (
 	"net/http"
 )
 
+// Request struct for disable several resource groups
 type MassDisableRequest struct {
-	RGIDs  []uint64 `url:"rgIds"`
-	Reason string   `url:"reason,omitempty"`
+	// IDs of the resource groups
+	// Required: true
+	RGIDs []uint64 `url:"rgIds"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq MassDisableRequest) Validate() error {
+func (rgrq MassDisableRequest) validate() error {
 	if len(rgrq.RGIDs) == 0 {
 		return errors.New("validation-error: field RGIDs must be set")
 	}
@@ -19,8 +25,9 @@ func (rgrq MassDisableRequest) Validate() error {
 	return nil
 }
 
+// MassDisable start jobs to disable several resource groups
 func (r RG) MassDisable(ctx context.Context, req MassDisableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

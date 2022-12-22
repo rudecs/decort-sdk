@@ -7,17 +7,25 @@ import (
 	"strconv"
 )
 
+// Request struct for revoke access to account
 type DeleteUserRequest struct {
-	AccountID       uint64 `url:"accountId"`
-	UserID          string `url:"userId"`
-	RecursiveDelete bool   `url:"recursivedelete,omitempty"`
+	// ID of the account
+	// Required: true
+	AccountID uint64 `url:"accountId"`
+
+	// ID or emailaddress of the user to remove
+	// Required: true
+	UserID string `url:"userId"`
+
+	// Recursively revoke access rights from owned cloudspaces and vmachines
+	// Required: false
+	RecursiveDelete bool `url:"recursivedelete,omitempty"`
 }
 
-func (arq DeleteUserRequest) Validate() error {
+func (arq DeleteUserRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
-
 	if arq.UserID == "" {
 		return errors.New("validation-error: field UserID can not be empty")
 	}
@@ -25,8 +33,9 @@ func (arq DeleteUserRequest) Validate() error {
 	return nil
 }
 
+// DeleteUser revokes user access from the account
 func (a Account) DeleteUser(ctx context.Context, req DeleteUserRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

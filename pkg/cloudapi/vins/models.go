@@ -1,271 +1,691 @@
 package vins
 
-type VINSRecord struct {
-	AccountID   uint64 `json:"accountId"`
+// Main information about VINS
+type ItemVINS struct {
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
 	AccountName string `json:"accountName"`
-	CreatedBy   string `json:"createdBy"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
 	CreatedTime uint64 `json:"createdTime"`
-	DeletedBy   string `json:"deletedBy"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
 	DeletedTime uint64 `json:"deletedTime"`
-	ExternalIP  string `json:"externalIP"`
-	ID          uint64 `json:"id"`
-	Name        string `json:"name"`
-	Network     string `json:"network"`
-	RGID        uint64 `json:"rgId"`
-	RGName      string `json:"rgName"`
-	Status      string `json:"status"`
-	UpdatedBy   string `json:"updatedBy"`
+
+	// External IP
+	ExternalIP string `json:"externalIP"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network
+	Network string `json:"network"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
 	UpdatedTime uint64 `json:"updatedTime"`
-	VXLANID     uint64 `json:"vxlanId"`
+
+	// VXLAN ID
+	VXLANID uint64 `json:"vxlanId"`
 }
 
-type VINSList []VINSRecord
+// List of VINSes
+type ListVINS []ItemVINS
 
-type VINSAudits struct {
-	Call         string  `json:"call"`
+// Main information about audit
+type ItemAudit struct {
+	// Call
+	Call string `json:"call"`
+
+	// Response time
 	ResponseTime float64 `json:"responsetime"`
-	StatusCode   uint64  `json:"statuscode"`
-	Timestamp    float64 `json:"timestamp"`
-	User         string  `json:"user"`
+
+	// Status code
+	StatusCode uint64 `json:"statuscode"`
+
+	// Timestamp
+	Timestamp float64 `json:"timestamp"`
+
+	// User
+	User string `json:"user"`
 }
 
-type VINSAuditsList []VINSAudits
+// List of audits
+type ListAudits []ItemAudit
 
-type VINSExtNet struct {
-	DefaultGW  string `json:"default_gw"`
-	ExtNetID   uint64 `json:"ext_net_id"`
-	IP         string `json:"ip"`
-	PrefixLen  uint64 `json:"prefixlen"`
-	Status     string `json:"status"`
+// Main information about external network
+type ItemExtNet struct {
+	// Default GW
+	DefaultGW string `json:"default_gw"`
+
+	// External network ID
+	ExtNetID uint64 `json:"ext_net_id"`
+
+	// IP
+	IP string `json:"ip"`
+
+	// Prefix len
+	PrefixLen uint64 `json:"prefixlen"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
 	TechStatus string `json:"techStatus"`
 }
 
-type ExtNetList []VINSExtNet
+// List of external networks
+type ListExtNets []ItemExtNet
 
-type IP struct {
+// Main information about IP
+type ItemIP struct {
+	// Client type
 	ClientType string `json:"clientType"`
+
+	// Domain name
 	DomainName string `json:"domainname"`
-	HostName   string `json:"hostname"`
-	IP         string `json:"ip"`
-	MAC        string `json:"mac"`
-	Type       string `json:"type"`
-	VMID       uint64 `json:"vmId"`
+
+	// Hostname
+	Hostname string `json:"hostname"`
+
+	// IP
+	IP string `json:"ip"`
+
+	// MAC
+	MAC string `json:"mac"`
+
+	// Type
+	Type string `json:"type"`
+
+	// Virtual machine ID
+	VMID uint64 `json:"vmId"`
 }
 
-type IPList []IP
+// List of IPs
+type ListIPs []ItemIP
 
-type VNFDev struct {
-	CKey            string           `json:"_ckey"`
-	AccountID       uint64           `json:"accountId"`
-	Capabilities    []string         `json:"capabilities"`
-	Config          VNFConfig        `json:"config"`
-	ConfigSaved     bool             `json:"configSaved"`
-	CustomPreConfig bool             `json:"customPrecfg"`
-	Description     string           `json:"desc"`
-	GID             uint64           `json:"gid"`
-	GUID            uint64           `json:"guid"`
-	ID              uint64           `json:"id"`
-	Interfaces      VNFInterfaceList `json:"interfaces"`
-	LockStatus      string           `json:"lockStatus"`
-	Milestones      uint64           `json:"milestones"`
-	Name            string           `json:"name"`
-	Status          string           `json:"status"`
-	TechStatus      string           `json:"techStatus"`
-	Type            string           `json:"type"`
-	VINS            []uint64         `json:"vins"`
+// Main information about VNF device
+type RecordVNFDev struct {
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Capabilities
+	Capabilities []string `json:"capabilities"`
+
+	// Config
+	Config RecordVNFConfig `json:"config"`
+
+	// Config saved
+	ConfigSaved bool `json:"configSaved"`
+
+	// CustomPreConfig
+	CustomPreConfig bool `json:"customPrecfg"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// List of interfaces
+	Interfaces ListVNFInterfaces `json:"interfaces"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Type
+	Type string `json:"type"`
+
+	// List of VINS IDs
+	VINS []uint64 `json:"vins"`
 }
 
-type VNFConfig struct {
-	MGMT      VNFConfigMGMT      `json:"mgmt"`
-	Resources VNFConfigResources `json:"resources"`
+// VNF config
+type RecordVNFConfig struct {
+	// MGMT
+	MGMT RecordMGMT `json:"mgmt"`
+
+	// Resources
+	Resources RecordResources `json:"resources"`
 }
 
-type VNFConfigMGMT struct {
-	IPAddr   string `json:"ipaddr"`
+// Main information about MGMT
+type RecordMGMT struct {
+	// IP address
+	IPAddress string `json:"ipaddr"`
+
+	// Password
 	Password string `json:"password"`
-	SSHKey   string `json:"sshkey"`
-	User     string `json:"user"`
+
+	// SSH key
+	SSHKey string `json:"sshkey"`
+
+	// User
+	User string `json:"user"`
 }
 
-type VNFConfigResources struct {
-	CPU     uint64 `json:"cpu"`
-	RAM     uint64 `json:"ram"`
+// Main information about resource
+type RecordResources struct {
+	// Number of CPU
+	CPU uint64 `json:"cpu"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
+
+	// Stack ID
 	StackID uint64 `json:"stackId"`
-	UUID    string `json:"uuid"`
+
+	// UUID
+	UUID string `json:"uuid"`
 }
 
-type VNFInterface struct {
-	ConnID      uint64   `json:"connId"`
-	ConnType    string   `json:"connType"`
-	DefGW       string   `json:"defGw"`
-	FlipGroupID uint64   `json:"flipgroupId"`
-	GUID        string   `json:"guid"`
-	IPAddress   string   `json:"ipAddress"`
-	ListenSSH   bool     `json:"listenSsh"`
-	MAC         string   `json:"mac"`
-	Name        string   `json:"name"`
-	NetID       uint64   `json:"netId"`
-	NetMask     uint64   `json:"netMask"`
-	NetType     string   `json:"netType"`
-	PCISlot     uint64   `json:"pciSlot"`
-	QOS         QOS      `json:"qos"`
-	Target      string   `json:"target"`
-	Type        string   `json:"type"`
-	VNFS        []uint64 `json:"vnfs"`
+// Main information about VNF interface
+type ItemVNFInterface struct {
+	// Connection ID
+	ConnID uint64 `json:"connId"`
+
+	// Connection type
+	ConnType string `json:"connType"`
+
+	// Default GW
+	DefGW string `json:"defGw"`
+
+	// FLIPGroup ID
+	FLIPGroupID uint64 `json:"flipgroupId"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// IP address
+	IPAddress string `json:"ipAddress"`
+
+	// Listen SSH
+	ListenSSH bool `json:"listenSsh"`
+
+	// MAC
+	MAC string `json:"mac"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network type
+	NetID uint64 `json:"netId"`
+
+	// Network mask
+	NetMask uint64 `json:"netMask"`
+
+	// Network type
+	NetType string `json:"netType"`
+
+	// PCI slot
+	PCISlot uint64 `json:"pciSlot"`
+
+	// QOS
+	QOS QOS `json:"qos"`
+
+	// Target
+	Target string `json:"target"`
+
+	// Type
+	Type string `json:"type"`
+
+	// List of VNF IDs
+	VNFs []uint64 `json:"vnfs"`
 }
 
+// Main information about QOS
 type QOS struct {
-	ERate   uint64 `json:"eRate"`
-	GUID    string `json:"guid"`
+	// ERate
+	ERate uint64 `json:"eRate"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// InBurst
 	InBurst uint64 `json:"inBurst"`
-	InRate  uint64 `json:"inRate"`
+
+	// InRate
+	InRate uint64 `json:"inRate"`
 }
 
-type VNFInterfaceList []VNFInterface
+// List of VNF interfaces
+type ListVNFInterfaces []ItemVNFInterface
 
-type VINSCompute struct {
-	ID   uint64 `json:"id"`
+// Main information about VINS compute
+type ItemVINSCompute struct {
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
 	Name string `json:"name"`
 }
 
-type VINSComputeList []VINSCompute
+// List of VINS computes
+type ListVINSComputes []ItemVINSCompute
 
-type VNFS struct {
-	DHCP DHCP `json:"DHCP"`
-	GW   GW   `json:"GW"`
-	NAT  NAT  `json:"NAT"`
+// Detailed information about VNF
+type RecordVNFs struct {
+	// DHCP
+	DHCP RecordDHCP `json:"DHCP"`
+
+	// GW
+	GW RecordGW `json:"GW"`
+
+	// NAT
+	NAT RecordNAT `json:"NAT"`
 }
 
-type NAT struct {
-	CKey        string  `json:"_ckey"`
-	AccountID   uint64  `json:"accountId"`
-	CreatedTime uint64  `json:"createdTime"`
-	Devices     Devices `json:"devices"`
-	GID         uint64  `json:"gid"`
-	GUID        uint64  `json:"guid"`
-	ID          uint64  `json:"id"`
-	LockStatus  string  `json:"lockStatus"`
-	Milestones  uint64  `json:"milestones"`
-	OwnerID     uint64  `json:"ownerId"`
-	OwnerType   string  `json:"ownerType"`
-	PureVirtual bool    `json:"pureVirtual"`
-	Status      string  `json:"status"`
-	TechStatus  string  `json:"techStatus"`
-	Type        string  `json:"type"`
+// Main information about NAT
+type RecordNAT struct {
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Config
+	Config NATConfig `json:"config"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Detailed information about devices
+	Devices RecordDevices `json:"devices"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Owner ID
+	OwnerID uint64 `json:"ownerId"`
+
+	// Owner type
+	OwnerType string `json:"ownerType"`
+
+	// Pure virtual
+	PureVirtual bool `json:"pureVirtual"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Type
+	Type string `json:"type"`
 }
 
+// NAT configuration
 type NATConfig struct {
-	NetMask uint64        `json:"netmask"`
-	Network string        `json:"network"`
-	Rules   []interface{} `json:"rules"`
+	// Network mask
+	NetMask uint64 `json:"netmask"`
+
+	// Network
+	Network string `json:"network"`
+
+	// List NAT rules
+	Rules ListNATRules `json:"rules"`
 }
 
-type GW struct {
-	CKey        string   `json:"_ckey"`
-	AccountID   uint64   `json:"accountId"`
-	Config      GWConfig `json:"config"`
-	CreatedTime uint64   `json:"createdTime"`
-	Devices     Devices  `json:"devices"`
-	GID         uint64   `json:"gid"`
-	GUID        uint64   `json:"guid"`
-	ID          uint64   `json:"id"`
-	LockStatus  string   `json:"lockStatus"`
-	Milestones  uint64   `json:"milestones"`
-	OwnerID     uint64   `json:"ownerId"`
-	OwnerType   string   `json:"ownerType"`
-	PureVirtual bool     `json:"pureVirtual"`
-	Status      string   `json:"status"`
-	TechStatus  string   `json:"techStatus"`
-	Type        string   `json:"type"`
+// Main information about GW
+type RecordGW struct {
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Config
+	Config RecordGWConfig `json:"config"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Detailed information about devices
+	Devices RecordDevices `json:"devices"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Owner ID
+	OwnerID uint64 `json:"ownerId"`
+
+	// Owner type
+	OwnerType string `json:"ownerType"`
+
+	// Pure virtual
+	PureVirtual bool `json:"pureVirtual"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Type
+	Type string `json:"type"`
 }
 
-type GWConfig struct {
-	DefaultGW  string `json:"default_gw"`
-	ExtNetID   uint64 `json:"ext_net_id"`
-	ExtNetIP   string `json:"ext_net_ip"`
+// GW configuration
+type RecordGWConfig struct {
+	// Default GW
+	DefaultGW string `json:"default_gw"`
+
+	// External network ID
+	ExtNetID uint64 `json:"ext_net_id"`
+
+	// External network IP
+	ExtNetIP string `json:"ext_net_ip"`
+
+	// External network mask
 	ExtNetMask uint64 `json:"ext_netmask"`
-	QOS        QOS    `json:"qos"`
+
+	// QOS
+	QOS QOS `json:"qos"`
 }
 
-type Devices struct {
-	Primary DevicePrimary `json:"primary"`
+// Information about devices
+type RecordDevices struct {
+	// Main information about primary device
+	Primary RecordPrimary `json:"primary"`
 }
 
-type DevicePrimary struct {
-	DevID   uint64 `json:"devId"`
+// Main information about primary device
+type RecordPrimary struct {
+	// Device ID
+	DevID uint64 `json:"devId"`
+
+	// IFace01
 	IFace01 string `json:"iface01"`
+
+	// IFace02
 	IFace02 string `json:"iface02"`
 }
 
-type DHCP struct {
-	CKey        string     `json:"_ckey"`
-	AccountID   uint64     `json:"accountId"`
-	Config      DHCPConfig `json:"config"`
-	CreatedTime uint64     `json:"createdTime"`
-	Devices     Devices    `json:"devices"`
-	GID         uint64     `json:"gid"`
-	GUID        uint64     `json:"guid"`
-	ID          uint64     `json:"id"`
-	LockStatus  string     `json:"lockStatus"`
-	Milestones  uint64     `json:"milestones"`
-	OwnerID     uint64     `json:"ownerId"`
-	OwnerType   string     `json:"ownerType"`
-	PureVirtual bool       `json:"pureVirtual"`
-	Status      string     `json:"status"`
-	TechStatus  string     `json:"techStatus"`
-	Type        string     `json:"type"`
+// Main information about DHCP
+type RecordDHCP struct {
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Config
+	Config RecordDHCPConfig `json:"config"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Detailed information about devices
+	Devices RecordDevices `json:"devices"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Owner ID
+	OwnerID uint64 `json:"ownerId"`
+
+	// Owner type
+	OwnerType string `json:"ownerType"`
+
+	// Pure virtual
+	PureVirtual bool `json:"pureVirtual"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Type
+	Type string `json:"type"`
 }
 
-type DHCPConfig struct {
-	DefaultGW    string          `json:"default_gw"`
-	DNS          []string        `json:"dns"`
-	IPEnd        string          `json:"ip_end"`
-	IPStart      string          `json:"ip_start"`
-	Lease        uint64          `json:"lease"`
-	Netmask      uint64          `json:"netmask"`
-	Network      string          `json:"network"`
-	Reservations ReservationList `json:"reservations"`
+// DHCP configuration
+type RecordDHCPConfig struct {
+	// Default GW
+	DefaultGW string `json:"default_gw"`
+
+	// List of DNS
+	DNS []string `json:"dns"`
+
+	// IP end
+	IPEnd string `json:"ip_end"`
+
+	// IP start
+	IPStart string `json:"ip_start"`
+
+	// Lease
+	Lease uint64 `json:"lease"`
+
+	// Network mask
+	NetMask uint64 `json:"netmask"`
+
+	// Network
+	Network string `json:"network"`
+
+	// List of reservations
+	Reservations ListReservations `json:"reservations"`
 }
 
-type VINSDetailed struct {
-	VNFDev            VNFDev          `json:"VNFDev"`
-	CKey              string          `json:"_ckey"`
-	AccountID         uint64          `json:"accountId"`
-	AccountName       string          `json:"accountName"`
-	Computes          VINSComputeList `json:"computes"`
-	DefaultGW         string          `json:"defaultGW"`
-	DefaultQOS        QOS             `json:"defaultQos"`
-	Description       string          `json:"desc"`
-	GID               uint64          `json:"gid"`
-	GUID              uint64          `json:"guid"`
-	ID                uint64          `json:"id"`
-	LockStatus        string          `json:"lockStatus"`
-	ManagerID         uint64          `json:"managerId"`
-	ManagerType       string          `json:"managerType"`
-	Milestones        uint64          `json:"milestones"`
-	Name              string          `json:"name"`
-	NetMask           uint64          `json:"netMask"`
-	Network           string          `json:"network"`
-	PreReservaionsNum uint64          `json:"preReservationsNum"`
-	Redundant         bool            `json:"redundant"`
-	RGID              uint64          `json:"rgId"`
-	RGName            string          `json:"rgName"`
-	SecVNFDevID       uint64          `json:"secVnfDevId"`
-	Status            string          `json:"status"`
-	UserManaged       bool            `json:"userManaged"`
-	VNFS              VNFS            `json:"vnfs"`
-	VXLanID           uint64          `json:"vxlanId"`
-}
+// Detailed information about VINS
+type RecordVINS struct {
+	// Main information about VNF device
+	VNFDev RecordVNFDev `json:"VNFDev"`
 
-type Reservation struct {
-	ClientType  string `json:"clientType"`
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// List of VINS computes
+	Computes ListVINSComputes `json:"computes"`
+
+	// Default GW
+	DefaultGW string `json:"defaultGW"`
+
+	// Default QOS
+	DefaultQOS QOS `json:"defaultQos"`
+
+	// Description
 	Description string `json:"desc"`
-	DomainName  string `json:"domainname"`
-	HostName    string `json:"hostname"`
-	IP          string `json:"ip"`
-	MAC         string `json:"mac"`
-	Type        string `json:"type"`
-	VMID        int    `json:"vmId"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Manager ID
+	ManagerID uint64 `json:"managerId"`
+
+	// Manager type
+	ManagerType string `json:"managerType"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network mask
+	NetMask uint64 `json:"netMask"`
+
+	// Network
+	Network string `json:"network"`
+
+	// Pre reservaions number
+	PreReservaionsNum uint64 `json:"preReservationsNum"`
+
+	// Redundant
+	Redundant bool `json:"redundant"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// SecVNFDevID
+	SecVNFDevID uint64 `json:"secVnfDevId"`
+
+	// Status
+	Status string `json:"status"`
+
+	// User managed
+	UserManaged bool `json:"userManaged"`
+
+	// Main information about VNFs
+	VNFs RecordVNFs `json:"vnfs"`
+
+	//  VXLAN ID
+	VXLANID uint64 `json:"vxlanId"`
 }
 
-type ReservationList []Reservation
+// Main information about NAT rule
+type ItemNATRule struct {
+	// ID
+	ID uint64 `json:"id"`
+
+	// Local IP
+	LocalIP string `json:"localIp"`
+
+	// Local port
+	LocalPort uint64 `json:"localPort"`
+
+	// Protocol
+	Protocol string `json:"protocol"`
+
+	// Public port end
+	PublicPortEnd uint64 `json:"publicPortEnd"`
+
+	// Public port start
+	PublicPortStart uint64 `json:"publicPortStart"`
+
+	// Virtual machine ID
+	VMID uint64 `json:"vmId"`
+
+	// Virtual machine name
+	VMName string `json:"vmName"`
+}
+
+// List of NAT rules
+type ListNATRules []ItemNATRule
+
+// Main information about reservation
+type ItemReservation struct {
+	// Client type
+	ClientType string `json:"clientType"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Domain name
+	DomainName string `json:"domainname"`
+
+	// Hostname
+	Hostname string `json:"hostname"`
+
+	// IP
+	IP string `json:"ip"`
+
+	// MAC
+	MAC string `json:"mac"`
+
+	// Type
+	Type string `json:"type"`
+
+	// Virtual machine ID
+	VMID uint64 `json:"vmId"`
+}
+
+// List of reservations
+type ListReservations []ItemReservation

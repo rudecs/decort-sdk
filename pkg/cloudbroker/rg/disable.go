@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for disable resource group
 type DisableRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq DisableRequest) Validate() error {
+func (rgrq DisableRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -20,8 +26,9 @@ func (rgrq DisableRequest) Validate() error {
 	return nil
 }
 
+// Disable disables resource group by ID
 func (r RG) Disable(ctx context.Context, req DisableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

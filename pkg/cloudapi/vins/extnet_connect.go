@@ -7,13 +7,22 @@ import (
 	"strconv"
 )
 
+// Request struct for connect external network
 type ExtNetConnectRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
-	NetID  uint64 `url:"netId"`
-	IP     string `url:"ip"`
+
+	// External network ID
+	// Required: false
+	NetID uint64 `url:"netId,omitempty"`
+
+	// Directly set IP address
+	// Required: false
+	IP string `url:"ip,omitempty"`
 }
 
-func (vrq ExtNetConnectRequest) Validate() error {
+func (vrq ExtNetConnectRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -21,8 +30,9 @@ func (vrq ExtNetConnectRequest) Validate() error {
 	return nil
 }
 
+// ExtNetConnect connect VINS to external network
 func (v VINS) ExtNetConnect(ctx context.Context, req ExtNetConnectRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

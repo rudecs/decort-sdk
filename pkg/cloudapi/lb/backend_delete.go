@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for delete backend
 type BackendDeleteRequest struct {
-	LBID        uint64 `url:"lbId"`
+	// ID of the load balancer instance to BackendDelete
+	// Required: true
+	LBID uint64 `url:"lbId"`
+
+	// Cannot be emtpy string - name of the backend to delete
+	// Required: true
 	BackendName string `url:"backendName"`
 }
 
-func (lbrq BackendDeleteRequest) Validate() error {
+func (lbrq BackendDeleteRequest) validate() error {
 	if lbrq.LBID == 0 {
 		return errors.New("validation-error: field LBID can not be empty or equal to 0")
 	}
-
 	if lbrq.BackendName == "" {
 		return errors.New("validation-error: field BackendName can not be empty")
 	}
@@ -24,8 +29,10 @@ func (lbrq BackendDeleteRequest) Validate() error {
 	return nil
 }
 
+// BackendDelete deletes backend from the specified load balancer.
+// Warning: you cannot undo this action!
 func (l LB) BackendDelete(ctx context.Context, req BackendDeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

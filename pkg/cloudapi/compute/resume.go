@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for resume compute
 type ResumeRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq ResumeRequest) Validate() error {
+func (crq ResumeRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq ResumeRequest) Validate() error {
 	return nil
 }
 
+// Resume resume Compute from paused state
 func (c Compute) Resume(ctx context.Context, req ResumeRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (c Compute) Resume(ctx context.Context, req ResumeRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

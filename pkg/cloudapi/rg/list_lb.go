@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list load balancers
 type ListLBRequest struct {
+	// Resource group ID
+	// Required: true
 	RGID uint64 `url:"rgId"`
 }
 
-func (rgrq ListLBRequest) Validate() error {
+func (rgrq ListLBRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("field RGID can not be empty or equal to 0")
 	}
@@ -19,21 +22,26 @@ func (rgrq ListLBRequest) Validate() error {
 	return nil
 }
 
-func (r RG) ListLB(ctx context.Context, req ListLBRequest) (LBList, error) {
-	if err := req.Validate(); err != nil {
-		return nil, err
-	}
-
-	url := "/cloudapi/rg/listLb"
-	lbListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+// ListLB gets list all load balancers in the specified resource group, accessible by the user
+func (r RG) ListLB(ctx context.Context, req ListLBRequest) (ListLB, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	lbList := LBList{}
-	if err := json.Unmarshal(lbListRaw, &lbList); err != nil {
+	url := "/cloudapi/rg/listLb"
+
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	if err != nil {
 		return nil, err
 	}
 
-	return lbList, nil
+	list := ListLB{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
+		return nil, err
+	}
+
+	return list, nil
 }

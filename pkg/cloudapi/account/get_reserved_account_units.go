@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for calculate the reserved units for all cloudspaces and resource groups in the account
 type GetReservedAccountUnitsRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq GetReservedAccountUnitsRequest) Validate() error {
+func (arq GetReservedAccountUnitsRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,15 @@ func (arq GetReservedAccountUnitsRequest) Validate() error {
 	return nil
 }
 
+// GetReservedAccountUnits calculates the reserved units for all cloudspaces and resource groups in the account.
+// Calculated cloud units are returned in a dict which includes:
+//
+//   - CU_M: reserved memory in MB
+//   - CU_C: number of cpu cores
+//   - CU_D: reserved vdisk storage in GB
+//   - CU_I: number of public IPs
 func (a Account) GetReservedAccountUnits(ctx context.Context, req GetReservedAccountUnitsRequest) (*ResourceLimits, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +42,12 @@ func (a Account) GetReservedAccountUnits(ctx context.Context, req GetReservedAcc
 		return nil, err
 	}
 
-	rl := &ResourceLimits{}
+	info := ResourceLimits{}
 
-	err = json.Unmarshal(res, &rl)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return rl, nil
-
+	return &info, nil
 }

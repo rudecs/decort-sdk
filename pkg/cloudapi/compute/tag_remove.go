@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for remove tag from compute
 type TagRemoveRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Key       string `url:"key"`
+
+	// Tag key
+	// Required: true
+	Key string `url:"key"`
 }
 
-func (crq TagRemoveRequest) Validate() error {
+func (crq TagRemoveRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -23,8 +29,9 @@ func (crq TagRemoveRequest) Validate() error {
 	return nil
 }
 
+// TagRemove removes tag from compute tags dict
 func (c Compute) TagRemove(ctx context.Context, req TagRemoveRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -40,5 +47,6 @@ func (c Compute) TagRemove(ctx context.Context, req TagRemoveRequest) (bool, err
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

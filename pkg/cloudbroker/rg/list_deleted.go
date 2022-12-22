@@ -6,12 +6,19 @@ import (
 	"net/http"
 )
 
+// Request struct for get list deleted resource groups
 type ListDeletedRequest struct {
+	// Page number
+	// Required: false
 	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
 	Size uint64 `url:"size,omitempty"`
 }
 
-func (r RG) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListDeleted, error) {
+// ListDeleted gets list all deleted resource groups the user has access to
+func (r RG) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListRG, error) {
 	url := "/cloudbroker/rg/listDeleted"
 
 	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -19,12 +26,12 @@ func (r RG) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListDelete
 		return nil, err
 	}
 
-	listDeleted := ListDeleted{}
+	list := ListRG{}
 
-	err = json.Unmarshal(res, &listDeleted)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return listDeleted, nil
+	return list, nil
 }

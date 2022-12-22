@@ -1,0 +1,46 @@
+package compute
+
+import (
+	"context"
+	"errors"
+	"net/http"
+)
+
+// Request struct for get compute logs
+type GetLogRequest struct {
+	// ID of compute instance to get log for
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
+
+	// Path to log file
+	// Required: true
+	Path string `url:"path"`
+}
+
+func (crq GetLogRequest) validate() error {
+	if crq.ComputeID == 0 {
+		return errors.New("validation-error: field ComputeID must be set")
+	}
+	if crq.Path == "" {
+		return errors.New("validation-error: field Path must be set")
+	}
+
+	return nil
+}
+
+// GetLog gets compute's log file by path
+func (c Compute) GetLog(ctx context.Context, req GetLogRequest) (string, error) {
+	err := req.validate()
+	if err != nil {
+		return "", err
+	}
+
+	url := "/cloudbroker/compute/getLog"
+
+	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	if err != nil {
+		return "", err
+	}
+
+	return string(res), nil
+}

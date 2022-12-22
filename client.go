@@ -15,31 +15,36 @@ import (
 	"github.com/rudecs/decort-sdk/internal/client"
 )
 
-type Client struct {
+// HTTP-client for platform
+type DecortClient struct {
 	decortURL string
 	client    *http.Client
 }
 
-func New(cfg config.Config) *Client {
+// Сlient builder
+func New(cfg config.Config) *DecortClient {
 	if cfg.Retries == 0 {
 		cfg.Retries = 5
 	}
 
-	return &Client{
+	return &DecortClient{
 		decortURL: cfg.DecortURL,
 		client:    client.NewHttpClient(cfg),
 	}
 }
 
-func (dc *Client) CloudApi() *cloudapi.CloudApi {
+// CloudAPI builder
+func (dc *DecortClient) CloudAPI() *cloudapi.CloudAPI {
 	return cloudapi.New(dc)
 }
 
-func (dc *Client) CloudBroker() *cloudbroker.CloudBroker {
+// CloudBroker builder
+func (dc *DecortClient) CloudBroker() *cloudbroker.CloudBroker {
 	return cloudbroker.New(dc)
 }
 
-func (dc *Client) DecortApiCall(ctx context.Context, method, url string, params interface{}) ([]byte, error) {
+// DecortApiCall method for sending requests to the platform
+func (dc *DecortClient) DecortApiCall(ctx context.Context, method, url string, params interface{}) ([]byte, error) {
 	values, err := query.Values(params)
 	if err != nil {
 		return nil, err

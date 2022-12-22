@@ -4,6 +4,7 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/vins"
 )
 
-func (ca *CloudApi) VINS() *vins.VINS {
+// Accessing the VINS method group
+func (ca *CloudAPI) VINS() *vins.VINS {
 	return vins.New(ca.client)
 }

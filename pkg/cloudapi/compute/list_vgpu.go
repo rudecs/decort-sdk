@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list vGPU
 type ListVGPURequest struct {
+	// Identifier compute
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq ListVGPURequest) Validate() error {
+func (crq ListVGPURequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq ListVGPURequest) Validate() error {
 	return nil
 }
 
+// ListVGPU gets list vGPU
 func (c Compute) ListVGPU(ctx context.Context, req ListVGPURequest) ([]interface{}, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +36,12 @@ func (c Compute) ListVGPU(ctx context.Context, req ListVGPURequest) ([]interface
 		return nil, err
 	}
 
-	pciDeviceList := []interface{}{}
+	list := []interface{}{}
 
-	err = json.Unmarshal(res, &pciDeviceList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return pciDeviceList, nil
+	return list, nil
 }

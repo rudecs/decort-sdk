@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of computes
 type ListComputesRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq ListComputesRequest) Validate() error {
+func (rgrq ListComputesRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("field RGID can not be empty or equal to 0")
 	}
@@ -20,21 +26,26 @@ func (rgrq ListComputesRequest) Validate() error {
 	return nil
 }
 
-func (r RG) ListComputes(ctx context.Context, req ListComputesRequest) (ComputeList, error) {
-	if err := req.Validate(); err != nil {
-		return nil, err
-	}
-
-	url := "/cloudapi/rg/listComputes"
-	computeListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+// ListComputes gets list of all compute instances under specified resource group, accessible by the user
+func (r RG) ListComputes(ctx context.Context, req ListComputesRequest) (ListComputes, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	computeList := ComputeList{}
-	if err := json.Unmarshal(computeListRaw, &computeList); err != nil {
+	url := "/cloudapi/rg/listComputes"
+
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	if err != nil {
 		return nil, err
 	}
 
-	return computeList, nil
+	list := ListComputes{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
+		return nil, err
+	}
+
+	return list, nil
 }

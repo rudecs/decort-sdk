@@ -6,22 +6,32 @@ import (
 	"net/http"
 )
 
+// Request struct for get list deleted resource groups
 type ListDeletedRequest struct {
+	// Page number
+	// Required: false
 	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
 	Size uint64 `url:"size,omitempty"`
 }
 
-func (r RG) ListDeleted(ctx context.Context, req ListDeletedRequest) (ResourceGroupList, error) {
+// ListDeleted gets list all deleted resource groups the user has access to
+func (r RG) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListResourceGroups, error) {
 	url := "/cloudapi/rg/listDeleted"
-	rgListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	rgList := ResourceGroupList{}
-	if err := json.Unmarshal(rgListRaw, &rgList); err != nil {
+	list := ListResourceGroups{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
 		return nil, err
 	}
 
-	return rgList, nil
+	return list, nil
 }

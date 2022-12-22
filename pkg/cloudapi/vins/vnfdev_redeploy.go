@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for redeploy VNFDevs
 type VNFDevRedeployRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
 }
 
-func (vrq VNFDevRedeployRequest) Validate() error {
+func (vrq VNFDevRedeployRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (vrq VNFDevRedeployRequest) Validate() error {
 	return nil
 }
 
+// VNFDevRedeploy redeploy VINS VNFDevs
 func (v VINS) VNFDevRedeploy(ctx context.Context, req VNFDevRedeployRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +42,4 @@ func (v VINS) VNFDevRedeploy(ctx context.Context, req VNFDevRedeployRequest) (bo
 	}
 
 	return result, nil
-
 }

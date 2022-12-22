@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for delete snapshot
 type SnapshotDeleteRequest struct {
+	// ID of disk to delete
+	// Required: true
 	DiskID uint64 `url:"diskId"`
-	Label  string `url:"label"`
+
+	// Label of the snapshot to delete
+	// Required: false
+	Label string `url:"label"`
 }
 
-func (drq SnapshotDeleteRequest) Validate() error {
+func (drq SnapshotDeleteRequest) validate() error {
 	if drq.DiskID == 0 {
 		return errors.New("validation-error: field DiskID can not be empty or equal to 0")
 	}
@@ -24,8 +30,9 @@ func (drq SnapshotDeleteRequest) Validate() error {
 	return nil
 }
 
+// SnapshotDelete deletes a snapshot
 func (d Disks) SnapshotDelete(ctx context.Context, req SnapshotDeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -43,5 +50,4 @@ func (d Disks) SnapshotDelete(ctx context.Context, req SnapshotDeleteRequest) (b
 	}
 
 	return result, nil
-
 }

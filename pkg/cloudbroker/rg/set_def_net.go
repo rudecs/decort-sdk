@@ -3,23 +3,38 @@ package rg
 import (
 	"context"
 	"errors"
-	"github.com/rudecs/decort-sdk/internal/validators"
 	"net/http"
 	"strconv"
+
+	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for set default network
 type SetDefNetRequest struct {
-	RGID    uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Network type
+	// Should be one of:
+	//	- "PUBLIC"
+	//	- "PRIVATE"
+	// Required: true
 	NetType string `url:"netType"`
-	NetID   uint64 `url:"netId,omitempty"`
-	Reason  string `url:"reason,omitempty"`
+
+	// Network ID
+	// Required: false
+	NetID uint64 `url:"netId"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq SetDefNetRequest) Validate() error {
+func (rgrq SetDefNetRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
-
 	validate := validators.StringInSlice(rgrq.NetType, []string{"PUBLIC", "PRIVATE"})
 	if !validate {
 		return errors.New("validation-error: field NetType must be one of PRIVATE or PUBLIC")
@@ -28,8 +43,9 @@ func (rgrq SetDefNetRequest) Validate() error {
 	return nil
 }
 
+// SetDefNet sets default network for attach associated virtual machines
 func (r RG) SetDefNet(ctx context.Context, req SetDefNetRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}

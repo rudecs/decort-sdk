@@ -7,21 +7,28 @@ import (
 	"strconv"
 )
 
+// Request struct for change QoS of the disk
 type DiskQOSRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	DiskID    uint64 `url:"diskId"`
-	Limits    string `url:"limits"`
+
+	// ID of the disk to apply limits
+	// Required: true
+	DiskID uint64 `url:"diskId"`
+
+	// Limit IO for a certain disk total and read/write options are not allowed to be combined
+	// Required: true
+	Limits string `url:"limits"`
 }
 
-func (crq DiskQOSRequest) Validate() error {
+func (crq DiskQOSRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.DiskID == 0 {
 		return errors.New("validation-error: field DiskID can not be empty or equal to 0")
 	}
-
 	if crq.Limits == "" {
 		return errors.New("validation-error: field Limits can not be empty")
 	}
@@ -29,8 +36,9 @@ func (crq DiskQOSRequest) Validate() error {
 	return nil
 }
 
+// DiskQOS change QoS of the disk
 func (c Compute) DiskQOS(ctx context.Context, req DiskQOSRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

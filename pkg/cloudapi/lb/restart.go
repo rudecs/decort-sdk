@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for restart load balancer
 type RestartRequest struct {
+	// ID of the load balancer instance to restart
+	// Required: true
 	LBID uint64 `url:"lbId"`
 }
 
-func (lbrq RestartRequest) Validate() error {
+func (lbrq RestartRequest) validate() error {
 	if lbrq.LBID == 0 {
 		return errors.New("validation-error: field LBID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (lbrq RestartRequest) Validate() error {
 	return nil
 }
 
+// Restart restarts specified load balancer instance
 func (l LB) Restart(ctx context.Context, req RestartRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

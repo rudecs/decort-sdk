@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for stop compute
 type StopRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Force     bool   `url:"force,omitempty"`
+
+	// Force stop compute
+	// Required: false
+	Force bool `url:"force,omitempty"`
 }
 
-func (crq StopRequest) Validate() error {
+func (crq StopRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -20,8 +26,9 @@ func (crq StopRequest) Validate() error {
 	return nil
 }
 
+// Stop stops compute
 func (c Compute) Stop(ctx context.Context, req StopRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -37,5 +44,6 @@ func (c Compute) Stop(ctx context.Context, req StopRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

@@ -7,20 +7,28 @@ import (
 	"strconv"
 )
 
+// Request struct for delete master from group
 type DeleteMasterFromGroupRequest struct {
-	K8SID         uint64   `url:"k8sId"`
-	MasterGroupID uint64   `url:"masterGroupId"`
-	MasterIDs     []string `url:"masterIds"`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// ID of the masters compute group
+	// Required: true
+	MasterGroupID uint64 `url:"masterGroupId"`
+
+	// List of Compute IDs of master nodes to delete
+	// Required: true
+	MasterIDs []string `url:"masterIds"`
 }
 
-func (krq DeleteMasterFromGroupRequest) Validate() error {
+func (krq DeleteMasterFromGroupRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
 	if krq.MasterGroupID == 0 {
 		return errors.New("validation-error: field MasterGroupID can not be empty or equal to 0")
 	}
-
 	if len(krq.MasterIDs) == 0 {
 		return errors.New("validation-error: field MasterIDs can not be empty")
 	}
@@ -28,8 +36,9 @@ func (krq DeleteMasterFromGroupRequest) Validate() error {
 	return nil
 }
 
+// DeleteMasterFromGroup deletes compute from masters group in selected Kubernetes cluster
 func (k8s K8S) DeleteMasterFromGroup(ctx context.Context, req DeleteMasterFromGroupRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -45,5 +54,6 @@ func (k8s K8S) DeleteMasterFromGroup(ctx context.Context, req DeleteMasterFromGr
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

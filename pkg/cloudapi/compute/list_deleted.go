@@ -6,13 +6,19 @@ import (
 	"net/http"
 )
 
+// Request struct for get deleted computes list
 type ListDeletedRequest struct {
+	// Page number
+	// Required: false
 	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
 	Size uint64 `url:"size,omitempty"`
 }
 
-func (c Compute) ListDeleted(ctx context.Context, req ListDeletedRequest) (ComputeList, error) {
-
+// ListDeleted gets list all deleted computes
+func (c Compute) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListComputes, error) {
 	url := "/cloudapi/compute/listDeleted"
 
 	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -20,12 +26,12 @@ func (c Compute) ListDeleted(ctx context.Context, req ListDeletedRequest) (Compu
 		return nil, err
 	}
 
-	computeList := ComputeList{}
+	list := ListComputes{}
 
-	err = json.Unmarshal(res, &computeList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return computeList, nil
+	return list, nil
 }

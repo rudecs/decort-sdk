@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for disable/enable kubernetes cluster
 type DisabelEnableRequest struct {
+	// Kubernetes cluster ID
+	// Required: true
 	K8SID uint64 `url:"k8sId"`
 }
 
-func (krq DisabelEnableRequest) Validate() error {
+func (krq DisabelEnableRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (krq DisabelEnableRequest) Validate() error {
 	return nil
 }
 
+// Disable disables kubernetes cluster by ID
 func (k8s K8S) Disable(ctx context.Context, req DisabelEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,11 +40,13 @@ func (k8s K8S) Disable(ctx context.Context, req DisabelEnableRequest) (bool, err
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }
 
+// Enable enables kubernetes cluster by ID
 func (k8s K8S) Enable(ctx context.Context, req DisabelEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -56,5 +62,6 @@ func (k8s K8S) Enable(ctx context.Context, req DisabelEnableRequest) (bool, erro
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for rename disk
 type RenameRequest struct {
+	// ID of the disk to rename
+	// Required: true
 	DiskID uint64 `url:"diskId"`
-	Name   string `url:"name"`
+
+	// New name of disk
+	// Required: true
+	Name string `url:"name"`
 }
 
-func (drq RenameRequest) Validate() error {
+func (drq RenameRequest) validate() error {
 	if drq.DiskID == 0 {
 		return errors.New("validation-error: field DiskID must be set")
 	}
-
 	if drq.Name == "" {
 		return errors.New("validation-error: field Name must be set")
 	}
@@ -24,8 +29,9 @@ func (drq RenameRequest) Validate() error {
 	return nil
 }
 
+// Rename rename disk
 func (d Disks) Rename(ctx context.Context, req RenameRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -43,5 +49,4 @@ func (d Disks) Rename(ctx context.Context, req RenameRequest) (bool, error) {
 	}
 
 	return result, nil
-
 }

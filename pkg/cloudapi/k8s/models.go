@@ -1,119 +1,290 @@
 package k8s
 
-type K8SGroup struct {
-	Annotations  []string         `json:"annotations"`
-	CPU          uint64           `json:"cpu"`
-	DetailedInfo DetailedInfoList `json:"detailedInfo"`
-	Disk         uint64           `json:"disk"`
-	GUID         string           `json:"guid"`
-	ID           uint64           `json:"id"`
-	Labels       []string         `json:"labels"`
-	Name         string           `json:"name"`
-	Num          uint64           `json:"num"`
-	RAM          uint64           `json:"ram"`
-	Taints       []string         `json:"taints"`
+// Main information about kubernetes cluster
+type ItemK8SGroup struct {
+	// List of Annotations
+	Annotations []string `json:"annotations"`
+
+	// Number of CPU
+	CPU uint64 `json:"cpu"`
+
+	// List detailed information
+	DetailedInfo ListDetailedInfo `json:"detailedInfo"`
+
+	// Disk ID
+	Disk uint64 `json:"disk"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// List of Labels
+	Labels []string `json:"labels"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Num
+	Num uint64 `json:"num"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
+
+	// List of taints
+	Taints []string `json:"taints"`
 }
 
-type K8SGroupList []K8SGroup
+// List kubernetes cluster groups
+type ListK8SGroups []ItemK8SGroup
 
-type DetailedInfo struct {
-	ID         uint64 `json:"id"`
-	Name       string `json:"name"`
-	Status     string `json:"status"`
+// Detailed information
+type ItemDetailedInfo struct {
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
 	TechStatus string `json:"techStatus"`
 }
 
-type DetailedInfoList []DetailedInfo
+// List detailed information
+type ListDetailedInfo []ItemDetailedInfo
 
-type K8SRecord struct {
-	ACL         ACLGroup  `json:"ACL"`
-	AccountID   uint64    `json:"accountId"`
-	AccountName string    `json:"accountName"`
-	BServiceID  uint64    `json:"bserviceId"`
-	CIID        uint64    `json:"ciId"`
-	CreatedBy   string    `json:"createdBy"`
-	CreatedTime uint64    `json:"createdTime"`
-	DeletedBy   string    `json:"deletedBy"`
-	DeletedTime uint64    `json:"deletedTime"`
-	ID          uint64    `json:"id"`
-	K8CIName    string    `json:"k8ciName"`
-	K8SGroups   K8SGroups `json:"k8sGroups"`
-	LBID        uint64    `json:"lbId"`
-	Name        string    `json:"name"`
-	RGID        uint64    `json:"rgId"`
-	RGName      string    `json:"rgName"`
-	Status      string    `json:"status"`
-	TechStatus  string    `json:"techStatus"`
-	UpdatedBy   string    `json:"updatedBy"`
-	UpdatedTime uint64    `json:"updatedTime"`
+// Deteal information about kubernetes cluster
+type RecordK8S struct {
+	// Access Control List
+	ACL RecordACL `json:"ACL"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Basic Service ID
+	BServiceID uint64 `json:"bserviceId"`
+
+	// CIID
+	CIID uint64 `json:"ciId"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// K8CI name
+	K8CIName string `json:"k8ciName"`
+
+	// Kubernetes cluster groups information
+	K8SGroups RecordK8SGroups `json:"k8sGroups"`
+
+	// Load balancer ID
+	LBID uint64 `json:"lbId"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
 }
 
-type K8SGroups struct {
-	Masters MasterGroup  `json:"masters"`
-	Workers K8SGroupList `json:"workers"`
+// Detailed information about kubernetes cluster groups
+type RecordK8SGroups struct {
+
+	// Master information
+	Masters MasterGroup `json:"masters"`
+
+	// Worker information
+	Workers ListK8SGroups `json:"workers"`
 }
 
+// Master group information
 type MasterGroup struct {
-	CPU          uint64           `json:"cpu"`
-	DetailedInfo DetailedInfoList `json:"detailedInfo"`
-	Disk         uint64           `json:"disk"`
-	ID           uint64           `json:"id"`
-	Name         string           `json:"name"`
-	Num          uint64           `json:"num"`
-	RAM          uint64           `json:"ram"`
+	// Number of CPU
+	CPU uint64 `json:"cpu"`
+
+	// Detailed information
+	DetailedInfo ListDetailedInfo `json:"detailedInfo"`
+
+	// Disk ID
+	Disk uint64 `json:"disk"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Num
+	Num uint64 `json:"num"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
 }
 
-type ACLGroup struct {
-	AccountACL ACLList `json:"accountAcl"`
-	K8SACL     ACLList `json:"k8sAcl"`
-	RGACL      ACLList `json:"rgAcl"`
+// Access Control List
+type RecordACL struct {
+	// Account ACL
+	AccountACL ListACL `json:"accountAcl"`
+
+	// K8S ACL
+	K8SACL ListACL `json:"k8sAcl"`
+
+	// RG ACL
+	RGACL ListACL `json:"rgAcl"`
 }
 
-type ACL struct {
-	Explicit    bool   `json:"explicit"`
-	GUID        string `json:"guid"`
-	Right       string `json:"right"`
-	Status      string `json:"status"`
-	Type        string `json:"type"`
+// Main information of Access Control List
+type ItemACL struct {
+	// Explicit
+	Explicit bool `json:"explicit"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Right
+	Right string `json:"right"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Type
+	Type string `json:"type"`
+
+	// User group ID
 	UserGroupID string `json:"userGroupId"`
 }
 
-type ACLList []ACL
+// List of ACL
+type ListACL []ItemACL
 
-type K8SItem struct {
-	AccountID      uint64         `json:"accountId"`
-	AccountName    string         `json:"accountName"`
-	ACL            []interface{}  `json:"acl"`
-	BServiceID     uint64         `json:"bserviceId"`
-	CIID           uint64         `json:"ciId"`
-	Config         interface{}    `json:"config"`
-	CreatedBy      string         `json:"createdBy"`
-	CreatedTime    uint64         `json:"createdTime"`
-	DeletedBy      string         `json:"deletedBy"`
-	DeletedTime    uint64         `json:"deletedTime"`
-	Description    string         `json:"desc"`
-	ExtNetID       uint64         `json:"extnetId"`
-	GID            uint64         `json:"gid"`
-	GUID           uint64         `json:"guid"`
-	ID             uint64         `json:"id"`
-	LBID           uint64         `json:"lbId"`
-	Milestones     uint64         `json:"milestones"`
-	Name           string         `json:"name"`
-	RGID           uint64         `json:"rgId"`
-	RGName         string         `json:"rgName"`
-	ServiceAccount ServiceAccount `json:"serviceAccount"`
-	Status         string         `json:"status"`
-	TechStatus     string         `json:"techStatus"`
-	UpdatedBy      string         `json:"updatedBy"`
-	UpdatedTime    uint64         `json:"updatedTime"`
-	VINSID         uint64         `json:"vinsId"`
-	WorkersGroup   K8SGroupList   `json:"workersGroups"`
+// Main information about kubernetes cluster
+type ItemK8SCluster struct {
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Access Control List
+	ACL []interface{} `json:"acl"`
+
+	// Basic Service ID
+	BServiceID uint64 `json:"bserviceId"`
+
+	// CIID
+	CIID uint64 `json:"ciId"`
+
+	// Config
+	Config interface{} `json:"config"`
+
+	// Create by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// External network ID
+	ExtNetID uint64 `json:"extnetId"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Load balancer ID
+	LBID uint64 `json:"lbId"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Information about service account
+	ServiceAccount RecordServiceAccount `json:"serviceAccount"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// VINS ID
+	VINSID uint64 `json:"vinsId"`
+
+	// List workers group
+	WorkersGroup ListK8SGroups `json:"workersGroups"`
 }
 
-type ServiceAccount struct {
-	GUID     string `json:"guid"`
+// Information about service account
+type RecordServiceAccount struct {
+	// GUID
+	GUID string `json:"guid"`
+
+	// Password
 	Password string `json:"password"`
+
+	// Username
 	Username string `json:"username"`
 }
 
-type K8SList []K8SItem
+// List of kubernetes clusters
+type ListK8SClusters []ItemK8SCluster

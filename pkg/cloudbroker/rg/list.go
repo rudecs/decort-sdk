@@ -6,13 +6,23 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of resource groups
 type ListRequest struct {
-	IncludeDeleted bool   `url:"includedeleted,omitempty"`
-	Page           uint64 `url:"page,omitempty"`
-	Size           uint64 `url:"size,omitempty"`
+	// Included deleted resource groups
+	// Required: false
+	IncludeDeleted bool `url:"includedeleted,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (r RG) List(ctx context.Context, req ListRequest) (List, error) {
+// List gets list of all resource groups the user has access to
+func (r RG) List(ctx context.Context, req ListRequest) (ListRG, error) {
 	url := "/cloudbroker/rg/list"
 
 	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -20,7 +30,7 @@ func (r RG) List(ctx context.Context, req ListRequest) (List, error) {
 		return nil, err
 	}
 
-	list := List{}
+	list := ListRG{}
 
 	err = json.Unmarshal(res, &list)
 	if err != nil {

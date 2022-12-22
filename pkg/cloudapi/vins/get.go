@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get information about VINS
 type GetRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
 }
 
-func (vrq GetRequest) Validate() error {
+func (vrq GetRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (vrq GetRequest) Validate() error {
 	return nil
 }
 
-func (v VINS) Get(ctx context.Context, req GetRequest) (*VINSDetailed, error) {
-	err := req.Validate()
+// Get gets information about VINS by ID
+func (v VINS) Get(ctx context.Context, req GetRequest) (*RecordVINS, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +36,13 @@ func (v VINS) Get(ctx context.Context, req GetRequest) (*VINSDetailed, error) {
 		return nil, err
 	}
 
-	VINS := &VINSDetailed{}
+	info := RecordVINS{}
 
-	err = json.Unmarshal(res, VINS)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return VINS, nil
+	return &info, nil
 
 }

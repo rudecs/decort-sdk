@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for rollback
 type SnapshotRollbackRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Label     string `url:"label"`
+
+	// Text label of snapshot to rollback
+	// Required: true
+	Label string `url:"label"`
 }
 
-func (crq SnapshotRollbackRequest) Validate() error {
+func (crq SnapshotRollbackRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -23,8 +29,9 @@ func (crq SnapshotRollbackRequest) Validate() error {
 	return nil
 }
 
+// SnapshotRollback rollback specified compute snapshot
 func (c Compute) SnapshotRollback(ctx context.Context, req SnapshotRollbackRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

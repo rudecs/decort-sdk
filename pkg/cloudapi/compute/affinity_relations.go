@@ -7,12 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get dict of computes
 type AffinityRelationsRequest struct {
-	ComputeID     uint64 `url:"computeId"`
-	AffinityLabel string `url:"affinityLabel"`
+	// ID of the compute instance
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq AffinityRelationsRequest) Validate() error {
+func (crq AffinityRelationsRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -20,8 +22,9 @@ func (crq AffinityRelationsRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) AffinityRelations(ctx context.Context, req AffinityRelationsRequest) (*AffinityRelations, error) {
-	err := req.Validate()
+// AffinityRelations gets dict of computes divided by affinity and anti affinity rules
+func (c Compute) AffinityRelations(ctx context.Context, req AffinityRelationsRequest) (*RecordAffinityRelations, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +36,12 @@ func (c Compute) AffinityRelations(ctx context.Context, req AffinityRelationsReq
 		return nil, err
 	}
 
-	relations := &AffinityRelations{}
+	info := RecordAffinityRelations{}
 
-	err = json.Unmarshal(res, relations)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return relations, nil
+	return &info, nil
 }

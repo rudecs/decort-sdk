@@ -1,0 +1,45 @@
+## Version 1.0.0
+
+### Features
+
+- Add a configurable http-client for interacting with the DECORT cloud platform:
+  - Custom connection retries
+  - Custom auth method - app_id, app_secret pair and jwt-token
+  - Custom parameters for a ssl verify
+  - Custom SSO URL for auth
+  - Custom Decort URL for interacting with DECORT
+- Add support for a cloudapi api groups:
+  - account
+  - bservice
+  - compute
+  - computeci
+  - disks
+  - extnet
+  - flipgroup
+  - image
+  - k8ci
+  - k8s
+  - kvmppc
+  - kvmx86
+  - lb
+  - locations
+  - rg
+  - sizes
+  - tasks
+  - vins
+- Add support for a cloudbroker api groups:
+  - account
+  - compute
+  - disks
+  - extnet
+  - grid
+  - image
+  - k8ci
+  - k8s
+  - kvmppc
+  - kvmx86
+  - lb
+  - rg
+  - sep
+  - tasks
+  - vins

@@ -4,6 +4,7 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/account"
 )
 
-func (ca *CloudApi) Account() *account.Account {
+// Accessing the Account method group
+func (ca *CloudAPI) Account() *account.Account {
 	return account.New(ca.client)
 }

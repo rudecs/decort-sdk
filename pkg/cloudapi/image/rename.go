@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for rename image
 type RenameRequest struct {
+	// ID of the virtual image to rename
+	// Required: true
 	ImageID uint64 `url:"imageId"`
-	Name    string `url:"name"`
+
+	// New name
+	// Required: true
+	Name string `url:"name"`
 }
 
-func (irq RenameRequest) Validate() error {
+func (irq RenameRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID can not be empty or equal to 0")
 	}
-
 	if irq.Name == "" {
 		return errors.New("validation-error: field Name can not be empty")
 	}
@@ -24,8 +29,9 @@ func (irq RenameRequest) Validate() error {
 	return nil
 }
 
+// Rename renames image
 func (i Image) Rename(ctx context.Context, req RenameRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -43,5 +49,4 @@ func (i Image) Rename(ctx context.Context, req RenameRequest) (bool, error) {
 	}
 
 	return result, nil
-
 }

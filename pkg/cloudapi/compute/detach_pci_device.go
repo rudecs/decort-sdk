@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
-type DetachPciDeviceRequest struct {
+// Request struct for detach PCI device
+type DetachPCIDeviceRequest struct {
+	// Identifier compute
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	DeviceID  uint64 `url:"deviceId"`
+
+	// Pci device ID
+	// Required: true
+	DeviceID uint64 `url:"deviceId"`
 }
 
-func (crq DetachPciDeviceRequest) Validate() error {
+func (crq DetachPCIDeviceRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.DeviceID == 0 {
 		return errors.New("validation-error: field DeviceID can not be empty or equal to 0")
 	}
@@ -24,8 +29,9 @@ func (crq DetachPciDeviceRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) DetachPciDevice(ctx context.Context, req DetachPciDeviceRequest) (bool, error) {
-	err := req.Validate()
+// DetachPCIDevice detach PCI device
+func (c Compute) DetachPCIDevice(ctx context.Context, req DetachPCIDeviceRequest) (bool, error) {
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

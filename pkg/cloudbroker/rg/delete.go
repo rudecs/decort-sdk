@@ -7,14 +7,27 @@ import (
 	"strconv"
 )
 
+// Request struct for delete resource group
 type DeleteRequest struct {
-	RGID        uint64 `url:"rgId"`
-	Force       bool   `url:"force,omitempty"`
-	Permanently bool   `url:"permanently,omitempty"`
-	Reason      string `url:"reason,omitempty"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Set to True if you want force delete non-empty resource group
+	// Required: false
+	Force bool `url:"force,omitempty"`
+
+	// Set to True if you want to destroy resource group and all linked resources, if any, immediately.
+	// Otherwise, they will be placed into recycle bin and could be restored later within recycle bin's purge period
+	// Required: false
+	Permanently bool `url:"permanently,omitempty"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq DeleteRequest) Validate() error {
+func (rgrq DeleteRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -22,8 +35,9 @@ func (rgrq DeleteRequest) Validate() error {
 	return nil
 }
 
+// Delete deletes resource group
 func (r RG) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

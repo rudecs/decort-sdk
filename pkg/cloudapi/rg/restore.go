@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for restore resource group
 type RestoreRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq RestoreRequest) Validate() error {
+func (rgrq RestoreRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("field RGID can not be empty or equal to 0")
 	}
@@ -20,16 +26,24 @@ func (rgrq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restores resource group from recycle bin
 func (r RG) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/rg/restore"
+
 	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}
 
-	return strconv.ParseBool(string(res))
+	result, err := strconv.ParseBool(string(res))
+	if err != nil {
+		return false, err
+	}
+
+	return result, nil
 }

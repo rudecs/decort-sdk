@@ -7,12 +7,19 @@ import (
 	"strings"
 )
 
+// Request struct for create snapshot
 type SnapshotCreateRequest struct {
+	// ID of the compute instance to create snapshot for
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Label     string `url:"label"`
+
+	// Text label for snapshot.
+	// Must be unique among this compute snapshots
+	// Required: true
+	Label string `url:"label"`
 }
 
-func (crq SnapshotCreateRequest) Validate() error {
+func (crq SnapshotCreateRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -23,8 +30,9 @@ func (crq SnapshotCreateRequest) Validate() error {
 	return nil
 }
 
+// SnapshotCreate create compute snapshot
 func (c Compute) SnapshotCreate(ctx context.Context, req SnapshotCreateRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}

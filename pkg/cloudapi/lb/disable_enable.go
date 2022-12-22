@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
-type DisabelEnableRequest struct {
+// Request struct for disable/enable load balancer
+type DisableEnableRequest struct {
+	// ID of the load balancer instance to disable/enable
+	// Required: true
 	LBID uint64 `url:"lbId"`
 }
 
-func (lbrq DisabelEnableRequest) Validate() error {
+func (lbrq DisableEnableRequest) validate() error {
 	if lbrq.LBID == 0 {
 		return errors.New("validation-error: field LBID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (lbrq DisabelEnableRequest) Validate() error {
 	return nil
 }
 
-func (l LB) Disable(ctx context.Context, req DisabelEnableRequest) (bool, error) {
-	err := req.Validate()
+// Disable disables specified load balancer instance
+func (l LB) Disable(ctx context.Context, req DisableEnableRequest) (bool, error) {
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -40,8 +44,9 @@ func (l LB) Disable(ctx context.Context, req DisabelEnableRequest) (bool, error)
 	return result, nil
 }
 
-func (l LB) Enable(ctx context.Context, req DisabelEnableRequest) (bool, error) {
-	err := req.Validate()
+// Enable enables specified load balancer instance
+func (l LB) Enable(ctx context.Context, req DisableEnableRequest) (bool, error) {
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

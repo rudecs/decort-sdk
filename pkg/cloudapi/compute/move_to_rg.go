@@ -7,15 +7,33 @@ import (
 	"strconv"
 )
 
+// Request struct for move compute new resource group
 type MoveToRGRequest struct {
+	// ID of the compute instance to move
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	RGID      uint64 `url:"rgId"`
-	Name      string `url:"name,omitempty"`
-	Autostart bool   `url:"autostart,omitempty"`
-	ForceStop bool   `url:"forceStop,omitempty"`
+
+	// ID of the target resource group
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// New name for the compute upon successful move,
+	// if name change required.
+	// Pass empty string if no name change necessary
+	// Required: false
+	Name string `url:"name,omitempty"`
+
+	// Should the compute be restarted upon successful move
+	// Required: false
+	Autostart bool `url:"autostart,omitempty"`
+
+	// By default moving compute in a running state is not allowed.
+	// Set this flag to True to force stop running compute instance prior to move.
+	// Required: false
+	ForceStop bool `url:"forceStop,omitempty"`
 }
 
-func (crq MoveToRGRequest) Validate() error {
+func (crq MoveToRGRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -26,8 +44,9 @@ func (crq MoveToRGRequest) Validate() error {
 	return nil
 }
 
+// MoveToRG moves compute instance to new resource group
 func (c Compute) MoveToRG(ctx context.Context, req MoveToRGRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -43,5 +62,6 @@ func (c Compute) MoveToRG(ctx context.Context, req MoveToRGRequest) (bool, error
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

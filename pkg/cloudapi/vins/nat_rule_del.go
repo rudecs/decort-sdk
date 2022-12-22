@@ -7,16 +7,22 @@ import (
 	"strconv"
 )
 
-type NatRuleDelRequest struct {
+// Request struct for delete NAT rule
+type NATRuleDelRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
+
+	// ID of the rule to delete.
+	// Pass -1 to clear all rules at once
+	// Required: true
 	RuleID uint64 `url:"ruleId"`
 }
 
-func (vrq NatRuleDelRequest) Validate() error {
+func (vrq NATRuleDelRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
-
 	if vrq.RuleID == 0 {
 		return errors.New("validation-error: field RuleID can not be empty or equal to 0")
 	}
@@ -24,8 +30,9 @@ func (vrq NatRuleDelRequest) Validate() error {
 	return nil
 }
 
-func (v VINS) NatRuleDel(ctx context.Context, req NatRuleDelRequest) (bool, error) {
-	err := req.Validate()
+// NATRuleDel delete NAT (port forwarding) rule on VINS
+func (v VINS) NATRuleDel(ctx context.Context, req NATRuleDelRequest) (bool, error) {
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -43,5 +50,4 @@ func (v VINS) NatRuleDel(ctx context.Context, req NatRuleDelRequest) (bool, erro
 	}
 
 	return result, nil
-
 }

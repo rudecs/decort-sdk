@@ -6,27 +6,32 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of locations
 type ListRequest struct {
-	Page uint64 `url:"page"`
-	Size uint64 `url:"size"`
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (l Locations) List(ctx context.Context, req ListRequest) (LocationsList, error) {
-	url := "/locations/list"
-	prefix := "/cloudapi"
+// List gets list all locations
+func (l Locations) List(ctx context.Context, req ListRequest) (ListLocations, error) {
+	url := "/cloudapi/locations/list"
 
-	url = prefix + url
-	locationsListRaw, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	locationsList := LocationsList{}
-	err = json.Unmarshal(locationsListRaw, &locationsList)
+	list := ListLocations{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return locationsList, nil
-
+	return list, nil
 }

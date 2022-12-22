@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for delete snapshot
 type SnapshotDeleteRequest struct {
+	// ID of the Basic Service
+	// Required: true
 	ServiceID uint64 `url:"serviceId"`
-	Label     string `url:"label"`
+
+	// Label of the snapshot
+	// Required: true
+	Label string `url:"label"`
 }
 
-func (bsrq SnapshotDeleteRequest) Validate() error {
+func (bsrq SnapshotDeleteRequest) validate() error {
 	if bsrq.ServiceID == 0 {
 		return errors.New("field ServiceID can not be empty or equal to 0")
 	}
-
 	if bsrq.Label == "" {
 		return errors.New("field Label can not be empty")
 	}
@@ -24,16 +29,24 @@ func (bsrq SnapshotDeleteRequest) Validate() error {
 	return nil
 }
 
+// SnapshotDelete delete snapshot of the Basic Service
 func (b BService) SnapshotDelete(ctx context.Context, req SnapshotDeleteRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/bservice/snapshotDelete"
+
 	res, err := b.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err
 	}
 
-	return strconv.ParseBool(string(res))
+	result, err := strconv.ParseBool(string(res))
+	if err != nil {
+		return false, err
+	}
+
+	return result, nil
 }

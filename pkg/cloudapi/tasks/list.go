@@ -6,27 +6,33 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of tasks
 type ListRequest struct {
-	Page uint64 `url:"page"`
-	Size uint64 `url:"size"`
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (t Tasks) List(ctx context.Context, req ListRequest) (TasksList, error) {
-	url := "/tasks/list"
-	prefix := "/cloudapi"
+// List gets list user API tasks with status PROCESSING
+func (t Tasks) List(ctx context.Context, req ListRequest) (ListTasks, error) {
+	url := "/cloudapi/tasks/list"
 
-	url = prefix + url
-	taskListRaw, err := t.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := t.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	taskList := TasksList{}
-	err = json.Unmarshal(taskListRaw, &taskList)
+	list := ListTasks{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return taskList, nil
+	return list, nil
 
 }

@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for force stop and start compute
 type PowerCycleRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq PowerCycleRequest) Validate() error {
+func (crq PowerCycleRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq PowerCycleRequest) Validate() error {
 	return nil
 }
 
+// PowerCycle makes force stop and start compute
 func (c Compute) PowerCycle(ctx context.Context, req PowerCycleRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (c Compute) PowerCycle(ctx context.Context, req PowerCycleRequest) (bool, e
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

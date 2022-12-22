@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get list VINSes
 type ListVINSRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq ListVINSRequest) Validate() error {
+func (rgrq ListVINSRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -20,8 +26,9 @@ func (rgrq ListVINSRequest) Validate() error {
 	return nil
 }
 
+// ListVINS gets list all ViNSes under specified resource group, accessible by the user
 func (r RG) ListVINS(ctx context.Context, req ListVINSRequest) (ListVINS, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +40,12 @@ func (r RG) ListVINS(ctx context.Context, req ListVINSRequest) (ListVINS, error)
 		return nil, err
 	}
 
-	listVINS := ListVINS{}
+	list := ListVINS{}
 
-	err = json.Unmarshal(res, &listVINS)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return listVINS, nil
+	return list, nil
 }

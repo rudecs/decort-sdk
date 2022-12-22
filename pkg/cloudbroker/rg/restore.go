@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for restore resource group
 type RestoreRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq RestoreRequest) Validate() error {
+func (rgrq RestoreRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -20,8 +26,9 @@ func (rgrq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restores resource group from recycle bin
 func (r RG) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

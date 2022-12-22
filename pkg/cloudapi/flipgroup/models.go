@@ -1,40 +1,103 @@
 package flipgroup
 
-type FlipGroupRecord struct {
+// Main information about FLIPGroup
+type RecordFLIPGroup struct {
+	// Default GW
 	DefaultGW string `json:"defaultGW"`
-	ID        uint64 `json:"id"`
-	IP        string `json:"ip"`
-	Name      string `json:"name"`
-	Netmask   uint64 `json:"netmask"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// IP
+	IP string `json:"ip"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network mask
+	NetMask uint64 `json:"netmask"`
 }
 
-type FlipGroupItem struct {
-	AccountID   uint64   `json:"accountId"`
-	AccountName string   `json:"accountName"`
-	ClientIDs   []uint64 `json:"clientIds"`
-	ClientType  string   `json:"clientType"`
-	ConnID      uint64   `json:"connId"`
-	ConnType    string   `json:"connType"`
-	CreatedBy   string   `json:"createdBy"`
-	CreatedTime uint64   `json:"createdTime"`
-	DefaultGW   string   `json:"defaultGW"`
-	DeletedBy   string   `json:"deletedBy"`
-	DeletedTime uint64   `json:"deletedTime"`
-	Description string   `json:"desc"`
-	GID         uint64   `json:"gid"`
-	GUID        uint64   `json:"guid"`
-	ID          uint64   `json:"id"`
-	IP          string   `json:"ip"`
-	Milestones  uint64   `json:"milestones"`
-	Name        string   `json:"name"`
-	NetID       uint64   `json:"netId"`
-	NetType     string   `json:"netType"`
-	Network     string   `json:"network"`
-	RGID        uint64   `json:"rgId"`
-	RGName      string   `json:"rgName"`
-	Status      string   `json:"status"`
-	UpdatedBy   string   `json:"updatedBy"`
-	UpdatedTime uint64   `json:"updatedTime"`
+// Detailed information about FLIPGroup
+type ItemFLIPGroup struct {
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// List of client IDs
+	ClientIDs []uint64 `json:"clientIds"`
+
+	// Client type
+	ClientType string `json:"clientType"`
+
+	// Connection ID
+	ConnID uint64 `json:"connId"`
+
+	// Connection type
+	ConnType string `json:"connType"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Default GW
+	DefaultGW string `json:"defaultGW"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// IP
+	IP string `json:"ip"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network ID
+	NetID uint64 `json:"netId"`
+
+	// Network type
+	NetType string `json:"netType"`
+
+	// Network
+	Network string `json:"network"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
 }
 
-type FlipGroupList []FlipGroupItem
+// List of FLIPGroup
+type ListFLIPGroups []ItemFLIPGroup

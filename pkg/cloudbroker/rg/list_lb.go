@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list load balancers
 type ListLBRequest struct {
+	// Resource group ID
+	// Required: true
 	RGID uint64 `url:"rgId"`
 }
 
-func (rgrq ListLBRequest) Validate() error {
+func (rgrq ListLBRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -19,25 +22,26 @@ func (rgrq ListLBRequest) Validate() error {
 	return nil
 }
 
+// ListLB gets list all load balancers in the specified resource group, accessible by the user
 func (r RG) ListLB(ctx context.Context, req ListLBRequest) (ListLB, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
 	url := "/cloudbroker/rg/listLb"
 
-	lbListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	lbList := ListLB{}
+	list := ListLB{}
 
-	err = json.Unmarshal(lbListRaw, &lbList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return lbList, nil
+	return list, nil
 }

@@ -1,89 +1,226 @@
 package lb
 
-type LoadBalancer struct {
-	HAMode        bool        `json:"HAmode"`
-	ACL           interface{} `json:"acl"`
-	Backends      []Backend   `json:"backends"`
-	CreatedBy     string      `json:"createdBy"`
-	CreatedTime   uint64      `json:"createdTime"`
-	DeletedBy     string      `json:"deletedBy"`
-	DeletedTime   uint64      `json:"deletedTime"`
-	Description   string      `json:"desc"`
-	DPAPIUser     string      `json:"dpApiUser"`
-	ExtNetID      uint64      `json:"extnetId"`
-	Frontends     []Frontend  `json:"frontends"`
-	GID           uint64      `json:"gid"`
-	GUID          uint64      `json:"guid"`
-	ID            uint64      `json:"id"`
-	ImageID       uint64      `json:"imageId"`
-	Milestones    uint64      `json:"milestones"`
-	Name          string      `json:"name"`
-	PrimaryNode   Node        `json:"primaryNode"`
-	RGID          uint64      `json:"rgId"`
-	RGName        string      `json:"rgName"`
-	SecondaryNode Node        `json:"secondaryNode"`
-	Status        string      `json:"status"`
-	TechStatus    string      `json:"techStatus"`
-	UpdatedBy     string      `json:"updatedBy"`
-	UpdatedTime   uint64      `json:"updatedTime"`
-	VINSID        uint64      `json:"vinsId"`
+// Detailed information about load balancer
+type RecordLB struct {
+	//HAMode
+	HAMode bool `json:"HAmode"`
+
+	// Access Control List
+	ACL interface{} `json:"acl"`
+
+	// List of load balancer backends
+	Backends ListBackends `json:"backends"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// DPAPIUser
+	DPAPIUser string `json:"dpApiUser"`
+
+	// External network ID
+	ExtNetID uint64 `json:"extnetId"`
+
+	// List of load balancer frontends
+	Frontends ListFrontends `json:"frontends"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Image ID
+	ImageID uint64 `json:"imageId"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Primary node
+	PrimaryNode RecordNode `json:"primaryNode"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Secondary node
+	SecondaryNode RecordNode `json:"secondaryNode"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// VINS ID
+	VINSID uint64 `json:"vinsId"`
 }
 
-type LoadBalancerDetailed struct {
+// Main information about load balancer
+type ItemLoadBalancer struct {
+	// DPAPIPassword
 	DPAPIPassword string `json:"dpApiPassword"`
-	LoadBalancer
+	// Detailed information about load balancer
+	RecordLB
 }
 
-type Backend struct {
-	Algorithm             string         `json:"algorithm"`
-	GUID                  string         `json:"guid"`
-	Name                  string         `json:"name"`
-	ServerDefaultSettings ServerSettings `json:"serverDefaultSettings"`
-	Servers               []Server       `json:"servers"`
+// List of load balancers
+type ListLB []ItemLoadBalancer
+
+// Main information about backend
+type ItemBackend struct {
+	// Algorithm
+	Algorithm string `json:"algorithm"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Server settings
+	ServerDefaultSettings RecordServerSettings `json:"serverDefaultSettings"`
+
+	// List of servers
+	Servers ListServers `json:"servers"`
 }
 
-type LBList []LoadBalancerDetailed
+// List of backends
+type ListBackends []ItemBackend
 
-type ServerSettings struct {
-	Inter     uint64 `json:"inter"`
-	GUID      string `json:"guid"`
+// Server settings
+type RecordServerSettings struct {
+	// Inter
+	Inter uint64 `json:"inter"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// DownInter
 	DownInter uint64 `json:"downinter"`
-	Rise      uint64 `json:"rise"`
-	Fall      uint64 `json:"fall"`
+
+	// Rise
+	Rise uint64 `json:"rise"`
+
+	// Fall
+	Fall uint64 `json:"fall"`
+
+	// SlowStart
 	SlowStart uint64 `json:"slowstart"`
-	MaxConn   uint64 `json:"maxconn"`
-	MaxQueue  uint64 `json:"maxqueue"`
-	Weight    uint64 `json:"weight"`
+
+	// Max connections
+	MaxConn uint64 `json:"maxconn"`
+
+	// Max queue
+	MaxQueue uint64 `json:"maxqueue"`
+
+	// Weight
+	Weight uint64 `json:"weight"`
 }
 
-type Server struct {
-	Address        string         `json:"address"`
-	Check          string         `json:"check"`
-	GUID           string         `json:"guid"`
-	Name           string         `json:"name"`
-	Port           uint64         `json:"port"`
-	ServerSettings ServerSettings `json:"serverSettings"`
-}
+// Main information about server
+type ItemServer struct {
 
-type Node struct {
-	BackendIP  string `json:"backendIp"`
-	ComputeID  uint64 `json:"computeId"`
-	FrontendIP string `json:"frontendIp"`
-	GUID       string `json:"guid"`
-	MGMTIP     string `json:"mgmtIp"`
-	NetworkID  uint64 `json:"networkId"`
-}
-
-type Frontend struct {
-	Backend  string    `json:"backend"`
-	Bindings []Binding `json:"bindings"`
-	GUID     string    `json:"guid"`
-	Name     string    `json:"name"`
-}
-
-type Binding struct {
+	// Address
 	Address string `json:"address"`
-	GUID    string `json:"guid"`
-	Name    string `json:"name"`
-	Port    uint64 `json:"port"`
+
+	// Check
+	Check string `json:"check"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Port
+	Port uint64 `json:"port"`
+
+	// Server settings
+	ServerSettings RecordServerSettings `json:"serverSettings"`
 }
+
+// List of servers
+type ListServers []ItemServer
+
+// Main information about node
+type RecordNode struct {
+	// Backend IP
+	BackendIP string `json:"backendIp"`
+
+	// Compute ID
+	ComputeID uint64 `json:"computeId"`
+
+	// Frontend IP
+	FrontendIP string `json:"frontendIp"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// MGMTIP
+	MGMTIP string `json:"mgmtIp"`
+
+	// Network ID
+	NetworkID uint64 `json:"networkId"`
+}
+
+// Main information about frontend
+type ItemFrontend struct {
+	// Backend
+	Backend string `json:"backend"`
+
+	// List of bindings
+	Bindings ListBindings `json:"bindings"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+}
+
+// List of frontends
+type ListFrontends []ItemFrontend
+
+// Main information about bindings
+type ItemBinding struct {
+	// Address
+	Address string `json:"address"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Port
+	Port uint64 `json:"port"`
+}
+
+// List of bindings
+type ListBindings []ItemBinding

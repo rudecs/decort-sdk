@@ -6,24 +6,40 @@ import (
 	"net/http"
 )
 
+// Request struct for list the available flavors
 type ListRequest struct {
+	// ID of the cloudspace
+	// Required: false
 	CloudspaceID uint64 `url:"cloudspaceId,omitempty"`
-	Location     string `url:"location,omitempty"`
-	Page         uint64 `url:"page,omitempty"`
-	Size         uint64 `url:"size,omitempty"`
+
+	// Location code for the sizes
+	// Required: false
+	Location string `url:"location,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (s Sizes) List(ctx context.Context, req ListRequest) (SizesList, error) {
+// List gets list the available flavors, filtering can be based on the user which is doing the request
+func (s Sizes) List(ctx context.Context, req ListRequest) (ListSizes, error) {
 	url := "/cloudapi/sizes/list"
-	sizesListRaw, err := s.client.DecortApiCall(ctx, http.MethodPost, url, req)
+
+	res, err := s.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	sizesList := SizesList{}
-	if err := json.Unmarshal(sizesListRaw, &sizesList); err != nil {
+	list := ListSizes{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
 		return nil, err
 	}
 
-	return sizesList, nil
+	return list, nil
 }

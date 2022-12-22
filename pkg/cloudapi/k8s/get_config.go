@@ -6,11 +6,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get configuration of kubernetes cluster
 type GetConfigRequest struct {
+	// Kubernetes cluster ID
+	// Required: true
 	K8SID uint64 `url:"k8sId"`
 }
 
-func (krq GetConfigRequest) Validate() error {
+func (krq GetConfigRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -18,8 +21,9 @@ func (krq GetConfigRequest) Validate() error {
 	return nil
 }
 
+// GetConfig gets configuration data to access Kubernetes cluster
 func (k8s K8S) GetConfig(ctx context.Context, req GetConfigRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}

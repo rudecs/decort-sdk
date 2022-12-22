@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
-type ListFlipGroupsRequest struct {
+// Request struct for get list FLIPGroups
+type ListFLIPGroupsRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListFlipGroupsRequest) Validate() error {
+func (arq ListFLIPGroupsRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq ListFlipGroupsRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListFlipGroups(ctx context.Context, req ListFlipGroupsRequest) (AccountFlipGroupsList, error) {
-	err := req.Validate()
+// ListFLIPGroups gets list all FLIPGroups under specified account, accessible by the user
+func (a Account) ListFLIPGroups(ctx context.Context, req ListFLIPGroupsRequest) (ListFLIPGroups, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +36,12 @@ func (a Account) ListFlipGroups(ctx context.Context, req ListFlipGroupsRequest) 
 		return nil, err
 	}
 
-	accountFlipGroupsList := AccountFlipGroupsList{}
+	list := ListFLIPGroups{}
 
-	err = json.Unmarshal(res, &accountFlipGroupsList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountFlipGroupsList, nil
-
+	return list, nil
 }

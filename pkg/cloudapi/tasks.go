@@ -4,6 +4,7 @@ import (
 	"github.com/rudecs/decort-sdk/pkg/cloudapi/tasks"
 )
 
-func (ca *CloudApi) Tasks() *tasks.Tasks {
+// Accessing the Tasks method group
+func (ca *CloudAPI) Tasks() *tasks.Tasks {
 	return tasks.New(ca.client)
 }

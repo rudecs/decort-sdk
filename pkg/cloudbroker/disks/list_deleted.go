@@ -3,25 +3,29 @@ package disks
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 )
 
+// Request struct for get list deleted disks
 type ListDeletedRequest struct {
-	AccountID uint64 `url:"accountId"`
-	Type      string `url:"type,omitempty"`
-	Page      uint64 `url:"page,omitempty"`
-	Size      uint64 `url:"size,omitempty"`
+	// ID of the account the disks belong to
+	// Required: false
+	AccountID uint64 `url:"accountId,omitempty"`
+
+	// Type of the disks
+	// Required: false
+	Type string `url:"type,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (drq ListDeletedRequest) Validate() error {
-	if drq.AccountID == 0 {
-		return errors.New("validation-error: field AccountID must be set")
-	}
-
-	return nil
-}
-
+// ListDeleted gets list the deleted disks based on filter
 func (d Disks) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListDeletedDisks, error) {
 	url := "/cloudbroker/disks/listDeleted"
 
@@ -30,12 +34,12 @@ func (d Disks) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListDel
 		return nil, err
 	}
 
-	deletedDisks := ListDeletedDisks{}
+	list := ListDeletedDisks{}
 
-	err = json.Unmarshal(res, &deletedDisks)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return deletedDisks, nil
+	return list, nil
 }

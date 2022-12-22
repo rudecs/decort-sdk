@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for eject CD image
 type CDEjectRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq CDEjectRequest) Validate() error {
+func (crq CDEjectRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq CDEjectRequest) Validate() error {
 	return nil
 }
 
+// CDEject eject CD image to compute's CD-ROM
 func (c Compute) CDEject(ctx context.Context, req CDEjectRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

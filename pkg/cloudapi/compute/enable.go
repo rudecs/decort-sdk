@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for enable compute
 type EnableRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq EnableRequest) Validate() error {
+func (crq EnableRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq EnableRequest) Validate() error {
 	return nil
 }
 
+// Enable enables compute
 func (c Compute) Enable(ctx context.Context, req EnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

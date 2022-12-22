@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for delete workers group
 type WorkersGroupDeleteRequest struct {
-	K8SID          uint64 `url:"k8sId"`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// Worker group ID
+	// Required: true
 	WorkersGroupID uint64 `url:"workersGroupId"`
 }
 
-func (krq WorkersGroupDeleteRequest) Validate() error {
+func (krq WorkersGroupDeleteRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
-
 	if krq.WorkersGroupID == 0 {
 		return errors.New("validation-error: field WorkersGroupID can not be empty or equal to 0")
 	}
@@ -24,8 +29,9 @@ func (krq WorkersGroupDeleteRequest) Validate() error {
 	return nil
 }
 
+// WorkersGroupDelete deletes workers group from Kubernetes cluster
 func (k8s K8S) WorkersGroupDelete(ctx context.Context, req WorkersGroupDeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -41,5 +47,6 @@ func (k8s K8S) WorkersGroupDelete(ctx context.Context, req WorkersGroupDeleteReq
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

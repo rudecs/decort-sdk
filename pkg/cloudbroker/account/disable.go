@@ -7,23 +7,31 @@ import (
 	"strconv"
 )
 
+// Request struct for disable account
 type DisableRequest struct {
+	// ID of account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
-	Reason    string `url:"reason"`
+
+	// Reason to disable
+	// Required: true
+	Reason string `url:"reason"`
 }
 
-func (arq DisableRequest) Validate() error {
+func (arq DisableRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
 	if arq.Reason == "" {
 		return errors.New("validation-error: field Reason must be set")
 	}
+
 	return nil
 }
 
+// Disable disables an account
 func (a Account) Disable(ctx context.Context, req DisableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

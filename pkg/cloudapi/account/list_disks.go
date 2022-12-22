@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list deleted disks
 type ListDisksRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListDisksRequest) Validate() error {
+func (arq ListDisksRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq ListDisksRequest) Validate() error {
 	return nil
 }
 
-func (a Account) ListDisks(ctx context.Context, req ListDisksRequest) (AccountDisksList, error) {
-	err := req.Validate()
+// ListDisks gets list all currently unattached disks under specified account
+func (a Account) ListDisks(ctx context.Context, req ListDisksRequest) (ListDisks, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +36,12 @@ func (a Account) ListDisks(ctx context.Context, req ListDisksRequest) (AccountDi
 		return nil, err
 	}
 
-	accountDisksList := AccountDisksList{}
+	list := ListDisks{}
 
-	err = json.Unmarshal(res, &accountDisksList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountDisksList, nil
-
+	return list, nil
 }

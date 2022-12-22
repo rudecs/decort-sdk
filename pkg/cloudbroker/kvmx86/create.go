@@ -7,28 +7,92 @@ import (
 	"strconv"
 )
 
+// Request struct for create KVM x86 VM
 type CreateRequest struct {
-	RGID     uint64 `url:"rgId"`
-	Name     string `url:"name"`
-	CPU      uint64 `url:"cpu"`
-	RAM      uint64 `url:"ram"`
-	ImageID  uint64 `url:"imageId"`
+	// ID of the resource group, which will own this VM
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Name of this VM.
+	// Must be unique among all VMs (including those in DELETED state) in target resource group
+	// Required: true
+	Name string `url:"name"`
+
+	// Number CPUs to allocate to this VM
+	// Required: true
+	CPU uint64 `url:"cpu"`
+
+	// Volume of RAM in MB to allocate to this VM
+	// Required: true
+	RAM uint64 `url:"ram"`
+
+	// ID of the OS image to base this VM on;
+	// Could be boot disk image or CD-ROM image
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// Size of the boot disk in GB
+	// Required: false
 	BootDisk uint64 `url:"bootDisk,omitempty"`
-	SepID    uint64 `url:"sepId,omitempty"`
-	Pool     string `url:"pool,omitempty"`
-	NetType  string `url:"netType,omitempty"`
-	NetID    uint64 `url:"netId,omitempty"`
-	IPAddr   string `url:"ipAddr,omitempty"`
-	UserData string `url:"userdata,omitempty"`
-	Desc     string `url:"desc,omitempty"`
-	Start    bool   `url:"start,omitempty"`
-	StackID  uint64 `url:"stackId,omitempty"`
-	IS       string `url:"IS,omitempty"`
-	IpaType  string `url:"ipaType,omitempty"`
-	Reason   string `url:"reason,omitempty"`
+
+	// ID of SEP to create boot disk on.
+	// Uses images SEP ID if not set
+	// Required: false
+	SEPID uint64 `url:"sepId,omitempty"`
+
+	// Pool to use if SEP ID is set, can be also empty if needed to be chosen by system
+	// Required: false
+	Pool string `url:"pool,omitempty"`
+
+	// Network type
+	// Should be one of:
+	//	- VINS
+	//	- EXTNET
+	//	- NONE
+	// Required: false
+	NetType string `url:"netType,omitempty"`
+
+	// Network ID for connect to,
+	// for EXTNET - external network ID,
+	// for VINS - VINS ID,
+	// when network type is not "NONE"
+	// Required: false
+	NetID uint64 `url:"netId,omitempty"`
+
+	// IP address to assign to this VM when connecting to the specified network
+	// Required: false
+	IPAddr string `url:"ipAddr,omitempty"`
+
+	// Input data for cloud-init facility
+	// Required: false
+	Userdata string `url:"userdata,omitempty"`
+
+	// Text description of this VM
+	// Required: false
+	Description string `url:"desc,omitempty"`
+
+	// Start VM upon success
+	// Required: false
+	Start bool `url:"start,omitempty"`
+
+	// Stack ID
+	// Required: false
+	StackID uint64 `url:"stackId,omitempty"`
+
+	// System name
+	// Required: false
+	IS string `url:"IS,omitempty"`
+
+	// Compute purpose
+	// Required: false
+	IPAType string `url:"ipaType,omitempty"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (krq CreateRequest) Validate() error {
+func (krq CreateRequest) validate() error {
 	if krq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -48,8 +112,9 @@ func (krq CreateRequest) Validate() error {
 	return nil
 }
 
+// Create creates KVM PowerPC VM based on specified OS image
 func (k KVMX86) Create(ctx context.Context, req CreateRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}

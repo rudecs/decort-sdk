@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request for get information about compute
 type GetRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq GetRequest) Validate() error {
+func (crq GetRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq GetRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) Get(ctx context.Context, req GetRequest) (*ComputeRecord, error) {
-	err := req.Validate()
+// Get Gets information about compute
+func (c Compute) Get(ctx context.Context, req GetRequest) (*RecordCompute, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,11 +36,12 @@ func (c Compute) Get(ctx context.Context, req GetRequest) (*ComputeRecord, error
 		return nil, err
 	}
 
-	compute := &ComputeRecord{}
-	err = json.Unmarshal(res, compute)
+	info := RecordCompute{}
+
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return compute, nil
+	return &info, nil
 }

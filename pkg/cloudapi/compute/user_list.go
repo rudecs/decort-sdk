@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list users for compute
 type UserListRequest struct {
-	ComputeID uint64 `url:"computeId "`
+	// ID of the compute instance
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq UserListRequest) Validate() error {
+func (crq UserListRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,7 +22,12 @@ func (crq UserListRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) UserList(ctx context.Context, req UserListRequest) (*UserList, error) {
+// UserList gets users list for compute
+func (c Compute) UserList(ctx context.Context, req UserListRequest) (*RecordACL, error) {
+	err := req.validate()
+	if err != nil {
+		return nil, err
+	}
 
 	url := "/cloudapi/compute/userList"
 
@@ -28,12 +36,12 @@ func (c Compute) UserList(ctx context.Context, req UserListRequest) (*UserList, 
 		return nil, err
 	}
 
-	userList := &UserList{}
+	list := RecordACL{}
 
-	err = json.Unmarshal(res, userList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return userList, nil
+	return &list, nil
 }

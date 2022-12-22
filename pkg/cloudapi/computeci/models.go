@@ -1,14 +1,31 @@
 package computeci
 
-type ComputeCIRecord struct {
+// Main information about computeci
+type ItemComputeCI struct {
+	// Custom fields
 	CustomFields map[string]interface{} `json:"customFields"`
-	Description  string                 `json:"desc"`
-	Drivers      []string               `json:"drivers"`
-	GUID         uint64                 `json:"guid"`
-	ID           uint64                 `json:"id"`
-	Name         string                 `json:"name"`
-	Status       string                 `json:"status"`
-	Template     string                 `jsnn:"template"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// List drivers
+	Drivers []string `json:"drivers"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Template
+	Template string `jsnn:"template"`
 }
 
-type ComputeCIList []ComputeCIRecord
+// List of computeci instances
+type ListComputeCI []ItemComputeCI

@@ -6,23 +6,36 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of computeci
 type ListRequest struct {
-	IncludeDeleted bool   `url:"includeDeleted,omitempty"`
-	Page           uint64 `url:"page,omitempty"`
-	Size           uint64 `url:"size,omitempty"`
+	// If true list deleted instances as well
+	// Required: false
+	IncludeDeleted bool `url:"includeDeleted,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (c ComputeCI) List(ctx context.Context, req ListRequest) (ComputeCIList, error) {
+// List gets list of computeci instances
+func (c ComputeCI) List(ctx context.Context, req ListRequest) (ListComputeCI, error) {
 	url := "/cloudapi/computeci/list"
-	computeciListRaw, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
+
+	res, err := c.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	computeciList := ComputeCIList{}
-	if err := json.Unmarshal(computeciListRaw, &computeciList); err != nil {
+	list := ListComputeCI{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
 		return nil, err
 	}
 
-	return computeciList, nil
+	return list, nil
 }

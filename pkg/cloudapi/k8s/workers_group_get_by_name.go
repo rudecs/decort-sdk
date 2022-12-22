@@ -7,16 +7,21 @@ import (
 	"net/http"
 )
 
+// Request struct for get information about worker group
 type WorkersGroupGetByNameRequest struct {
-	K8SID     uint64 `url:"k8sId"`
-	GroupName string `url:"groupName "`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// Worker group name
+	// Required: true
+	GroupName string `url:"groupName"`
 }
 
-func (krq WorkersGroupGetByNameRequest) Validate() error {
+func (krq WorkersGroupGetByNameRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
-
 	if krq.GroupName == "" {
 		return errors.New("validation-error: field WorkersGroupID can not be empty")
 	}
@@ -24,8 +29,9 @@ func (krq WorkersGroupGetByNameRequest) Validate() error {
 	return nil
 }
 
-func (k8s K8S) WorkersGroupGetByName(ctx context.Context, req WorkersGroupGetByNameRequest) (*K8SGroup, error) {
-	err := req.Validate()
+// WorkersGroupGetByName gets worker group metadata by name
+func (k8s K8S) WorkersGroupGetByName(ctx context.Context, req WorkersGroupGetByNameRequest) (*RecordK8SGroups, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -37,12 +43,12 @@ func (k8s K8S) WorkersGroupGetByName(ctx context.Context, req WorkersGroupGetByN
 		return nil, err
 	}
 
-	group := &K8SGroup{}
+	info := RecordK8SGroups{}
 
-	err = json.Unmarshal(res, group)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return group, nil
+	return &info, nil
 }

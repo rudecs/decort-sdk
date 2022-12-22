@@ -6,14 +6,23 @@ import (
 	"net/http"
 )
 
+// Request struct for get list available images
 type ListRequest struct {
-	AccountID uint64 `json:"accountId"`
-	Page      uint64 `json:"page"`
-	Size      uint64 `json:"size"`
+	// Optional account ID to include account images
+	// Required: false
+	AccountID uint64 `json:"accountId,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `json:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `json:"size,omitempty"`
 }
 
-func (i Image) List(ctx context.Context, req ListRequest) (ImageList, error) {
-
+// List gets list available images, optionally filtering by account ID
+func (i Image) List(ctx context.Context, req ListRequest) (ListImages, error) {
 	url := "/cloudapi/image/list"
 
 	res, err := i.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -21,12 +30,12 @@ func (i Image) List(ctx context.Context, req ListRequest) (ImageList, error) {
 		return nil, err
 	}
 
-	imageList := ImageList{}
+	list := ListImages{}
 
-	err = json.Unmarshal(res, &imageList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return imageList, nil
+	return list, nil
 }

@@ -6,23 +6,36 @@ import (
 	"net/http"
 )
 
+// Request struct for get list information about images
 type ListRequest struct {
-	IncludeDisabled bool   `url:"includeDisabled,omitempty"`
-	Page            uint64 `url:"page,omitempty"`
-	Size            uint64 `url:"size,omitempty"`
+	// List disabled items as well
+	// Required: false
+	IncludeDisabled bool `url:"includeDisabled,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (k K8CI) List(ctx context.Context, req ListRequest) (K8CIList, error) {
+// List gets list all k8ci catalog items available to the current user
+func (k K8CI) List(ctx context.Context, req ListRequest) (ListK8CI, error) {
 	url := "/cloudapi/k8ci/list"
-	k8ciListRaw, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
+
+	res, err := k.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	k8ciList := K8CIList{}
-	if err := json.Unmarshal(k8ciListRaw, &k8ciList); err != nil {
+	list := ListK8CI{}
+
+	err = json.Unmarshal(res, &list)
+	if err != nil {
 		return nil, err
 	}
 
-	return k8ciList, nil
+	return list, nil
 }

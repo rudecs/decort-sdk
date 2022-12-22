@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for pin comptute to stack
 type PinToStackRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq PinToStackRequest) Validate() error {
+func (crq PinToStackRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq PinToStackRequest) Validate() error {
 	return nil
 }
 
+// PinToStack pin compute to current stack
 func (c Compute) PinToStack(ctx context.Context, req PinToStackRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}
@@ -36,5 +40,6 @@ func (c Compute) PinToStack(ctx context.Context, req PinToStackRequest) (uint64,
 	if err != nil {
 		return 0, err
 	}
+
 	return result, nil
 }

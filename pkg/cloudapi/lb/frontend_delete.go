@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for delete frontend
 type FrontendDeleteRequest struct {
-	LBID         uint64 `url:"lbId"`
+	// ID of the load balancer instance to FrontendDelete
+	// Required: true
+	LBID uint64 `url:"lbId"`
+
+	// Name of the frontend to delete
+	// Required: true
 	FrontendName string `url:"frontendName"`
 }
 
-func (lbrq FrontendDeleteRequest) Validate() error {
+func (lbrq FrontendDeleteRequest) validate() error {
 	if lbrq.LBID == 0 {
 		return errors.New("validation-error: field LBID can not be empty or equal to 0")
 	}
-
 	if lbrq.FrontendName == "" {
 		return errors.New("validation-error: field FrontendName can not be empty")
 	}
@@ -24,8 +29,10 @@ func (lbrq FrontendDeleteRequest) Validate() error {
 	return nil
 }
 
+// FrontendDelete deletes frontend from the specified load balancer.
+// Warning: you cannot undo this action!
 func (l LB) FrontendDelete(ctx context.Context, req FrontendDeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

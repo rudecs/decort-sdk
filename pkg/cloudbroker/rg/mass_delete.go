@@ -6,14 +6,29 @@ import (
 	"net/http"
 )
 
+// Request struct for delete several resource groups
 type MassDeleteRequest struct {
-	RGIDs       []uint64 `url:"rgIds"`
-	Force       bool     `url:"force,omitempty"`
-	Permanently bool     `url:"permanently,omitempty"`
-	Reason      string   `url:"reason,omitempty"`
+	// IDs of the resource groups
+	// Required: true
+	RGIDs []uint64 `url:"rgIds"`
+
+	// Set to true if you want force delete non-empty resource groups
+	// Required: false
+	Force bool `url:"force,omitempty"`
+
+	// Set to true if you want to destroy resource group and all linked
+	// resources, if any, immediately.
+	// Otherwise, they will be placed into recycle bin and could be
+	// restored later within recycle bins purge period
+	// Required: false
+	Permanently bool `url:"permanently,omitempty"`
+
+	// Reason for action
+	// Required: false
+	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq MassDeleteRequest) Validate() error {
+func (rgrq MassDeleteRequest) validate() error {
 	if len(rgrq.RGIDs) == 0 {
 		return errors.New("validation-error: field RGIDs must be set")
 	}
@@ -21,8 +36,9 @@ func (rgrq MassDeleteRequest) Validate() error {
 	return nil
 }
 
+// MassDelete starts jobs to delete several resource groups
 func (r RG) MassDelete(ctx context.Context, req MassDeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

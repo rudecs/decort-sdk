@@ -7,12 +7,19 @@ import (
 	"strconv"
 )
 
+// Request struct for delete kubernetes cluster
 type DeleteRequest struct {
-	K8SID       uint64 `url:"k8sId"`
-	Permanently bool   `url:"permanently"`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// True if cluster is destroyed permanently.
+	// Otherwise it can be restored from Recycle Bin
+	// Required: true
+	Permanently bool `url:"permanently"`
 }
 
-func (krq DeleteRequest) Validate() error {
+func (krq DeleteRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -20,8 +27,9 @@ func (krq DeleteRequest) Validate() error {
 	return nil
 }
 
+// Delete deletes kubernetes cluster
 func (k8s K8S) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -37,5 +45,6 @@ func (k8s K8S) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

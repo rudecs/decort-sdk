@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of computes
 type ListComputesRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq ListComputesRequest) Validate() error {
+func (rgrq ListComputesRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
@@ -20,8 +26,9 @@ func (rgrq ListComputesRequest) Validate() error {
 	return nil
 }
 
+// ListComputes gets list of all compute instances under specified resource group, accessible by the user
 func (r RG) ListComputes(ctx context.Context, req ListComputesRequest) (ListComputes, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +40,12 @@ func (r RG) ListComputes(ctx context.Context, req ListComputesRequest) (ListComp
 		return nil, err
 	}
 
-	listComputes := ListComputes{}
+	list := ListComputes{}
 
-	err = json.Unmarshal(res, &listComputes)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return listComputes, nil
+	return list, nil
 }

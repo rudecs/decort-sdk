@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// GetDefault get default external network ID
 func (e ExtNet) GetDefault(ctx context.Context) (uint64, error) {
 	url := "/cloudapi/extnet/getDefault"
 
@@ -20,5 +21,4 @@ func (e ExtNet) GetDefault(ctx context.Context) (uint64, error) {
 	}
 
 	return result, nil
-
 }

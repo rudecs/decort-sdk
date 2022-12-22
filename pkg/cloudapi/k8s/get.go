@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get detailed information about kubernetes cluster
 type GetRequest struct {
+	// Kubernetes cluster ID
+	// Required: true
 	K8SID uint64 `url:"k8sId"`
 }
 
-func (krq GetRequest) Validate() error {
+func (krq GetRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (krq GetRequest) Validate() error {
 	return nil
 }
 
-func (k8s K8S) Get(ctx context.Context, req GetRequest) (*K8SRecord, error) {
-	err := req.Validate()
+// Get gets information about Kubernetes cluster
+func (k8s K8S) Get(ctx context.Context, req GetRequest) (*RecordK8S, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +36,12 @@ func (k8s K8S) Get(ctx context.Context, req GetRequest) (*K8SRecord, error) {
 		return nil, err
 	}
 
-	k8sInfo := &K8SRecord{}
+	info := RecordK8S{}
 
-	err = json.Unmarshal(res, k8sInfo)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return k8sInfo, nil
+	return &info, nil
 }

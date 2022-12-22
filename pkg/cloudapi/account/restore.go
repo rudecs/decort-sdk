@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for restore a deleted account
 type RestoreRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq RestoreRequest) Validate() error {
+func (arq RestoreRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restores a deleted account
 func (a Account) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +42,4 @@ func (a Account) Restore(ctx context.Context, req RestoreRequest) (bool, error) 
 	}
 
 	return result, nil
-
 }

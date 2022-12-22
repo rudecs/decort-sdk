@@ -9,21 +9,32 @@ import (
 	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for grant access to compute
 type UserGrantRequest struct {
-	ComputeID  uint64 `url:"computeId"`
-	Username   string `url:"userName"`
+	// ID of the compute instance
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
+
+	// Name of the user to add
+	// Required: true
+	Username string `url:"userName"`
+
+	// Access type
+	// Should be one of:
+	//	- 'R' for Read only
+	//	- 'RCX' for Write
+	//	- 'ARCXDU' for Admin
+	// Required: true
 	AccessType string `url:"accesstype"`
 }
 
-func (crq UserGrantRequest) Validate() error {
+func (crq UserGrantRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.Username == "" {
 		return errors.New("validation-error: field UserName can not be empty")
 	}
-
 	if crq.AccessType == "" {
 		return errors.New("validation-error: field AccessType can not be empty")
 	}
@@ -35,8 +46,9 @@ func (crq UserGrantRequest) Validate() error {
 	return nil
 }
 
+// UserGrant grant user access to the compute
 func (c Compute) UserGrant(ctx context.Context, req UserGrantRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -52,5 +64,6 @@ func (c Compute) UserGrant(ctx context.Context, req UserGrantRequest) (bool, err
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

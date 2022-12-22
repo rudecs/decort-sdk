@@ -7,23 +7,31 @@ import (
 	"strconv"
 )
 
+// Request struct for enable account
 type EnableRequest struct {
+	// ID of account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
-	Reason    string `url:"reason"`
+
+	// Reason to enable
+	// Required: true
+	Reason string `url:"reason"`
 }
 
-func (arq EnableRequest) Validate() error {
+func (arq EnableRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
 	if arq.Reason == "" {
 		return errors.New("field Reason must be set")
 	}
+
 	return nil
 }
 
+// Enable enables an account
 func (a Account) Enable(ctx context.Context, req EnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

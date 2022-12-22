@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list deleted disks
 type ListDisksRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListDisksRequest) Validate() error {
+func (arq ListDisksRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
@@ -19,25 +22,26 @@ func (arq ListDisksRequest) Validate() error {
 	return nil
 }
 
+// ListDisks gets list all currently unattached disks under specified account
 func (a Account) ListDisks(ctx context.Context, req ListDisksRequest) (ListDisks, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
-		return ListDisks{}, err
+		return nil, err
 	}
 
 	url := "/cloudbroker/account/listDisks"
 
-	result := ListDisks{}
-
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
-		return ListDisks{}, err
+		return nil, err
 	}
 
-	err = json.Unmarshal(res, &result)
+	list := ListDisks{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
-		return ListDisks{}, err
+		return nil, err
 	}
 
-	return result, nil
+	return list, nil
 }

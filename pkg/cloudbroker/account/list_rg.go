@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list resource groups
 type ListRGRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq ListRGRequest) Validate() error {
+func (arq ListRGRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
@@ -19,25 +22,26 @@ func (arq ListRGRequest) Validate() error {
 	return nil
 }
 
+// ListRG gets list all resource groups under specified account, accessible by the user
 func (a Account) ListRG(ctx context.Context, req ListRGRequest) (ListRG, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
-		return ListRG{}, err
+		return nil, err
 	}
 
 	url := "/cloudbroker/account/listRG"
 
-	result := ListRG{}
-
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
-		return ListRG{}, err
+		return nil, err
 	}
 
-	err = json.Unmarshal(res, &result)
+	list := ListRG{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
-		return ListRG{}, err
+		return nil, err
 	}
 
-	return result, nil
+	return list, nil
 }

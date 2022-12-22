@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for insert new CD image
 type CDInsertRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	CDROMID   uint64 `url:"cdromId"`
+
+	// ID of CD-ROM image
+	// Required: true
+	CDROMID uint64 `url:"cdromId"`
 }
 
-func (crq CDInsertRequest) Validate() error {
+func (crq CDInsertRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -23,8 +29,9 @@ func (crq CDInsertRequest) Validate() error {
 	return nil
 }
 
+// CDInsert insert new CD image to compute's CD-ROM
 func (c Compute) CDInsert(ctx context.Context, req CDInsertRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

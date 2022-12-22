@@ -6,24 +6,32 @@ import (
 	"net/http"
 )
 
+// Request struct for get list deleted accounts
 type ListDeletedRequest struct {
-	Page uint64 `url:"page,omitempty"`
-	Size uint64 `url:"size,omitempty"`
+	// Page number
+	// Required: false
+	Page uint64 `url:"page"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size"`
 }
 
-func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListInfoResponse, error) {
+// ListDeleted gets list all deleted accounts the user has access to
+func (a Account) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListAccounts, error) {
 	url := "/cloudbroker/account/listDeleted"
 
-	result := ListInfoResponse{}
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
-		return ListInfoResponse{}, err
+		return nil, err
 	}
 
-	err = json.Unmarshal(res, &result)
+	list := ListAccounts{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
-		return ListInfoResponse{}, err
+		return nil, err
 	}
 
-	return result, err
+	return list, nil
 }

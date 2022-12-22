@@ -6,26 +6,36 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of VINSes
 type ListRequest struct {
-	IncludeDeleted bool   `url:"includeDeleted"`
-	Page           uint64 `url:"page"`
-	Size           uint64 `url:"size"`
+	// Include deleted
+	// Required: false
+	IncludeDeleted bool `url:"includeDeleted,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (v VINS) List(ctx context.Context, req ListRequest) (VINSList, error) {
+// List gets list of VINSes available for current user
+func (v VINS) List(ctx context.Context, req ListRequest) (ListVINS, error) {
 	url := "/cloudapi/vins/list"
 
-	VINSListRaw, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := v.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	VINSList := VINSList{}
-	err = json.Unmarshal(VINSListRaw, &VINSList)
+	list := ListVINS{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return VINSList, nil
-
+	return list, nil
 }

@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for change status of account
 type DisabelEnableRequest struct {
+	// ID of account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq DisabelEnableRequest) Validate() error {
+func (arq DisabelEnableRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (arq DisabelEnableRequest) Validate() error {
 	return nil
 }
 
+// Disable disables an account
 func (a Account) Disable(ctx context.Context, req DisabelEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -40,8 +44,9 @@ func (a Account) Disable(ctx context.Context, req DisabelEnableRequest) (bool, e
 	return result, nil
 }
 
+// Enable enables an account
 func (a Account) Enable(ctx context.Context, req DisabelEnableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

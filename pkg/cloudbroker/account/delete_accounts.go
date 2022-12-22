@@ -6,24 +6,35 @@ import (
 	"net/http"
 )
 
+// Request struct for delete group accounts
 type DeleteAccountsRequest struct {
+	// IDs of accounts
+	// Required: true
 	AccountsIDs []uint64 `url:"accountIds"`
-	Reason      string   `url:"reason"`
-	Permanently bool     `url:"permanently,omitempty"`
+
+	// Reason for deletion
+	// Required: true
+	Reason string `url:"reason"`
+
+	// Whether to completely destroy accounts or not
+	// Required: false
+	Permanently bool `url:"permanently,omitempty"`
 }
 
-func (arq DeleteAccountsRequest) Validate() error {
-	if arq.AccountsIDs == nil || len(arq.AccountsIDs) == 0 {
+func (arq DeleteAccountsRequest) validate() error {
+	if len(arq.AccountsIDs) == 0 {
 		return errors.New("validation-error: field AccountIDs must be set")
 	}
 	if arq.Reason == "" {
 		return errors.New("validation-error: field Reason must be set")
 	}
+
 	return nil
 }
 
+// DeleteAccounts destroy a group of accounts
 func (a Account) DeleteAccounts(ctx context.Context, req DeleteAccountsRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

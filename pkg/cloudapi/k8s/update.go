@@ -7,13 +7,24 @@ import (
 	"strconv"
 )
 
+// Request struct for update kubernetes cluster
 type UpdateRequest struct {
-	K8SID       uint64 `url:"k8sId"`
-	Name        string `url:"name,omitempty"`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// New name to set.
+	// If empty string is passed, name is not updated
+	// Required: false
+	Name string `url:"name,omitempty"`
+
+	// New description to set.
+	// If empty string is passed, description is not updated
+	// Required: false
 	Description string `url:"desc,omitempty"`
 }
 
-func (krq UpdateRequest) Validate() error {
+func (krq UpdateRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -21,8 +32,9 @@ func (krq UpdateRequest) Validate() error {
 	return nil
 }
 
+// Update updates name or description of Kubernetes cluster
 func (k8s K8S) Update(ctx context.Context, req UpdateRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -38,5 +50,6 @@ func (k8s K8S) Update(ctx context.Context, req UpdateRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

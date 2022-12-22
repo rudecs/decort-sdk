@@ -9,21 +9,32 @@ import (
 	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for update user access
 type UserUpdateRequest struct {
-	ComputeID  uint64 `url:"computeId"`
-	Username   string `url:"userName"`
+	// ID of the compute instance
+	// Required: true
+	ComputeID uint64 `url:"computeId"`
+
+	// Name of the user to update
+	// Required: true
+	Username string `url:"userName"`
+
+	// Access type
+	// Should be one of:
+	//	- 'R' for Read only
+	//	- 'RCX' for Write
+	//	- 'ARCXDU' for Admin
+	// Required: true
 	AccessType string `url:"accesstype"`
 }
 
-func (crq UserUpdateRequest) Validate() error {
+func (crq UserUpdateRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.Username == "" {
 		return errors.New("validation-error: field UserName can not be empty")
 	}
-
 	if crq.AccessType == "" {
 		return errors.New("validation-error: field AccessType can not be empty")
 	}
@@ -35,8 +46,9 @@ func (crq UserUpdateRequest) Validate() error {
 	return nil
 }
 
+// UserUpdate updates user access to the compute
 func (c Compute) UserUpdate(ctx context.Context, req UserUpdateRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -52,5 +64,6 @@ func (c Compute) UserUpdate(ctx context.Context, req UserUpdateRequest) (bool, e
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

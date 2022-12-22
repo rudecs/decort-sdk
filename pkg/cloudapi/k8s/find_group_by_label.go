@@ -7,17 +7,26 @@ import (
 	"net/http"
 )
 
+// Request struct for get information about group of kubernetes cluster
 type FindGroupByLabelRequest struct {
-	K8SID  uint64   `url:"k8sId"`
+	// Kubernetes cluster ID
+	// Required: true
+	K8SID uint64 `url:"k8sId"`
+
+	// List of labels to search
+	// Required: true
 	Labels []string `url:"labels"`
-	Strict bool     `url:"strict"`
+
+	// If true and more than one label provided, select only groups that have all provided labels.
+	// If false - groups that have at least one label
+	// Required: true
+	Strict bool `url:"strict"`
 }
 
-func (krq FindGroupByLabelRequest) Validate() error {
+func (krq FindGroupByLabelRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
-
 	if len(krq.Labels) == 0 {
 		return errors.New("validation-error: field Labels can not be empty")
 	}
@@ -25,8 +34,9 @@ func (krq FindGroupByLabelRequest) Validate() error {
 	return nil
 }
 
-func (k8s K8S) FindGroupByLabel(ctx context.Context, req FindGroupByLabelRequest) (K8SGroupList, error) {
-	err := req.Validate()
+// FindGroupByLabel find worker group information by one on more labels
+func (k8s K8S) FindGroupByLabel(ctx context.Context, req FindGroupByLabelRequest) (ListK8SGroups, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -38,12 +48,12 @@ func (k8s K8S) FindGroupByLabel(ctx context.Context, req FindGroupByLabelRequest
 		return nil, err
 	}
 
-	k8sGroupList := K8SGroupList{}
+	list := ListK8SGroups{}
 
-	err = json.Unmarshal(res, &k8sGroupList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return k8sGroupList, nil
+	return list, nil
 }

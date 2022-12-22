@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for clear affinity label for compute
 type AffinityLabelRemoveRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq AffinityLabelRemoveRequest) Validate() error {
+func (crq AffinityLabelRemoveRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq AffinityLabelRemoveRequest) Validate() error {
 	return nil
 }
 
+// AffinityLabelRemove clear affinity label for compute
 func (c Compute) AffinityLabelRemove(ctx context.Context, req AffinityLabelRemoveRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

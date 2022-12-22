@@ -7,13 +7,22 @@ import (
 	"strconv"
 )
 
+// Request struct for IP relese
 type IPReleaseRequest struct {
+	// VINS ID
+	// Required: true
 	VINSID uint64 `url:"vinsId"`
+
+	// IP address
+	// Required: false
 	IPAddr string `url:"ipAddr,omitempty"`
-	MAC    string `url:"mac,omitempty"`
+
+	// MAC address
+	// Required: false
+	MAC string `url:"mac,omitempty"`
 }
 
-func (vrq IPReleaseRequest) Validate() error {
+func (vrq IPReleaseRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
@@ -21,8 +30,10 @@ func (vrq IPReleaseRequest) Validate() error {
 	return nil
 }
 
+// IPRelese delete IP reservation matched by specified IP & MAC address combination.
+// If both IP and MAC address are empty strings, all IP reservations will be deleted.
 func (v VINS) IPRelese(ctx context.Context, req IPReleaseRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -40,5 +51,4 @@ func (v VINS) IPRelese(ctx context.Context, req IPReleaseRequest) (bool, error) 
 	}
 
 	return result, nil
-
 }

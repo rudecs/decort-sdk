@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for restore a deleted unattached disk
 type RestoreRequest struct {
+	// ID of the disk to restore
+	// Required: true
 	DiskID uint64 `url:"diskId"`
+
+	// Reason for restoring the disk
+	// Required: true
 	Reason string `url:"reason"`
 }
 
-func (drq RestoreRequest) Validate() error {
+func (drq RestoreRequest) validate() error {
 	if drq.DiskID == 0 {
 		return errors.New("validation-error: field DiskID must be set")
 	}
@@ -23,8 +29,9 @@ func (drq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restore a deleted unattached disk from recycle bin
 func (d Disks) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -42,5 +49,4 @@ func (d Disks) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
 	}
 
 	return result, nil
-
 }

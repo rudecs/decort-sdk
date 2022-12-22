@@ -7,20 +7,28 @@ import (
 	"strconv"
 )
 
+// Request struct for add tag to compute
 type TagAddRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Key       string `url:"key"`
-	Value     string `url:"value"`
+
+	// Tag key
+	// Required: true
+	Key string `url:"key"`
+
+	// Tag value
+	// Required: true
+	Value string `url:"value"`
 }
 
-func (crq TagAddRequest) Validate() error {
+func (crq TagAddRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
 	if crq.Key == "" {
 		return errors.New("validation-error: field Key can not be empty")
 	}
-
 	if crq.Value == "" {
 		return errors.New("validation-error: field Value can not be empty")
 	}
@@ -28,8 +36,9 @@ func (crq TagAddRequest) Validate() error {
 	return nil
 }
 
+// TagAdd add tag to compute tags dict
 func (c Compute) TagAdd(ctx context.Context, req TagAddRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -45,5 +54,6 @@ func (c Compute) TagAdd(ctx context.Context, req TagAddRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

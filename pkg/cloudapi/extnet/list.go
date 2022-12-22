@@ -6,26 +6,36 @@ import (
 	"net/http"
 )
 
+// Request struct for get list external network
 type ListRequest struct {
-	AccountID uint64 `url:"accountId"`
-	Page      uint64 `url:"page"`
-	Size      uint64 `url:"size"`
+	// Filter by account ID
+	// Required: false
+	AccountID uint64 `url:"accountId,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (e ExtNet) List(ctx context.Context, req ListRequest) (ExtNetList, error) {
+// List gets list all available external networks
+func (e ExtNet) List(ctx context.Context, req ListRequest) (ListExtNets, error) {
 	url := "/cloudapi/extnet/list"
 
-	extnetListRaw, err := e.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := e.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	extnetList := ExtNetList{}
-	err = json.Unmarshal(extnetListRaw, &extnetList)
+	list := ListExtNets{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return extnetList, nil
-
+	return list, nil
 }

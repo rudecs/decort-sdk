@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get compute audits
 type GetAuditsRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq GetAuditsRequest) Validate() error {
+func (crq GetAuditsRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq GetAuditsRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) GetAudits(ctx context.Context, req GetAuditsRequest) (AuditShortList, error) {
-	err := req.Validate()
+// GetAudits gets compute audits
+func (c Compute) GetAudits(ctx context.Context, req GetAuditsRequest) (ListShortAudits, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,11 +36,12 @@ func (c Compute) GetAudits(ctx context.Context, req GetAuditsRequest) (AuditShor
 		return nil, err
 	}
 
-	auditsList := AuditShortList{}
-	err = json.Unmarshal(res, &auditsList)
+	list := ListShortAudits{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return auditsList, nil
+	return list, nil
 }

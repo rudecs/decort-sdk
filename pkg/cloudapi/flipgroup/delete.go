@@ -7,24 +7,30 @@ import (
 	"strconv"
 )
 
+// Request struct for delete FLIPGroup
 type DeleteRequest struct {
-	FlipGroupID uint64 `url:"flipgroupId"`
+	// FLIPGroup ID
+	// Required: true
+	FLIPGroupID uint64 `url:"flipgroupId"`
 }
 
-func (frq DeleteRequest) Validate() error {
-	if frq.FlipGroupID == 0 {
-		return errors.New("field FlipGroupID can not be empty or equal to 0")
+func (frq DeleteRequest) validate() error {
+	if frq.FLIPGroupID == 0 {
+		return errors.New("field FLIPGroupID can not be empty or equal to 0")
 	}
 
 	return nil
 }
 
-func (f FlipGroup) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
-	if err := req.Validate(); err != nil {
+// Delete method wil delete Floating IP group
+func (f FLIPGroup) Delete(ctx context.Context, req DeleteRequest) (bool, error) {
+	err := req.validate()
+	if err != nil {
 		return false, err
 	}
 
 	url := "/cloudapi/flipgroup/delete"
+
 	res, err := f.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return false, err

@@ -7,12 +7,19 @@ import (
 	"net/http"
 )
 
+// Request struct for get compute snapshot real size on storage
 type SnapshotUsageRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Label     string `url:"label,omitempty"`
+
+	// Specify to show usage exact for this snapshot.
+	// Leave empty for get usage for all compute snapshots
+	// Required: false
+	Label string `url:"label,omitempty"`
 }
 
-func (crq SnapshotUsageRequest) Validate() error {
+func (crq SnapshotUsageRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -20,8 +27,11 @@ func (crq SnapshotUsageRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) SnapshotUsage(ctx context.Context, req SnapshotUsageRequest) (SnapshotUsageList, error) {
-	err := req.Validate()
+// SnapshotUsage Get compute snapshot real size on storage.
+// Always returns list of json objects, and first json object contains summary about all related
+// snapshots.
+func (c Compute) SnapshotUsage(ctx context.Context, req SnapshotUsageRequest) (ListUsageSnapshots, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +43,12 @@ func (c Compute) SnapshotUsage(ctx context.Context, req SnapshotUsageRequest) (S
 		return nil, err
 	}
 
-	snapshotUsage := SnapshotUsageList{}
+	list := ListUsageSnapshots{}
 
-	err = json.Unmarshal(res, &snapshotUsage)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return snapshotUsage, nil
+	return list, nil
 }

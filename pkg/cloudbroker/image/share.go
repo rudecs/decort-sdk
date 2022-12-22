@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for share image
 type ShareRequest struct {
-	ImageId    uint64   `url:"imageId"`
+	// ID of the image to share
+	// Required: true
+	ImageId uint64 `url:"imageId"`
+
+	// List of account IDs
+	// Required: true
 	AccountIDs []uint64 `url:"accounts"`
 }
 
-func (irq ShareRequest) Validate() error {
+func (irq ShareRequest) validate() error {
 	if irq.ImageId == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -23,8 +29,9 @@ func (irq ShareRequest) Validate() error {
 	return nil
 }
 
+// Share shares image with accounts
 func (i Image) Share(ctx context.Context, req ShareRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

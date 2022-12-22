@@ -6,14 +6,23 @@ import (
 	"net/http"
 )
 
+// Request struct for get list information K8S
 type ListRequest struct {
-	IncludeDeleted bool   `url:"includedeleted"`
-	Page           uint64 `url:"page"`
-	Size           uint64 `url:"size"`
+	// Include deleted clusters in result
+	// Required: false
+	IncludeDeleted bool `url:"includedeleted,omitempty"`
+
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (k8s K8S) List(ctx context.Context, req ListRequest) (K8SList, error) {
-
+// List gets list all kubernetes clusters the user has access to
+func (k8s K8S) List(ctx context.Context, req ListRequest) (ListK8SClusters, error) {
 	url := "/cloudapi/k8s/list"
 
 	res, err := k8s.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -21,12 +30,12 @@ func (k8s K8S) List(ctx context.Context, req ListRequest) (K8SList, error) {
 		return nil, err
 	}
 
-	k8sList := K8SList{}
+	list := ListK8SClusters{}
 
-	err = json.Unmarshal(res, &k8sList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return k8sList, nil
+	return list, nil
 }

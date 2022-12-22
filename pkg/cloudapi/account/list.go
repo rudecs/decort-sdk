@@ -6,12 +6,19 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of accounts
 type ListRequest struct {
+	// Page number
+	// Required: false
 	Page uint64 `url:"page"`
+
+	// Page size
+	// Required: false
 	Size uint64 `url:"size"`
 }
 
-func (a Account) List(ctx context.Context, req ListRequest) (AccountCloudApiList, error) {
+// List gets list all accounts the user has access to
+func (a Account) List(ctx context.Context, req ListRequest) (ListAccounts, error) {
 	url := "/cloudapi/account/list"
 
 	res, err := a.client.DecortApiCall(ctx, http.MethodPost, url, req)
@@ -19,13 +26,12 @@ func (a Account) List(ctx context.Context, req ListRequest) (AccountCloudApiList
 		return nil, err
 	}
 
-	accountList := AccountCloudApiList{}
+	list := ListAccounts{}
 
-	err = json.Unmarshal(res, &accountList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return accountList, nil
-
+	return list, nil
 }

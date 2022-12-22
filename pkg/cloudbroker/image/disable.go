@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for disable image
 type DisableRequest struct {
+	// ID of image to be disabled
+	// Required: true
 	ImageID uint64 `url:"imageId"`
 }
 
-func (irq DisableRequest) Validate() error {
+func (irq DisableRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -19,8 +22,9 @@ func (irq DisableRequest) Validate() error {
 	return nil
 }
 
+// Disable disables image
 func (i Image) Disable(ctx context.Context, req DisableRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

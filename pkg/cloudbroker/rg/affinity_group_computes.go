@@ -7,16 +7,21 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of all computes with their relationships
 type AffinityGroupComputesRequest struct {
-	RGID          uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Affinity group label
+	// Required: true
 	AffinityGroup string `url:"affinityGroup"`
 }
 
-func (rgrq AffinityGroupComputesRequest) Validate() error {
+func (rgrq AffinityGroupComputesRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
-
 	if rgrq.AffinityGroup == "" {
 		return errors.New("validation-error: field AffinityGroup must be set")
 	}
@@ -24,23 +29,25 @@ func (rgrq AffinityGroupComputesRequest) Validate() error {
 	return nil
 }
 
-func (r RG) AffinityGroupComputes(ctx context.Context, req AffinityGroupComputesRequest) (AffinityGroupComputeList, error) {
-	if err := req.Validate(); err != nil {
+// AffinityGroupComputes gets list of all computes with their relationships to another computes
+func (r RG) AffinityGroupComputes(ctx context.Context, req AffinityGroupComputesRequest) (ListAffinityGroupCompute, error) {
+	err := req.validate()
+	if err != nil {
 		return nil, err
 	}
 
 	url := "/cloudbroker/rg/affinityGroupComputes"
 
-	agcListRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	agcList := AffinityGroupComputeList{}
+	list := ListAffinityGroupCompute{}
 
-	if err := json.Unmarshal(agcListRaw, &agcList); err != nil {
+	if err := json.Unmarshal(res, &list); err != nil {
 		return nil, err
 	}
 
-	return agcList, nil
+	return list, nil
 }

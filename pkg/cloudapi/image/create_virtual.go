@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for create virtual image
 type CreateVirtualRequest struct {
-	Name     string `url:"name"`
+	// Name of the virtual image to create
+	// Required: true
+	Name string `url:"name"`
+
+	// ID of real image to link this virtual image to upon creation
+	// Required: true
 	TargetID uint64 `url:"targetId"`
 }
 
-func (irq CreateVirtualRequest) Validate() error {
+func (irq CreateVirtualRequest) validate() error {
 	if irq.Name == "" {
 		return errors.New("validation-error: field Name can not be empty")
 	}
-
 	if irq.TargetID == 0 {
 		return errors.New("validation-error: field TargetID can not be empty or equal to 0")
 	}
@@ -24,8 +29,9 @@ func (irq CreateVirtualRequest) Validate() error {
 	return nil
 }
 
+// CreateVirtual creates virtual image
 func (i Image) CreateVirtual(ctx context.Context, req CreateVirtualRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}
@@ -43,5 +49,4 @@ func (i Image) CreateVirtual(ctx context.Context, req CreateVirtualRequest) (uin
 	}
 
 	return result, nil
-
 }

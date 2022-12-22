@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get list port forwards
 type PFWListRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq PFWListRequest) Validate() error {
+func (crq PFWListRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq PFWListRequest) Validate() error {
 	return nil
 }
 
-func (c Compute) PFWList(ctx context.Context, req PFWListRequest) (PFWList, error) {
-	err := req.Validate()
+// PFWList gets compute port forwards list
+func (c Compute) PFWList(ctx context.Context, req PFWListRequest) (ListPFWs, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +36,12 @@ func (c Compute) PFWList(ctx context.Context, req PFWListRequest) (PFWList, erro
 		return nil, err
 	}
 
-	pfwList := PFWList{}
+	list := ListPFWs{}
 
-	err = json.Unmarshal(res, &pfwList)
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return pfwList, nil
+	return list, nil
 }

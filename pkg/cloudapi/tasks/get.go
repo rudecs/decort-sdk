@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get infromation about task
 type GetRequest struct {
+	// ID of audit
+	// Required: true
 	AuditID string `url:"auditId"`
 }
 
-func (trq GetRequest) Validate() error {
+func (trq GetRequest) validate() error {
 	if trq.AuditID == "" {
 		return errors.New("validation-error: field AuditID can not be empty")
 	}
@@ -19,27 +22,27 @@ func (trq GetRequest) Validate() error {
 	return nil
 }
 
-func (t Tasks) Get(ctx context.Context, req GetRequest) (*AsyncTask, error) {
-	err := req.Validate()
+// Get gets background API task status and result
+func (t Tasks) Get(ctx context.Context, req GetRequest) (*RecordAsyncTask, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := "/tasks/get"
-	prefix := "/cloudapi"
+	url := "/cloudapi/tasks/get"
 
-	url = prefix + url
-	taskRaw, err := t.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := t.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	task := &AsyncTask{}
-	err = json.Unmarshal(taskRaw, task)
+	info := RecordAsyncTask{}
+
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return task, nil
+	return &info, nil
 
 }

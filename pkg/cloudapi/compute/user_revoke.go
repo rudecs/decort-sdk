@@ -7,16 +7,21 @@ import (
 	"strconv"
 )
 
+// Request struct for revoke user access
 type UserRevokeRequest struct {
+	// ID of the compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
-	Username  string `url:"userName"`
+
+	// Name of the user to remove
+	// Required: true
+	Username string `url:"userName"`
 }
 
-func (crq UserRevokeRequest) Validate() error {
+func (crq UserRevokeRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
-
 	if crq.Username == "" {
 		return errors.New("validation-error: field UserName can not be empty")
 	}
@@ -24,8 +29,9 @@ func (crq UserRevokeRequest) Validate() error {
 	return nil
 }
 
+// UserRevoke revokes user access to the compute
 func (c Compute) UserRevoke(ctx context.Context, req UserRevokeRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -41,5 +47,6 @@ func (c Compute) UserRevoke(ctx context.Context, req UserRevokeRequest) (bool, e
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

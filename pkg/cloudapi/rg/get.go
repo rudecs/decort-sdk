@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
+// Request struct for get detailed information about resource group
 type GetRequest struct {
-	RGID   uint64 `url:"rgId"`
+	// Resource group ID
+	// Required: true
+	RGID uint64 `url:"rgId"`
+
+	// Reason for action
+	// Required: false
 	Reason string `url:"reason,omitempty"`
 }
 
-func (rgrq GetRequest) Validate() error {
+func (rgrq GetRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("field RGID can not be empty or equal to 0")
 	}
@@ -20,21 +26,26 @@ func (rgrq GetRequest) Validate() error {
 	return nil
 }
 
-func (r RG) Get(ctx context.Context, req GetRequest) (*ResourceGroup, error) {
-	if err := req.Validate(); err != nil {
-		return nil, err
-	}
-
-	url := "/cloudapi/rg/get"
-	rgRaw, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+// Get gets current configuration of the resource group
+func (r RG) Get(ctx context.Context, req GetRequest) (*RecordResourceGroup, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	rg := &ResourceGroup{}
-	if err := json.Unmarshal(rgRaw, rg); err != nil {
+	url := "/cloudapi/rg/get"
+
+	res, err := r.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	if err != nil {
 		return nil, err
 	}
 
-	return rg, nil
+	info := RecordResourceGroup{}
+
+	err = json.Unmarshal(res, &info)
+	if err != nil {
+		return nil, err
+	}
+
+	return &info, nil
 }

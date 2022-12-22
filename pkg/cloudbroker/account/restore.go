@@ -6,12 +6,18 @@ import (
 	"net/http"
 )
 
+// Request struct for restore a deleted account
 type RestoreRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
-	Reason    string `url:"reason"`
+
+	// Reason to restore
+	// Required: true
+	Reason string `url:"reason"`
 }
 
-func (arq RestoreRequest) Validate() error {
+func (arq RestoreRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
@@ -22,8 +28,9 @@ func (arq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restores a deleted account
 func (a Account) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

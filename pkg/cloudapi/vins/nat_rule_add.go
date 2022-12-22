@@ -7,28 +7,46 @@ import (
 	"strconv"
 )
 
-type NatRuleAddRequest struct {
-	VINSID       uint64 `url:"vinsId"`
-	IntIP        string `url:"intIp "`
-	IntPort      uint   `url:"intPort"`
-	ExtPortStart uint   `url:"extPortStart"`
-	ExtPortEnd   uint   `url:"extPortEnd,omitempty"`
-	Proto        string `url:"proto"`
+// Request struct for create NAT rules
+type NATRuleAddRequest struct {
+	// VINS ID
+	// Required: true
+	VINSID uint64 `url:"vinsId"`
+
+	// Internal IP address to apply this rule to
+	// Required: true
+	IntIP string `url:"intIp "`
+
+	// Internal IP port number to use for this rule
+	// Required: true
+	IntPort uint `url:"intPort"`
+
+	// External IP start port to use for this rule
+	// Required: true
+	ExtPortStart uint `url:"extPortStart"`
+
+	// External IP end port to use for this rule
+	// Required: false
+	ExtPortEnd uint `url:"extPortEnd,omitempty"`
+
+	// IP protocol type
+	// Should be one of:
+	//	- "tcp"
+	//	- "udp"
+	// Required: false
+	Proto string `url:"proto,omitempty"`
 }
 
-func (vrq NatRuleAddRequest) Validate() error {
+func (vrq NATRuleAddRequest) validate() error {
 	if vrq.VINSID == 0 {
 		return errors.New("validation-error: field VINSID can not be empty or equal to 0")
 	}
-
 	if vrq.IntIP == "" {
 		return errors.New("validation-error: field IntIP can not be empty")
 	}
-
 	if vrq.IntPort == 0 {
 		return errors.New("validation-error: field IntPort can not be empty or equal to 0")
 	}
-
 	if vrq.ExtPortStart == 0 {
 		return errors.New("validation-error: field ExtPortStart can not be empty or equal to 0")
 	}
@@ -36,8 +54,9 @@ func (vrq NatRuleAddRequest) Validate() error {
 	return nil
 }
 
-func (v VINS) NatRuleAdd(ctx context.Context, req NatRuleAddRequest) (bool, error) {
-	err := req.Validate()
+// NATRuleAdd create NAT (port forwarding) rule on VINS
+func (v VINS) NATRuleAdd(ctx context.Context, req NATRuleAddRequest) (bool, error) {
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -55,5 +74,4 @@ func (v VINS) NatRuleAdd(ctx context.Context, req NatRuleAddRequest) (bool, erro
 	}
 
 	return result, nil
-
 }

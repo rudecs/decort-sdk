@@ -3,37 +3,68 @@ package disks
 import (
 	"context"
 	"errors"
-	"github.com/rudecs/decort-sdk/internal/validators"
 	"net/http"
 	"strconv"
+
+	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
+// Request struct for create disk
 type CreateRequest struct {
-	AccountID   uint64 `url:"accountId"`
-	GID         uint64 `url:"gid"`
-	Name        string `url:"name"`
+	// ID of the account
+	// Required: true
+	AccountID uint64 `url:"accountId"`
+
+	// ID of the grid (platform)
+	// Required: true
+	GID uint64 `url:"gid"`
+
+	// Name of disk
+	// Required: true
+	Name string `url:"name"`
+
+	// Description of disk
+	// Required: false
 	Description string `url:"description,omitempty"`
-	Size        uint64 `url:"size,omitempty"`
-	Type        string `url:"type"`
-	SSDSize     uint64 `url:"ssdSize"`
-	IOPS        uint64 `url:"iops,omitempty"`
-	SepID       uint64 `url:"sepId,omitempty"`
-	Pool        string `url:"pool,omitempty"`
+
+	// Size in GB, default is 0
+	// Required: false
+	Size uint64 `url:"size,omitempty"`
+
+	// Type of disk
+	//	- B=Boot
+	//	- D=Data
+	//	- T=Temp
+	// Required: true
+	Type string `url:"type"`
+
+	// Size in GB default is 0
+	// Required: false
+	SSDSize uint64 `url:"ssdSize,omitempty"`
+
+	// Max IOPS disk can perform defaults to 2000
+	// Required: false
+	IOPS uint64 `url:"iops,omitempty"`
+
+	// Storage endpoint provider ID to create disk
+	// Required: false
+	SEPID uint64 `url:"sep_id,omitempty"`
+
+	// Pool name to create disk
+	// Required: false
+	Pool string `url:"pool,omitempty"`
 }
 
-func (drq CreateRequest) Validate() error {
+func (drq CreateRequest) validate() error {
 	if drq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID must be set")
 	}
-
 	if drq.GID == 0 {
 		return errors.New("validation-error: field GID must be set")
 	}
-
 	if drq.Name == "" {
 		return errors.New("validation-error: field Name must be set")
 	}
-
 	validate := validators.StringInSlice(drq.Type, []string{"B", "D", "T"})
 	if !validate {
 		return errors.New("validation-error: field must be B, D or T")
@@ -42,8 +73,9 @@ func (drq CreateRequest) Validate() error {
 	return nil
 }
 
+// Create creates a disk
 func (d Disks) Create(ctx context.Context, req CreateRequest) (uint64, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return 0, err
 	}

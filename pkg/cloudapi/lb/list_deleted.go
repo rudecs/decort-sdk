@@ -6,25 +6,32 @@ import (
 	"net/http"
 )
 
+// Request struct for get list of deleted load balancers
 type ListDeletedRequest struct {
-	Page uint64 `url:"page"`
-	Size uint64 `url:"size"`
+	// Page number
+	// Required: false
+	Page uint64 `url:"page,omitempty"`
+
+	// Page size
+	// Required: true
+	Size uint64 `url:"size,omitempty"`
 }
 
-func (l LB) ListDeleted(ctx context.Context, req ListDeletedRequest) (LBList, error) {
+// ListDeleted gets list of deleted load balancers
+func (l LB) ListDeleted(ctx context.Context, req ListDeletedRequest) (ListLB, error) {
 	url := "/cloudapi/lb/listDeleted"
 
-	lbListRaw, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
+	res, err := l.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	lbList := LBList{}
-	err = json.Unmarshal(lbListRaw, &lbList)
+	list := ListLB{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return lbList, nil
-
+	return list, nil
 }

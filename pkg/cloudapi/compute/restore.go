@@ -6,11 +6,14 @@ import (
 	"net/http"
 )
 
+// Request struct for restore compute
 type RestoreRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq RestoreRequest) Validate() error {
+func (crq RestoreRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -18,8 +21,9 @@ func (crq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restore compute from recycle bin
 func (c Compute) Restore(ctx context.Context, req RestoreRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}

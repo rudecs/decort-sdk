@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
+// Request struct for get image details
 type GetRequest struct {
+	// ID of image
+	// Required: true
 	ImageID uint64 `url:"imageId"`
 }
 
-func (irq GetRequest) Validate() error {
+func (irq GetRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -19,25 +22,26 @@ func (irq GetRequest) Validate() error {
 	return nil
 }
 
-func (i Image) Get(ctx context.Context, req GetRequest) (*ImageRecord, error) {
-	err := req.Validate()
+// Get get image details by ID
+func (i Image) Get(ctx context.Context, req GetRequest) (*RecordImage, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
 
 	url := "/cloudbroker/image/get"
 
-	result := ImageRecord{}
+	info := RecordImage{}
 
 	res, err := i.client.DecortApiCall(ctx, http.MethodPost, url, req)
 	if err != nil {
 		return nil, err
 	}
 
-	err = json.Unmarshal(res, &result)
+	err = json.Unmarshal(res, &info)
 	if err != nil {
 		return nil, err
 	}
 
-	return &result, nil
+	return &info, nil
 }

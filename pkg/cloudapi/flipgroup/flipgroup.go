@@ -1,15 +1,18 @@
+// API to manage FLIPGroup instances
 package flipgroup
 
 import (
 	"github.com/rudecs/decort-sdk/interfaces"
 )
 
-type FlipGroup struct {
+// Structure for creating request to FLIPGroup
+type FLIPGroup struct {
 	client interfaces.Caller
 }
 
-func New(client interfaces.Caller) *FlipGroup {
-	return &FlipGroup{
+// Builder for FLIPGroup endpoints
+func New(client interfaces.Caller) *FLIPGroup {
+	return &FLIPGroup{
 		client,
 	}
 }

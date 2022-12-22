@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for reset compute
 type ResetRequest struct {
+	// ID of compute instance
+	// Required: true
 	ComputeID uint64 `url:"computeId"`
 }
 
-func (crq ResetRequest) Validate() error {
+func (crq ResetRequest) validate() error {
 	if crq.ComputeID == 0 {
 		return errors.New("validation-error: field ComputeID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (crq ResetRequest) Validate() error {
 	return nil
 }
 
+// Reset reset compute
 func (c Compute) Reset(ctx context.Context, req ResetRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (c Compute) Reset(ctx context.Context, req ResetRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }

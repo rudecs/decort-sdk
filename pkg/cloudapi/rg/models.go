@@ -1,234 +1,592 @@
 package rg
 
-type ResourceGroup struct {
-	AccountID        uint64         `json:"accountId"`
-	AccountName      string         `json:"accountName"`
-	ACL              []ACL          `json:"acl"`
-	CreatedBy        string         `json:"createdBy"`
-	CreatedTime      uint64         `json:"createdTime"`
-	DefNetID         int64          `json:"def_net_id"`
-	DefNetType       string         `json:"def_net_type"`
-	DeletedBy        string         `json:"deletedBy"`
-	DeletedTime      uint64         `json:"deletedTime"`
-	Desc             string         `json:"desc"`
-	Dirty            bool           `json:"dirty"`
-	GID              uint64         `json:"gid"`
-	GUID             uint64         `json:"guid"`
-	ID               uint64         `json:"id"`
-	LockStatus       string         `json:"lockStatus"`
-	Milestones       uint64         `json:"milestones"`
-	Name             string         `json:"name"`
-	RegisterComputes bool           `json:"registerComputes"`
-	ResourceLimits   ResourceLimits `json:"resourceLimits"`
-	Secret           string         `json:"secret"`
-	Status           string         `json:"status"`
-	UpdatedBy        string         `json:"updatedBy"`
-	UpdatedTime      uint64         `json:"updatedTime"`
-	VINS             []uint64       `json:"vins"`
-	Computes         []uint64       `json:"vms"`
+// Detailed information about resource group
+type RecordResourceGroup struct {
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Access Control List
+	ACL ListACL `json:"acl"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// DefNetID
+	DefNetID int64 `json:"def_net_id"`
+
+	// DefNetType
+	DefNetType string `json:"def_net_type"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Dirty
+	Dirty bool `json:"dirty"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// RegisterComputes
+	RegisterComputes bool `json:"registerComputes"`
+
+	// Resource limits
+	ResourceLimits ResourceLimits `json:"resourceLimits"`
+
+	// Secret
+	Secret string `json:"secret"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// List of VINS IDs
+	VINS []uint64 `json:"vins"`
+
+	// List of compute IDs
+	Computes []uint64 `json:"vms"`
+
+	// List of resource types
+	ResTypes []string `json:"resTypes"`
+
+	// UniqPools
+	UniqPools []string `json:"uniqPools"`
 }
 
-type ResourceGroupList []ResourceGroup
+// List of resource groups
+type ListResourceGroups []RecordResourceGroup
 
-type ACL struct {
-	Explicit    bool   `json:"explicit"`
-	GUID        string `json:"guid"`
-	Right       string `json:"right"`
-	Status      string `json:"status"`
-	Type        string `json:"type"`
+// Main information about Access Control List
+type ItemACL struct {
+	// Explicit
+	Explicit bool `json:"explicit"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Right
+	Right string `json:"right"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Type
+	Type string `json:"type"`
+
+	// User group ID
 	UserGroupID string `json:"userGroupId"`
 }
 
+// List ACL
+type ListACL []ItemACL
+
+// Resource limits
 type ResourceLimits struct {
-	CUC      float64 `json:"CU_C"`
-	CUD      float64 `json:"CU_D"`
-	CUI      float64 `json:"CU_I"`
-	CUM      float64 `json:"CU_M"`
-	CUNP     float64 `json:"CU_NP"`
+	// CUC
+	CUC float64 `json:"CU_C"`
+
+	// CUD
+	CUD float64 `json:"CU_D"`
+
+	// CUI
+	CUI float64 `json:"CU_I"`
+
+	// CUM
+	CUM float64 `json:"CU_M"`
+
+	// CUNP
+	CUNP float64 `json:"CU_NP"`
+
+	// GPU units
 	GPUUnits float64 `json:"gpu_units"`
 }
 
-type AffinityGroupCompute struct {
-	ComputeID             uint64   `json:"computeId"`
-	OtherNode             []uint64 `json:"otherNode"`
-	OtherNodeIndirect     []uint64 `json:"otherNodeIndirect"`
+// Main information about affinity group
+type ItemAffinityGroup struct {
+	// Compute ID
+	ComputeID uint64 `json:"computeId"`
+
+	// Other node
+	OtherNode []uint64 `json:"otherNode"`
+
+	// Other node indirect
+	OtherNodeIndirect []uint64 `json:"otherNodeIndirect"`
+
+	// Other node indirect soft
 	OtherNodeIndirectSoft []uint64 `json:"otherNodeIndirectSoft"`
-	OtherNodeSoft         []uint64 `json:"otherNodeSoft"`
-	SameNode              []uint64 `json:"sameNode"`
-	SameNodeSoft          []uint64 `json:"sameNodeSoft"`
+
+	// Other node soft
+	OtherNodeSoft []uint64 `json:"otherNodeSoft"`
+
+	// Same node
+	SameNode []uint64 `json:"sameNode"`
+
+	// Same node soft
+	SameNodeSoft []uint64 `json:"sameNodeSoft"`
 }
 
-type AffinityGroupComputeList []AffinityGroupCompute
+// List of affinity groups
+type ListAffinityGroups []ItemAffinityGroup
 
-type Audit struct {
-	Call         string  `json:"call"`
+// Main information about audit
+type ItemAudit struct {
+	// Call
+	Call string `json:"call"`
+
+	// Response time
 	ResponseTime float64 `json:"responsetime"`
-	StatusCode   uint64  `json:"statuscode"`
-	Timestamp    float64 `json:"timestamp"`
-	User         string  `json:"user"`
+
+	// Status code
+	StatusCode uint64 `json:"statuscode"`
+
+	// Timestamp
+	Timestamp float64 `json:"timestamp"`
+
+	// User
+	User string `json:"user"`
 }
 
-type AuditList []Audit
+// List of audits
+type ListAudits []ItemAudit
 
-type Compute struct {
-	AccountID     uint64 `json:"accountId"`
-	AccountName   string `json:"accountName"`
-	AffinityLabel string `json:"affinityLabel"`
-	// TODO put actual type here
-	AffinityRules  []any  `json:"affinityRules"`
-	AffinityWeight uint64 `json:"affinityWeight"`
-	// TODO put actual type here
-	AntiAffinityRules []any  `json:"antiAffinityRules"`
-	CPUs              uint64 `json:"cpus"`
-	CreatedBy         string `json:"createdBy"`
-	CreatedTime       uint64 `json:"createdTime"`
-	DeletedBy         string `json:"deletedBy"`
-	DeletedTime       uint64 `json:"deletedTime"`
-	ID                uint64 `json:"id"`
-	Name              string `json:"name"`
-	RAM               uint64 `json:"ram"`
-	Registered        bool   `json:"registered"`
-	RGID              uint64 `json:"rgId"`
-	RGName            string `json:"rgName"`
-	Status            string `json:"status"`
-	TechStatus        string `json:"techStatus"`
-	TotalDisksSize    uint64 `json:"totalDisksSize"`
-	UpdatedBy         string `json:"updatedBy"`
-	UpdatedTime       uint64 `json:"updatedTime"`
-	UserManaged       bool   `json:"userManaged"`
-	VINSConnected     uint64 `json:"vinsConnected"`
-}
+// Main information about compute
+type ItemCompute struct {
+	// Account ID
+	AccountID uint64 `json:"accountId"`
 
-type ComputeList []Compute
-
-type LoadBalancer struct {
-	HAMode        bool        `json:"HAmode"`
-	ACL           interface{} `json:"acl"`
-	Backends      []Backend   `json:"backends"`
-	CreatedBy     string      `json:"createdBy"`
-	CreatedTime   uint64      `json:"createdTime"`
-	DeletedBy     string      `json:"deletedBy"`
-	DeletedTime   uint64      `json:"deletedTime"`
-	Description   string      `json:"desc"`
-	DPAPIUser     string      `json:"dpApiUser"`
-	ExtNetID      uint64      `json:"extnetId"`
-	Frontends     []Frontend  `json:"frontends"`
-	GID           uint64      `json:"gid"`
-	GUID          uint64      `json:"guid"`
-	ID            uint64      `json:"id"`
-	ImageID       uint64      `json:"imageId"`
-	Milestones    uint64      `json:"milestones"`
-	Name          string      `json:"name"`
-	PrimaryNode   Node        `json:"primaryNode"`
-	RGID          uint64      `json:"rgId"`
-	RGName        string      `json:"rgName"`
-	SecondaryNode Node        `json:"secondaryNode"`
-	Status        string      `json:"status"`
-	TechStatus    string      `json:"techStatus"`
-	UpdatedBy     string      `json:"updatedBy"`
-	UpdatedTime   uint64      `json:"updatedTime"`
-	VINSID        uint64      `json:"vinsId"`
-}
-
-type LoadBalancerDetailed struct {
-	DPAPIPassword string `json:"dpApiPassword"`
-	LoadBalancer
-}
-
-type Backend struct {
-	Algorithm             string         `json:"algorithm"`
-	GUID                  string         `json:"guid"`
-	Name                  string         `json:"name"`
-	ServerDefaultSettings ServerSettings `json:"serverDefaultSettings"`
-	Servers               []Server       `json:"servers"`
-}
-
-type LBList []LoadBalancerDetailed
-
-type ServerSettings struct {
-	Inter     uint64 `json:"inter"`
-	GUID      string `json:"guid"`
-	DownInter uint64 `json:"downinter"`
-	Rise      uint64 `json:"rise"`
-	Fall      uint64 `json:"fall"`
-	SlowStart uint64 `json:"slowstart"`
-	MaxConn   uint64 `json:"maxconn"`
-	MaxQueue  uint64 `json:"maxqueue"`
-	Weight    uint64 `json:"weight"`
-}
-
-type Server struct {
-	Address        string         `json:"address"`
-	Check          string         `json:"check"`
-	GUID           string         `json:"guid"`
-	Name           string         `json:"name"`
-	Port           uint64         `json:"port"`
-	ServerSettings ServerSettings `json:"serverSettings"`
-}
-
-type Node struct {
-	BackendIP  string `json:"backendIp"`
-	ComputeID  uint64 `json:"computeId"`
-	FrontendIP string `json:"frontendIp"`
-	GUID       string `json:"guid"`
-	MGMTIP     string `json:"mgmtIp"`
-	NetworkID  uint64 `json:"networkId"`
-}
-
-type Frontend struct {
-	Backend  string    `json:"backend"`
-	Bindings []Binding `json:"bindings"`
-	GUID     string    `json:"guid"`
-	Name     string    `json:"name"`
-}
-
-type Binding struct {
-	Address string `json:"address"`
-	GUID    string `json:"guid"`
-	Name    string `json:"name"`
-	Port    uint64 `json:"port"`
-}
-
-type PortForward struct {
-	PublicPortEnd   uint64 `json:"Public Port End"`
-	PublicPortStart uint64 `json:"Public Port Start"`
-	VMID            uint64 `json:"VM ID"`
-	VMIP            string `json:"VM IP"`
-	VMName          string `json:"VM Name"`
-	VMPort          uint64 `json:"VM Port"`
-	VINSID          uint64 `json:"ViNS ID"`
-	VINSName        string `json:"ViNS Name"`
-}
-
-type PortForwardList []PortForward
-
-type VINS struct {
-	AccountID   uint64 `json:"accountId"`
+	// Account name
 	AccountName string `json:"accountName"`
-	Computes    uint64 `json:"computes"`
-	CreatedBy   string `json:"createdBy"`
+
+	// Affinity label
+	AffinityLabel string `json:"affinityLabel"`
+
+	// List of affinity rules
+	AffinityRules []interface{} `json:"affinityRules"`
+
+	// Affinity weight
+	AffinityWeight uint64 `json:"affinityWeight"`
+
+	// List of anti affinity rules
+	AntiAffinityRules []interface{} `json:"antiAffinityRules"`
+
+	// Number of CPU
+	CPUs uint64 `json:"cpus"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
 	CreatedTime uint64 `json:"createdTime"`
-	DeletedBy   string `json:"deletedBy"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
 	DeletedTime uint64 `json:"deletedTime"`
-	ExternalIP  string `json:"externalIP"`
-	ID          uint64 `json:"id"`
-	Name        string `json:"name"`
-	Network     string `json:"network"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
+
+	// Registered
+	Registered bool `json:"registered"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Total disks size
+	TotalDisksSize uint64 `json:"totalDisksSize"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// User managed
+	UserManaged bool `json:"userManaged"`
+
+	// Number of ViNS connected
+	VINSConnected uint64 `json:"vinsConnected"`
+}
+
+// List of computes
+type ListComputes []ItemCompute
+
+// Main information about load balancer
+type RecordLoadBalancer struct {
+	// HAMode
+	HAMode bool `json:"HAmode"`
+
+	// Access Control List
+	ACL interface{} `json:"acl"`
+
+	// List of Backends
+	Backends ListBackends `json:"backends"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// DPAPIUser
+	DPAPIUser string `json:"dpApiUser"`
+
+	// External network ID
+	ExtNetID uint64 `json:"extnetId"`
+
+	// List of frontends
+	Frontends ListFrontends `json:"frontends"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Image ID
+	ImageID uint64 `json:"imageId"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Primary node
+	PrimaryNode RecordNode `json:"primaryNode"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Secondary node
+	SecondaryNode RecordNode `json:"secondaryNode"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Tech status
+	TechStatus string `json:"techStatus"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// VINS ID
+	VINSID uint64 `json:"vinsId"`
+}
+
+// Detailed information about load balancer
+type ItemLoadBalancer struct {
+	// DPAPI password
+	DPAPIPassword string `json:"dpApiPassword"`
+
+	// Main information about load balancer
+	RecordLoadBalancer
+}
+
+// Main information about backend
+type ItemBackend struct {
+	// Algorithm
+	Algorithm string `json:"algorithm"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Server settings
+	ServerDefaultSettings RecordServerSettings `json:"serverDefaultSettings"`
+
+	// List of servers
+	Servers ListServers `json:"servers"`
+}
+
+// List of backends
+type ListBackends []ItemBackend
+
+// List of load balancers
+type ListLB []ItemLoadBalancer
+
+// Server settings
+type RecordServerSettings struct {
+	// Inter
+	Inter uint64 `json:"inter"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Down inter
+	DownInter uint64 `json:"downinter"`
+
+	// Rise
+	Rise uint64 `json:"rise"`
+
+	// Fall
+	Fall uint64 `json:"fall"`
+
+	// Slow start
+	SlowStart uint64 `json:"slowstart"`
+
+	// Max connections
+	MaxConn uint64 `json:"maxconn"`
+
+	// Max queue
+	MaxQueue uint64 `json:"maxqueue"`
+
+	// Weight
+	Weight uint64 `json:"weight"`
+}
+
+// Main information about server
+type ItemServer struct {
+	// Address
+	Address string `json:"address"`
+
+	// Check
+	Check string `json:"check"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Port
+	Port uint64 `json:"port"`
+
+	// Server settings
+	ServerSettings RecordServerSettings `json:"serverSettings"`
+}
+
+// List of servers
+type ListServers []ItemServer
+
+// Main information about node
+type RecordNode struct {
+	// Backend IP
+	BackendIP string `json:"backendIp"`
+
+	// Compute ID
+	ComputeID uint64 `json:"computeId"`
+
+	// Frontend IP
+	FrontendIP string `json:"frontendIp"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// MGMT IP
+	MGMTIP string `json:"mgmtIp"`
+
+	// Network ID
+	NetworkID uint64 `json:"networkId"`
+}
+
+// Main information about frontend
+type ItemFrontend struct {
+	// Backend
+	Backend string `json:"backend"`
+
+	// List of bindings
+	Bindings ListBindings `json:"bindings"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+}
+
+// List of frontends
+type ListFrontends []ItemFrontend
+
+// Main information of binding
+type ItemBinding struct {
+	// Address
+	Address string `json:"address"`
+
+	// GUID
+	GUID string `json:"guid"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Port
+	Port uint64 `json:"port"`
+}
+
+// List of bindings
+type ListBindings []ItemBinding
+
+// Main information about port forward
+type ItemPortForward struct {
+	// Public port end
+	PublicPortEnd uint64 `json:"Public Port End"`
+
+	// Public port start
+	PublicPortStart uint64 `json:"Public Port Start"`
+
+	// Virtual machine ID
+	VMID uint64 `json:"VM ID"`
+
+	// Virtual machine IP
+	VMIP string `json:"VM IP"`
+
+	// Virtual machine name
+	VMName string `json:"VM Name"`
+
+	// Virtual machine port
+	VMPort uint64 `json:"VM Port"`
+
+	// VINS ID
+	VINSID uint64 `json:"ViNS ID"`
+
+	// VINS name
+	VINSName string `json:"ViNS Name"`
+}
+
+// List of port forwards
+type ListPortForwards []ItemPortForward
+
+// Main information about VINS
+type ItemVINS struct {
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Computes
+	Computes uint64 `json:"computes"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// External IP
+	ExternalIP string `json:"externalIP"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Name
+	Name string `json:"name"`
+
+	// Network
+	Network string `json:"network"`
+
+	// PriVNFDev ID
 	PriVNFDevID uint64 `json:"priVnfDevId"`
-	RGID        uint64 `json:"rgId"`
-	RGName      string `json:"rgName"`
-	Status      string `json:"status"`
-	UpdatedBy   string `json:"updatedBy"`
+
+	// Resource group ID
+	RGID uint64 `json:"rgId"`
+
+	// Resource group name
+	RGName string `json:"rgName"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
 	UpdatedTime uint64 `json:"updatedTime"`
 }
 
-type VINSList []VINS
+// List of VINSes
+type ListVINS []ItemVINS
 
-type ResourceUsage struct {
-	CPU          uint64 `json:"cpu"`
-	DiskSize     uint64 `json:"disksize"`
-	ExtIPs       uint64 `json:"extips"`
+// Main information about usage of resource
+type RecordResourceUsage struct {
+	// Number of CPU
+	CPU uint64 `json:"cpu"`
+
+	// Disk size
+	DiskSize uint64 `json:"disksize"`
+
+	// Number of external IPs
+	ExtIPs uint64 `json:"extips"`
+
+	// ExtraTraffic
 	ExtraTraffic uint64 `json:"exttraffic"`
-	GPU          uint64 `json:"gpu"`
-	RAM          uint64 `json:"ram"`
+
+	// Number of GPU
+	GPU uint64 `json:"gpu"`
+
+	// Number of RAM
+	RAM uint64 `json:"ram"`
 }

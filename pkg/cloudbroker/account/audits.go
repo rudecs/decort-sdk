@@ -7,19 +7,23 @@ import (
 	"net/http"
 )
 
+// Request struct for give list account audits
 type AuditsRequest struct {
+	// ID of the account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
 }
 
-func (arq AuditsRequest) Validate() error {
+func (arq AuditsRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
 	return nil
 }
 
-func (a Account) Audits(ctx context.Context, req AuditsRequest) (AccountAuditsList, error) {
-	err := req.Validate()
+// Audits gets audit records for the specified account object
+func (a Account) Audits(ctx context.Context, req AuditsRequest) (ListAudits, error) {
+	err := req.validate()
 	if err != nil {
 		return nil, err
 	}
@@ -30,11 +34,13 @@ func (a Account) Audits(ctx context.Context, req AuditsRequest) (AccountAuditsLi
 	if err != nil {
 		return nil, err
 	}
-	result := AccountAuditsList{}
-	err = json.Unmarshal(res, &result)
+
+	list := ListAudits{}
+
+	err = json.Unmarshal(res, &list)
 	if err != nil {
 		return nil, err
 	}
 
-	return result, nil
+	return list, nil
 }

@@ -7,12 +7,18 @@ import (
 	"strconv"
 )
 
+// Request struct for link virtual image to another image
 type LinkRequest struct {
-	ImageID  uint64 `url:"imageId"`
+	// ID of the virtual image
+	// Required: true
+	ImageID uint64 `url:"imageId"`
+
+	// ID of real image to link this virtual image to
+	// Required: true
 	TargetID uint64 `url:"targetId"`
 }
 
-func (irq LinkRequest) Validate() error {
+func (irq LinkRequest) validate() error {
 	if irq.ImageID == 0 {
 		return errors.New("validation-error: field ImageID must be set")
 	}
@@ -23,8 +29,9 @@ func (irq LinkRequest) Validate() error {
 	return nil
 }
 
+// Link links virtual image to another image in the platform
 func (i Image) Link(ctx context.Context, req LinkRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}

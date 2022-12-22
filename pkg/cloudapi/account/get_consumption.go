@@ -6,21 +6,28 @@ import (
 	"net/http"
 )
 
+// Request struct for download the resources tracking files for an account
 type GetConsumtionRequest struct {
+	// ID an account
+	// Required: true
 	AccountID uint64 `url:"accountId"`
-	Start     uint64 `url:"start"`
-	End       uint64 `url:"end"`
+
+	// Epoch represents the start time
+	// Required: true
+	Start uint64 `url:"start"`
+
+	// Epoch represents the end time
+	// Required: true
+	End uint64 `url:"end"`
 }
 
-func (arq GetConsumtionRequest) Validate() error {
+func (arq GetConsumtionRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
 	}
-
 	if arq.Start == 0 {
 		return errors.New("validation-error: field Start can not be empty or equal to 0")
 	}
-
 	if arq.End == 0 {
 		return errors.New("validation-error: field End can not be empty or equal to 0")
 	}
@@ -28,8 +35,9 @@ func (arq GetConsumtionRequest) Validate() error {
 	return nil
 }
 
+// GetConsumtion downloads the resources tracking files for an account within a given period
 func (a Account) GetConsumtion(ctx context.Context, req GetConsumtionRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}
@@ -45,21 +53,19 @@ func (a Account) GetConsumtion(ctx context.Context, req GetConsumtionRequest) (s
 
 }
 
+// GetConsumtionGet downloads the resources tracking files for an account within a given period
 func (a Account) GetConsumtionGet(ctx context.Context, req GetConsumtionRequest) (string, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return "", err
 	}
 
-	url := "/account/getConsumtion"
-	prefix := "/cloudapi"
+	url := "/cloudapi//account/getConsumtion"
 
-	url = prefix + url
 	res, err := a.client.DecortApiCall(ctx, http.MethodGet, url, req)
 	if err != nil {
 		return "", err
 	}
 
 	return string(res), nil
-
 }

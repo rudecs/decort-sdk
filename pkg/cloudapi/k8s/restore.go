@@ -7,11 +7,14 @@ import (
 	"strconv"
 )
 
+// Request struct for restore kubernetes cluster
 type RestoreRequest struct {
+	// Kubernetes cluster ID
+	// Required: true
 	K8SID uint64 `url:"k8sId"`
 }
 
-func (krq RestoreRequest) Validate() error {
+func (krq RestoreRequest) validate() error {
 	if krq.K8SID == 0 {
 		return errors.New("validation-error: field K8SID can not be empty or equal to 0")
 	}
@@ -19,8 +22,9 @@ func (krq RestoreRequest) Validate() error {
 	return nil
 }
 
+// Restore restore kubernetes cluster from Recycle Bin
 func (k8s K8S) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
-	err := req.Validate()
+	err := req.validate()
 	if err != nil {
 		return false, err
 	}
@@ -36,5 +40,6 @@ func (k8s K8S) Restore(ctx context.Context, req RestoreRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+
 	return result, nil
 }
