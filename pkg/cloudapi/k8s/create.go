@@ -46,7 +46,7 @@ type CreateRequest struct {
 
 	// Master node CPU count
 	// Required: false
-	MasterCPU uint `url:"masterCPU,omitempty"`
+	MasterCPU uint `url:"masterCpu,omitempty"`
 
 	// Master node RAM volume in MB
 	// Required: false
@@ -62,7 +62,7 @@ type CreateRequest struct {
 
 	// Worker node CPU count
 	// Required: false
-	WorkerCPU uint `url:"workerCPU,omitempty"`
+	WorkerCPU uint `url:"workerCpu,omitempty"`
 
 	// Worker node RAM volume in MB
 	// Required: false
