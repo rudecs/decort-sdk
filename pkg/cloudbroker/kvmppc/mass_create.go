@@ -62,9 +62,9 @@ type MassCreateRequest struct {
 	// Required: false
 	NetID uint64 `url:"netId,omitempty"`
 
-	// IP address to assign to this VM when connecting to the specified network
+	// Input data for cloud-init facility
 	// Required: false
-	IPAddr string `url:"ipAddr,omitempty"`
+	UserData string `url:"userdata,omitempty"`
 
 	// Text description of this VM
 	// Required: false

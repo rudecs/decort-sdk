@@ -5,8 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
 // Request struct for update resource group
@@ -54,31 +52,13 @@ type UpdateRequest struct {
 	// List of strings with pools i.e.: ["sep1_poolName1", "sep2_poolName2", etc]
 	// Required: false
 	UniqPools []string `url:"uniqPools,omitempty"`
-
-	// Resource types available to create in this account
-	// Each element in a resource type slice should be one of:
-	//	- compute
-	//	- vins
-	//	- k8s
-	//	- openshift
-	//	- lb
-	//	- flipgroup
-	// Required: false
-	ResTypes []string `url:"resourceTypes,omitempty"`
 }
 
 func (rgrq UpdateRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("validation-error: field RGID must be set")
 	}
-	if len(rgrq.ResTypes) > 0 {
-		for _, value := range rgrq.ResTypes {
-			validate := validators.StringInSlice(value, []string{"compute", "vins", "k8s", "openshift", "lb", "flipgroup"})
-			if !validate {
-				return errors.New("validation-error: Every resource type specified should be one of [compute, vins, k8s, openshift, lb, flipgroup]")
-			}
-		}
-	}
+
 	return nil
 }
 

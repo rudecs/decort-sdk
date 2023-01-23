@@ -12,11 +12,17 @@ type DeviceMigrateRequest struct {
 	// ID of external network
 	// Required: true
 	NetID uint64 `url:"net_id"`
+
+	// Target stack ID to migrate to
+	StackID uint64 `url:"stackId"`
 }
 
 func (erq DeviceMigrateRequest) validate() error {
 	if erq.NetID == 0 {
 		return errors.New("validation-error: field NetID must be set")
+	}
+	if erq.StackID == 0 {
+		return errors.New("validation-error: field StackID must be set")
 	}
 
 	return nil

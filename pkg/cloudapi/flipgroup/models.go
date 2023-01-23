@@ -29,6 +29,9 @@ type ItemFLIPGroup struct {
 	// List of client IDs
 	ClientIDs []uint64 `json:"clientIds"`
 
+	// Client names list
+	ClientNames []string `json:"clientNames"`
+
 	// Client type
 	ClientType string `json:"clientType"`
 

@@ -25,6 +25,22 @@ type CreateRequest struct {
 	// Required: true
 	WorkerGroupName string `url:"workerGroupName"`
 
+	// ID of SEP to create boot disks for master nodes. Uses images SEP ID if not set
+	// Required: false
+	MasterSEPID uint64 `url:"masterSepId,omitempty"`
+
+	// Pool to use if master SEP ID is set, can be also empty if needed to be chosen by system
+	// Required: false
+	MasterSEPPool string `url:"masterSepPool,omitempty"`
+
+	// ID of SEP to create boot disks for default worker nodes group. Uses images SEP ID if not set
+	// Required: false
+	WorkerSEPID uint64 `url:"workerSepId,omitempty"`
+
+	// Pool to use if worker SEP ID is set, can be also empty if needed to be chosen by system
+	// Required: false
+	WorkerSEPPool string `url:"workerSepPool,omitempty"`
+
 	// List of strings with labels for default worker group
 	// i.e: ["label1=value1", "label2=value2"]
 	// Required: false

@@ -191,6 +191,9 @@ type RecordGroup struct {
 	// List of Parent IDs
 	Parents []uint64 `json:"parents"`
 
+	// Pool name
+	PoolName string `json:"poolName"`
+
 	// Number of RAM, MB
 	RAM uint64 `json:"ram"`
 

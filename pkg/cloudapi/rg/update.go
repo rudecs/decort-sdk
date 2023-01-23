@@ -5,8 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
 // Request struct for update resource group
@@ -50,30 +48,11 @@ type UpdateRequest struct {
 	// Reason for action
 	// Required: false
 	Reason string `url:"reason,omitempty"`
-
-	// Resource types available to create in this account
-	// Each element in a resource type slice must be one of:
-	//	- compute
-	//	- vins
-	//	- k8s
-	//	- openshift
-	//	- lb
-	//	- flipgroup
-	// Required: false
-	ResTypes []string `url:"resourceTypes,omitempty"`
 }
 
 func (rgrq UpdateRequest) validate() error {
 	if rgrq.RGID == 0 {
 		return errors.New("field RGID can not be empty or equal to 0")
-	}
-	if len(rgrq.ResTypes) > 0 {
-		for _, value := range rgrq.ResTypes {
-			validate := validators.StringInSlice(value, []string{"compute", "vins", "k8s", "openshift", "lb", "flipgroup"})
-			if !validate {
-				return errors.New("validation-error: Every resource type specified should be one of [compute, vins, k8s, openshift, lb, flipgroup]")
-			}
-		}
 	}
 
 	return nil

@@ -27,7 +27,7 @@ func (crq ListGPURequest) validate() error {
 }
 
 // ListVGPU gets list GPU for compute
-func (c Compute) ListVGPU(ctx context.Context, req ListGPURequest) ([]interface{}, error) {
+func (c Compute) ListGPU(ctx context.Context, req ListGPURequest) ([]interface{}, error) {
 	err := req.validate()
 	if err != nil {
 		return nil, err

@@ -127,6 +127,9 @@ type RecordExtNet struct {
 	// CheckIPs
 	CheckIPs []string `json:"checkIPs"`
 
+	// CheckIps
+	CheckIps []string `json:"checkIps"`
+
 	// List DNS
 	DNS []string `json:"dns"`
 

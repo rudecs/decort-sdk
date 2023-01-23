@@ -45,75 +45,6 @@ type ResourceLimits struct {
 	GPUUnits float64 `json:"gpu_units"`
 }
 
-// Main information of account
-type InfoAccount struct {
-	// Segment
-	DCLocation string `json:"DCLocation"`
-
-	// Key
-	CKey string `jspn:"_ckey"`
-
-	// Meta
-	Meta []interface{} `json:"_meta"`
-
-	// Access Control List
-	ACL []RecordACL `json:"acl"`
-
-	// Company
-	Company string `json:"company"`
-
-	// Company URL
-	CompanyURL string `json:"companyurl"`
-
-	// Created by
-	CreatedBy string `jspn:"createdBy"`
-
-	// Created time
-	CreatedTime uint64 `json:"createdTime"`
-
-	// Deactiovation time
-	DeactiovationTime float64 `json:"deactivationTime"`
-
-	// Deleted by
-	DeletedBy string `json:"deletedBy"`
-
-	// Deleted time
-	DeletedTime uint64 `json:"deletedTime"`
-
-	// Display name
-	DisplayName string `json:"displayname"`
-
-	// GUID
-	GUID uint64 `json:"guid"`
-
-	// ID
-	ID uint64 `json:"id"`
-
-	// Name
-	Name string `json:"name"`
-
-	// Resource Limits
-	ResourceLimits ResourceLimits `json:"resourceLimits"`
-
-	// If true send emails when a user is granted access to resources
-	SendAccessEmails bool `json:"sendAccessEmails"`
-
-	// Service Account
-	ServiceAccount bool `json:"serviceAccount"`
-
-	// Status
-	Status string `json:"status"`
-
-	// Updated time
-	UpdatedTime uint64 `json:"updatedTime"`
-
-	// Version
-	Version uint64 `json:"version"`
-
-	// List VINS in account
-	VINS []uint64 `json:"vins"`
-}
-
 // Main information in one of if the list of accounts
 type ItemAccount struct {
 	// Access Control List
@@ -149,6 +80,9 @@ type Resource struct {
 	// Disk size
 	DiskSize int64 `json:"disksize"`
 
+	// Max disk size
+	DiskSizeMax int64 `json:"disksizemax"`
+
 	// Number of External IPs
 	ExtIPs int64 `json:"extips"`
 
@@ -160,6 +94,18 @@ type Resource struct {
 
 	// Number of RAM
 	RAM int64 `json:"ram"`
+
+	// SEPs
+	SEPs map[string]map[string]DiskUsage `json:"seps"`
+}
+
+// Disk usage
+type DiskUsage struct {
+	// Disk size
+	DiskSize float64 `json:"disksize"`
+
+	// Disk size max
+	DiskSizeMax float64 `json:"disksizemax"`
 }
 
 // Information about resources
@@ -189,21 +135,84 @@ type Machines struct {
 	Halted uint64 `json:"halted"`
 }
 
-// Сomplete information about account
+// Main information about account
 type RecordAccount struct {
-	// Main information about account
-	InfoAccount
+	// DCLocation
+	DCLocation string `json:"DCLocation"`
 
 	// Resources
 	Resources Resources `json:"Resources"`
 
+	// CKey
+	CKey string `json:"_ckey"`
+
+	// Access control list
+	ACL []RecordACL `json:"acl"`
+
+	// Company
+	Company string `json:"company"`
+
+	// Company URL
+	CompanyURL string `json:"companyurl"`
+
 	// Computes
 	Computes Computes `json:"computes"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// Deactivation time
+	DeactivationTime uint64 `json:"deactivationTime"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Display name
+	DisplayName string `json:"displayname"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
 
 	// Machines
 	Machines Machines `json:"machines"`
 
-	// Number of VINSes
+	// Name
+	Name string `json:"name"`
+
+	// Resource limits
+	ResourceLimits ResourceLimits `json:"resourceLimits"`
+
+	// Resource types
+	ResourceTypes []string `json:"resourceTypes"`
+
+	// Send access emails
+	SendAccessEmails bool `json:"sendAccessEmails"`
+
+	// Status
+	Status string `json:"status"`
+
+	// UniqPools
+	UniqPools []interface{} `json:"uniqPools"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// Version
+	Version uint64 `json:"version"`
+
+	// VINS
+	VINS []uint64 `json:"vins"`
+
+	// VINSes
 	VINSes uint64 `json:"vinses"`
 }
 
@@ -286,6 +295,9 @@ type ItemDisk struct {
 
 	// ID SEP
 	SEPID uint64 `json:"sepId"`
+
+	// Shareable
+	Shareable bool `json:"shareable"`
 
 	// Max size
 	SizeMax uint64 `json:"sizeMax"`
@@ -378,10 +390,10 @@ type ListAudits []ItemAudit
 // Information compute in resource group
 type RGComputes struct {
 	// Number of started computes
-	Started uint64 `json:"started"`
+	Started uint64 `json:"Started"`
 
 	// Number of stopped computes
-	Stopped uint64 `json:"stopped"`
+	Stopped uint64 `json:"Stopped"`
 }
 
 // Resources of Resource group
@@ -390,10 +402,37 @@ type RGResources struct {
 	Consumed Resource `json:"Consumed"`
 
 	// Limits
-	Limits Resource `json:"Limits"`
+	Limits LimitsRG `json:"Limits"`
 
 	// Reserved
 	Reserved Resource `json:"Reserved"`
+}
+
+// Resources used
+type LimitsRG struct {
+	// Number of cores
+	CPU int64 `json:"cpu"`
+
+	// Disk size
+	DiskSize int64 `json:"disksize"`
+
+	// Max disk size
+	DiskSizeMax int64 `json:"disksizemax"`
+
+	// Number of External IPs
+	ExtIPs int64 `json:"extips"`
+
+	// External traffic
+	ExtTraffic int64 `json:"exttraffic"`
+
+	// Number of grafic cores
+	GPU int64 `json:"gpu"`
+
+	// Number of RAM
+	RAM int64 `json:"ram"`
+
+	// SEPs
+	SEPs uint64 `json:"seps"`
 }
 
 // Main information about resource group

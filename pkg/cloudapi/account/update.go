@@ -5,8 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
 // Request struct for updaate account
@@ -46,30 +44,11 @@ type UpdateRequest struct {
 	// Limit (positive) or disable (0) GPU resources
 	// Required: false
 	GPUUnits uint64 `url:"gpu_units,omitempty"`
-
-	// Resource types available to create in this account
-	// Each element in a resource type slice must be one of:
-	//	- compute
-	//	- vins
-	//	- k8s
-	//	- openshift
-	//	- lb
-	//	- flipgroup
-	// Required: false
-	ResTypes []string `url:"resourceTypes,omitempty"`
 }
 
 func (arq UpdateRequest) validate() error {
 	if arq.AccountID == 0 {
 		return errors.New("validation-error: field AccountID can not be empty or equal to 0")
-	}
-	if len(arq.ResTypes) > 0 {
-		for _, value := range arq.ResTypes {
-			validate := validators.StringInSlice(value, []string{"compute", "vins", "k8s", "openshift", "lb", "flipgroup"})
-			if !validate {
-				return errors.New("validation-error: Every resource type specified should be one of [compute, vins, k8s, openshift, lb, flipgroup]")
-			}
-		}
 	}
 
 	return nil

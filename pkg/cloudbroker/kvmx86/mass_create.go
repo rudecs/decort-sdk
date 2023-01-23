@@ -66,7 +66,7 @@ type MassCreateRequest struct {
 	// Required: false
 	IPAddr string `url:"ipAddr,omitempty"`
 
-	// User data
+	// Input data for cloud-init facility
 	// Required: false
 	UserData string `url:"userdata,omitempty"`
 

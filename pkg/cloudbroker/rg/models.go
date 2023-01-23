@@ -29,6 +29,9 @@ type Reservation struct {
 	// Disk size
 	DiskSize uint64 `json:"disksize"`
 
+	// Max disk size
+	DiskSizeMax int64 `json:"disksizemax"`
+
 	// External IPs
 	ExtIPs uint64 `json:"extips"`
 
@@ -40,6 +43,18 @@ type Reservation struct {
 
 	// Number of RAM
 	RAM uint64 `json:"ram"`
+
+	// SEPs
+	SEPs map[string]map[string]DiskUsage `json:"seps"`
+}
+
+// Disk usage
+type DiskUsage struct {
+	// Disk size
+	DiskSize float64 `json:"disksize"`
+
+	// Disk size max
+	DiskSizeMax float64 `json:"disksizemax"`
 }
 
 // Resources usage information
@@ -180,7 +195,7 @@ type ItemRG struct {
 	VMs []uint64 `json:"vms"`
 
 	// Resource types list
-	ResTypes []string `json:"resTypes"`
+	ResTypes []string `json:"resourceTypes"`
 
 	// Uniq pools
 	UniqPools []string `json:"uniqPools"`
@@ -217,7 +232,7 @@ type ItemAffinityGroupCompute struct {
 type ListAffinityGroupCompute []ItemAffinityGroupCompute
 
 // Main information about affinity rule
-type ItemAffinityRule struct {
+type ItemRule struct {
 	// GUID
 	GUID string `json:"guid"`
 
@@ -237,8 +252,8 @@ type ItemAffinityRule struct {
 	Value string `json:"value"`
 }
 
-// List affinity rules
-type ListAffinityRules []ItemAffinityRule
+// List rules
+type ListRules []ItemRule
 
 // Main information about compute
 type ItemCompute struct {
@@ -252,13 +267,13 @@ type ItemCompute struct {
 	AffinityLabel string `json:"affinityLabel"`
 
 	// List affinity rules
-	AffinityRules ListAffinityRules `json:"affinityRules"`
+	AffinityRules ListRules `json:"affinityRules"`
 
 	// Affinity weight
 	AffinityWeight uint64 `json:"affinityWeight"`
 
 	// Anti affinity rules
-	AntiAffinityRules []interface{} `json:"antiAffinityRules"`
+	AntiAffinityRules ListRules `json:"antiAffinityRules"`
 
 	// Number of CPU
 	CPUs uint64 `json:"cpus"`

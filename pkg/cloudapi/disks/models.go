@@ -11,17 +11,11 @@ type ItemDisk struct {
 	// Account name
 	AccountName string `json:"accountName"`
 
-	// Boot partition
-	BootPartition uint64 `json:"bootPartition"`
+	// Computes
+	Computes map[string]string `json:"computes"`
 
 	// Created time
 	CreatedTime uint64 `json:"createdTime"`
-
-	// Compute ID
-	ComputeID uint64 `json:"computeId"`
-
-	// Compute name
-	ComputeName string `json:"computeName"`
 
 	// Deleted time
 	DeletedTime uint64 `json:"deletedTime"`
@@ -69,10 +63,13 @@ type ItemDisk struct {
 	ParentID uint64 `json:"parentId"`
 
 	// PCI slot
-	PCISlot uint64 `json:"pciSlot"`
+	PCISlot int64 `json:"pciSlot"`
 
 	// Pool
 	Pool string `json:"pool"`
+
+	// Present to
+	PresentTo []uint64 `json:"presentTo"`
 
 	// Purge time
 	PurgeTime uint64 `json:"purgeTime"`
@@ -89,11 +86,17 @@ type ItemDisk struct {
 	// SepType
 	SepType string `json:"sepType"`
 
+	// Shareable
+	Shareable bool `json:"shareable"`
+
 	// SepID
 	SepID uint64 `json:"sepId"`
 
 	// Size max
 	SizeMax uint64 `json:"sizeMax"`
+
+	// Size used
+	SizeUsed uint64 `json:"sizeUsed"`
 
 	// List of snapshots
 	Snapshots ListSnapshots `json:"snapshots"`
@@ -191,6 +194,9 @@ type RecordDisk struct {
 	// Account name
 	AccountName string `json:"accountName"`
 
+	// Computes
+	Computes map[string]string `json:"computes"`
+
 	// Created time
 	CreatedTime uint64 `json:"createdTime"`
 
@@ -239,6 +245,9 @@ type RecordDisk struct {
 	// Pool
 	Pool string `json:"pool"`
 
+	// Present to
+	PresentTo []uint64 `json:"presentTo"`
+
 	// Purge time
 	PurgeTime uint64 `json:"purgeTime"`
 
@@ -256,6 +265,9 @@ type RecordDisk struct {
 
 	// SepID
 	SepID uint64 `json:"sepId"`
+
+	// Shareable
+	Shareable bool `json:"shareable"`
 
 	// Size max
 	SizeMax uint64 `json:"sizeMax"`

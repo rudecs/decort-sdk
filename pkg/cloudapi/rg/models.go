@@ -1,7 +1,55 @@
 package rg
 
+// Resources used
+type Resource struct {
+	// Number of cores
+	CPU int64 `json:"cpu"`
+
+	// Disk size
+	DiskSize int64 `json:"disksize"`
+
+	// Max disk size
+	DiskSizeMax int64 `json:"disksizemax"`
+
+	// Number of External IPs
+	ExtIPs int64 `json:"extips"`
+
+	// External traffic
+	ExtTraffic int64 `json:"exttraffic"`
+
+	// Number of grafic cores
+	GPU int64 `json:"gpu"`
+
+	// Number of RAM
+	RAM int64 `json:"ram"`
+
+	// SEPs
+	SEPs map[string]map[string]DiskUsage `json:"seps"`
+}
+
+// Disk usage
+type DiskUsage struct {
+	// Disk size
+	DiskSize float64 `json:"disksize"`
+
+	// Disk size max
+	DiskSizeMax float64 `json:"disksizemax"`
+}
+
+// Information about resources
+type Resources struct {
+	// Current information about resources
+	Current Resource `json:"Current"`
+
+	// Reserved information about resources
+	Reserved Resource `json:"Reserved"`
+}
+
 // Detailed information about resource group
 type RecordResourceGroup struct {
+	// Resources
+	Resources Resources `json:"Resources"`
+
 	// Account ID
 	AccountID uint64 `json:"accountId"`
 
@@ -78,14 +126,101 @@ type RecordResourceGroup struct {
 	Computes []uint64 `json:"vms"`
 
 	// List of resource types
-	ResTypes []string `json:"resTypes"`
+	ResTypes []string `json:"resourceTypes"`
+
+	// UniqPools
+	UniqPools []string `json:"uniqPools"`
+}
+
+// Main information about resource group
+type ItemResourceGroup struct {
+	//
+	AccountACL ItemACL `json:"accountAcl"`
+
+	// Account ID
+	AccountID uint64 `json:"accountId"`
+
+	// Account name
+	AccountName string `json:"accountName"`
+
+	// Access Control List
+	ACL ListACL `json:"acl"`
+
+	// Created by
+	CreatedBy string `json:"createdBy"`
+
+	// Created time
+	CreatedTime uint64 `json:"createdTime"`
+
+	// DefNetID
+	DefNetID int64 `json:"def_net_id"`
+
+	// DefNetType
+	DefNetType string `json:"def_net_type"`
+
+	// Deleted by
+	DeletedBy string `json:"deletedBy"`
+
+	// Deleted time
+	DeletedTime uint64 `json:"deletedTime"`
+
+	// Description
+	Description string `json:"desc"`
+
+	// Dirty
+	Dirty bool `json:"dirty"`
+
+	// Grid ID
+	GID uint64 `json:"gid"`
+
+	// GUID
+	GUID uint64 `json:"guid"`
+
+	// ID
+	ID uint64 `json:"id"`
+
+	// Lock status
+	LockStatus string `json:"lockStatus"`
+
+	// Milestones
+	Milestones uint64 `json:"milestones"`
+
+	// Name
+	Name string `json:"name"`
+
+	// RegisterComputes
+	RegisterComputes bool `json:"registerComputes"`
+
+	// Resource limits
+	ResourceLimits ResourceLimits `json:"resourceLimits"`
+
+	// Secret
+	Secret string `json:"secret"`
+
+	// Status
+	Status string `json:"status"`
+
+	// Updated by
+	UpdatedBy string `json:"updatedBy"`
+
+	// Updated time
+	UpdatedTime uint64 `json:"updatedTime"`
+
+	// List of VINS IDs
+	VINS []uint64 `json:"vins"`
+
+	// List of compute IDs
+	Computes []uint64 `json:"vms"`
+
+	// List of resource types
+	ResTypes []string `json:"resourceTypes"`
 
 	// UniqPools
 	UniqPools []string `json:"uniqPools"`
 }
 
 // List of resource groups
-type ListResourceGroups []RecordResourceGroup
+type ListResourceGroups []ItemResourceGroup
 
 // Main information about Access Control List
 type ItemACL struct {

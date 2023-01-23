@@ -36,6 +36,9 @@ type Resource struct {
 	// Disk size
 	DiskSize int64 `json:"disksize"`
 
+	// Disk size max
+	DiskSizeMax int64 `json:"disksizemax"`
+
 	// Number of External IPs
 	ExtIPs int64 `json:"extips"`
 
@@ -47,6 +50,18 @@ type Resource struct {
 
 	// Number of RAM
 	RAM int64 `json:"ram"`
+
+	// SEPs
+	SEPs map[string]map[string]DiskUsage `json:"seps"`
+}
+
+// Disk usage
+type DiskUsage struct {
+	// Disk size
+	DiskSize float64 `json:"disksize"`
+
+	// Disk size max
+	DiskSizeMax float64 `json:"disksizemax"`
 }
 
 // Access Control List
@@ -138,11 +153,17 @@ type InfoAccount struct {
 	// Resource limits
 	ResourceLimits ResourceLimits `json:"resourceLimits"`
 
+	// Resource types
+	ResourceTypes []string `json:"resourceTypes"`
+
 	// Send access emails
 	SendAccessEmails bool `json:"sendAccessEmails"`
 
 	// Status
 	Status string `json:"status"`
+
+	// UniqPools
+	UniqPools []string `json:"uniqPools"`
 
 	// UpdatedTime
 	UpdatedTime uint64 `json:"updatedTime"`
@@ -258,6 +279,9 @@ type ItemDisk struct {
 	// SepID
 	SepID uint64 `json:"sepId"`
 
+	// Shareable
+	Shareable bool `json:"shareable"`
+
 	// Size max
 	SizeMax uint64 `json:"sizeMax"`
 
@@ -351,6 +375,9 @@ type Consumed struct {
 	// Disk size
 	DiskSize uint64 `json:"disksize"`
 
+	// Disk size max
+	DiskSizeMax int64 `json:"disksizemax"`
+
 	// External IPs
 	ExtIPs uint64 `json:"extips"`
 
@@ -362,6 +389,9 @@ type Consumed struct {
 
 	// Number of RAM
 	RAM uint64 `json:"ram"`
+
+	// SEPs
+	SEPs map[string]map[string]DiskUsage `json:"seps"`
 }
 
 // Limits
@@ -371,6 +401,9 @@ type Limits struct {
 
 	// Disk size
 	DiskSize int64 `json:"disksize"`
+
+	// Disk size max
+	DiskSizeMax int64 `json:"disksizemax"`
 
 	// External IPs
 	ExtIPs int64 `json:"extips"`
@@ -383,6 +416,9 @@ type Limits struct {
 
 	// Number of RAM
 	RAM int64 `json:"ram"`
+
+	// SEPs number
+	SEPs uint64 `json:"seps"`
 }
 
 // Resources of resource group

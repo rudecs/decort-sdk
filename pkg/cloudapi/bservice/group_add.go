@@ -44,6 +44,14 @@ type GroupAddRequest struct {
 	// Required: true
 	Driver string `url:"driver"`
 
+	// Storage endpoint provider ID
+	// Required: false
+	SEPID uint64 `url:"sepId,omitempty"`
+
+	// Pool to use if sepId is set, can be also empty if needed to be chosen by system
+	// Required: false
+	SEPPool string `url:"sepPool,omitempty"`
+
 	// Group role tag. Can be empty string, does not have to be unique
 	// Required: false
 	Role string `url:"role,omitempty"`

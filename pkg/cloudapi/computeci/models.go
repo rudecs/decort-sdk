@@ -24,7 +24,7 @@ type ItemComputeCI struct {
 	Status string `json:"status"`
 
 	// Template
-	Template string `jsnn:"template"`
+	Template string `json:"template"`
 }
 
 // List of computeci instances

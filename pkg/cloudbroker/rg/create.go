@@ -5,8 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/rudecs/decort-sdk/internal/validators"
 )
 
 // Request struct for create resource group
@@ -84,17 +82,6 @@ type CreateRequest struct {
 	// List of strings with pools i.e.: ["sep1_poolName1", "sep2_poolName2"]
 	// Required: false
 	UniqPools []string `url:"unuqPools,omitempty"`
-
-	// Resource types available to create in this account
-	// Each element in a resource type slice should be one of:
-	//	- compute
-	//	- vins
-	//	- k8s
-	//	- openshift
-	//	- lb
-	//	- flipgroup
-	// Required: false
-	ResTypes []string `url:"resourceTypes,omitempty"`
 }
 
 func (rgrq CreateRequest) validate() error {
@@ -106,14 +93,6 @@ func (rgrq CreateRequest) validate() error {
 	}
 	if len(rgrq.Name) < 2 {
 		return errors.New("field Name can not be shorter than two bytes")
-	}
-	if len(rgrq.ResTypes) > 0 {
-		for _, value := range rgrq.ResTypes {
-			validate := validators.StringInSlice(value, []string{"compute", "vins", "k8s", "openshift", "lb", "flipgroup"})
-			if !validate {
-				return errors.New("validation-error: Every resource type specified should be one of [compute, vins, k8s, openshift, lb, flipgroup]")
-			}
-		}
 	}
 
 	return nil

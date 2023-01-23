@@ -143,6 +143,9 @@ type RecordImage struct {
 	// Pool
 	Pool string `json:"pool"`
 
+	// Present to
+	PresentTo []uint64 `json:"presentTo"`
+
 	// ProviderName
 	ProviderName string `json:"provider_name"`
 

@@ -3,13 +3,13 @@ package compute
 // Access Control List
 type RecordACL struct {
 	// Account ACL list
-	AccountACL ListACL `json:"accountACL"`
+	AccountACL ListACL `json:"accountAcl"`
 
 	// Compute ACL list
-	ComputeACL ListACL `json:"computeACL"`
+	ComputeACL ListACL `json:"computeAcl"`
 
 	// Resource group ACL list
-	RGACL ListACL `json:"rgACL"`
+	RGACL ListACL `json:"rgAcl"`
 }
 
 // ACL information
@@ -281,7 +281,7 @@ type RecordCompute struct {
 	// Created time
 	CreatedTime uint64 `json:"createdTime"`
 
-	// Custom fields
+	// Custom fields items
 	CustomFields map[string]interface{} `json:"customFields"`
 
 	// Deleted by
@@ -597,6 +597,9 @@ type ItemComputeDisk struct {
 	// Pool
 	Pool string `json:"pool"`
 
+	// Present to
+	PresentTo []uint64 `json:"presentTo"`
+
 	// Purge time
 	PurgeTime uint64 `json:"purgeTime"`
 
@@ -611,6 +614,9 @@ type ItemComputeDisk struct {
 
 	// SepID
 	SepID uint64 `json:"sepId"`
+
+	// Shareable
+	Shareable bool `json:"shareable"`
 
 	// Size max
 	SizeMax uint64 `json:"sizeMax"`
@@ -703,7 +709,7 @@ type IOTune struct {
 // Main information about compute
 type ItemCompute struct {
 	// Access Control List
-	ACL []interface{} `json:"ACL"`
+	ACL []interface{} `json:"acl"`
 
 	// Account ID
 	AccountID uint64 `json:"accountId"`
@@ -750,7 +756,7 @@ type ItemCompute struct {
 	// Created time
 	CreatedTime uint64 `json:"createdTime"`
 
-	// Custom fields
+	// Custom fields list
 	CustomFields map[string]interface{} `json:"customFields"`
 
 	// Deleted by
@@ -765,8 +771,8 @@ type ItemCompute struct {
 	// Devices
 	Devices interface{} `json:"devices"`
 
-	// List disk IDs
-	Disks []uint64 `json:"disks"`
+	// List disk items
+	Disks []InfoDisk `json:"disks"`
 
 	// Driver
 	Driver string `json:"driver"`
@@ -782,9 +788,6 @@ type ItemCompute struct {
 
 	// Image ID
 	ImageID uint64 `json:"imageId"`
-
-	// Image name
-	ImageName string `json:"imageName"`
 
 	// List interfaces
 	Interfaces ListInterfaces `json:"interfaces"`
@@ -858,17 +861,23 @@ type ItemCompute struct {
 	// User Managed or not
 	UserManaged bool `json:"userManaged"`
 
-	// Userdata
-	Userdata interface{} `json:"userdata"`
-
 	// List vGPU IDs
 	VGPUs []uint64 `json:"vgpus"`
 
+	// VINS connected
+	VINSConnected uint64 `json:"vinsConnected"`
+
 	// Virtual image ID
 	VirtualImageID uint64 `json:"virtualImageId"`
+}
 
-	// Virtual image name
-	VirtualImageName string `json:"virtualImageName"`
+// Information Disk
+type InfoDisk struct {
+	// ID
+	ID uint64 `json:"id"`
+
+	// PCISlot
+	PCISlot uint64 `json:"pciSlot"`
 }
 
 // List information about computes

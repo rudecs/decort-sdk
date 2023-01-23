@@ -56,6 +56,9 @@ type InfoDisk struct {
 	// Boot partition
 	BootPartition uint64 `json:"bootPartition"`
 
+	// Computes
+	Computes map[string]string `json:"computes"`
+
 	// Created time
 	CreatedTime uint64 `json:"createdTime"`
 
@@ -119,6 +122,9 @@ type InfoDisk struct {
 	// Pool
 	Pool string `json:"pool"`
 
+	// Present to
+	PresentTo []uint64 `json:"presentTo"`
+
 	// Purge attempts
 	PurgeAttempts uint64 `json:"purgeAttempts"`
 
@@ -143,11 +149,14 @@ type InfoDisk struct {
 	// SEP ID
 	SEPID uint64 `json:"sepId"`
 
+	// Shareable
+	Shareable bool `json:"shareable"`
+
 	// Size max
 	SizeMax uint64 `json:"sizeMax"`
 
 	// Size used
-	SizeUsed uint64 `json:"sizeUsed"`
+	SizeUsed float64 `json:"sizeUsed"`
 
 	// List snapshots
 	Snapshots ListSnapshots `json:"snapshots"`
@@ -179,12 +188,6 @@ type RecordDisk struct {
 
 // Main information for list disks
 type ItemDisk struct {
-	// Compute ID
-	ComputeID uint64 `json:"computeId"`
-
-	// Compute name
-	ComputeName string `json:"computeName"`
-
 	// Machine ID
 	MachineID uint64 `json:"machineId"`
 
@@ -200,12 +203,6 @@ type ListDisks []ItemDisk
 
 // Main information about deleted disk
 type ItemDeletedDisk struct {
-	// Compute ID
-	ComputeID uint64 `json:"computeId"`
-
-	// Compute name
-	ComputeName string `json:"computeName"`
-
 	// Machine ID
 	MachineID uint64 `json:"machineId"`
 
@@ -253,6 +250,9 @@ type ItemSnapshot struct {
 
 	// Label
 	Label string `json:"label"`
+
+	// Reference ID
+	ReferenceID string `json:"referenceId"`
 
 	// Resource ID
 	ResID string `json:"resId"`

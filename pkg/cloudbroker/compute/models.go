@@ -401,6 +401,9 @@ type ItemDisk struct {
 	// Pool
 	Pool string `json:"pool"`
 
+	// Present to
+	PresentTo []uint64 `json:"presentTo"`
+
 	// Purge attempts
 	PurgeAttempts uint64 `json:"purgeAttempts"`
 
@@ -424,6 +427,9 @@ type ItemDisk struct {
 
 	// SEP ID
 	SEPID uint64 `json:"sepId"`
+
+	// Shareable
+	Shareable bool `json:"shareable"`
 
 	// Size max
 	SizeMax uint64 `json:"sizeMax"`
@@ -677,6 +683,9 @@ type InfoCompute struct {
 	// Tech status
 	TechStatus string `json:"techStatus"`
 
+	// Total disk size
+	TotalDiskSize uint64 `json:"totalDisksSize"`
+
 	// Updated by
 	UpdatedBy string `json:"updatedBy"`
 
@@ -691,6 +700,9 @@ type InfoCompute struct {
 
 	// List VGPU IDs
 	VGPUs []uint64 `json:"vgpus"`
+
+	// VINS connected
+	VINSConnected uint64 `json:"vinsConnected"`
 
 	// Virtual image ID
 	VirtualImageID uint64 `json:"virtualImageId"`
@@ -708,7 +720,7 @@ type RecordCompute struct {
 // Main information about compute for list
 type ItemCompute struct {
 	// List of disk IDs
-	Disks []uint64 `json:"disks"`
+	Disks []InfoDisk `json:"disks"`
 
 	// Main information about compute
 	InfoCompute
@@ -718,6 +730,15 @@ type ItemCompute struct {
 
 	// VINS connected
 	VINSConnected uint64 `json:"vinsConnected"`
+}
+
+// Information Disk
+type InfoDisk struct {
+	// ID
+	ID uint64 `json:"id"`
+
+	// PCISlot
+	PCISlot uint64 `json:"pciSlot"`
 }
 
 // List computes

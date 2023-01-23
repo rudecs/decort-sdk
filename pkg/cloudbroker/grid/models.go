@@ -17,6 +17,9 @@ type RecordResource struct {
 	// Disk size
 	DiskSize uint64 `json:"disksize"`
 
+	// Disk size max
+	DiskSizeMax int64 `json:"disksizemax"`
+
 	// External IPs
 	ExtIPs uint64 `json:"extips"`
 
@@ -28,6 +31,18 @@ type RecordResource struct {
 
 	// Number of RAM
 	RAM uint64 `json:"ram"`
+
+	// SEPs
+	SEPs map[string]map[string]DiskUsage `json:"seps"`
+}
+
+// Disk usage
+type DiskUsage struct {
+	// Disk size
+	DiskSize float64 `json:"disksize"`
+
+	// Disk size max
+	DiskSizeMax float64 `json:"disksizemax"`
 }
 
 // Detailed information about grid
