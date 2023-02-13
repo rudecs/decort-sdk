@@ -96,7 +96,7 @@ type ItemDisk struct {
 	SizeMax uint64 `json:"sizeMax"`
 
 	// Size used
-	SizeUsed uint64 `json:"sizeUsed"`
+	SizeUsed float64 `json:"sizeUsed"`
 
 	// List of snapshots
 	Snapshots ListSnapshots `json:"snapshots"`
@@ -273,7 +273,7 @@ type RecordDisk struct {
 	SizeMax uint64 `json:"sizeMax"`
 
 	// Size used
-	SizeUsed uint64 `json:"sizeUsed"`
+	SizeUsed float64 `json:"sizeUsed"`
 
 	// List of snapshots
 	Snapshots ListSnapshots `json:"snapshots"`

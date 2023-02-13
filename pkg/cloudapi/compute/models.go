@@ -622,7 +622,7 @@ type ItemComputeDisk struct {
 	SizeMax uint64 `json:"sizeMax"`
 
 	//Size used
-	SizeUsed uint64 `json:"sizeUsed"`
+	SizeUsed float64 `json:"sizeUsed"`
 
 	// List extend snapshots
 	Snapshots SnapshotExtendList `json:"snapshots"`
