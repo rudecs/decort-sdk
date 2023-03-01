@@ -18,7 +18,7 @@ type ItemAudit struct {
 	User string `json:"user"`
 }
 
-// List of audirs
+// List of audits
 type ListAudits []ItemAudit
 
 type RecordResources struct {
@@ -34,10 +34,10 @@ type Resource struct {
 	CPU int64 `json:"cpu"`
 
 	// Disk size
-	DiskSize int64 `json:"disksize"`
+	DiskSize float64 `json:"disksize"`
 
 	// Disk size max
-	DiskSizeMax int64 `json:"disksizemax"`
+	DiskSizeMax uint64 `json:"disksizemax"`
 
 	// Number of External IPs
 	ExtIPs int64 `json:"extips"`
@@ -61,7 +61,7 @@ type DiskUsage struct {
 	DiskSize float64 `json:"disksize"`
 
 	// Disk size max
-	DiskSizeMax float64 `json:"disksizemax"`
+	DiskSizeMax uint64 `json:"disksizemax"`
 }
 
 // Access Control List

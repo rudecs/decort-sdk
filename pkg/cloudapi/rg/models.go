@@ -6,10 +6,10 @@ type Resource struct {
 	CPU int64 `json:"cpu"`
 
 	// Disk size
-	DiskSize int64 `json:"disksize"`
+	DiskSize float64 `json:"disksize"`
 
 	// Max disk size
-	DiskSizeMax int64 `json:"disksizemax"`
+	DiskSizeMax uint64 `json:"disksizemax"`
 
 	// Number of External IPs
 	ExtIPs int64 `json:"extips"`
@@ -33,7 +33,7 @@ type DiskUsage struct {
 	DiskSize float64 `json:"disksize"`
 
 	// Disk size max
-	DiskSizeMax float64 `json:"disksizemax"`
+	DiskSizeMax uint64 `json:"disksizemax"`
 }
 
 // Information about resources
@@ -315,6 +315,30 @@ type ItemAudit struct {
 // List of audits
 type ListAudits []ItemAudit
 
+// Main information about affinity rules
+type ItemRule struct {
+	// GUID
+	GUID string `json:"guid"`
+
+	// Key
+	Key string `json:"key"`
+
+	// Mode
+	Mode string `json:"mode"`
+
+	// Policy
+	Policy string `json:"policy"`
+
+	// Topology
+	Topology string `json:"topology"`
+
+	// Value
+	Value string `json:"value"`
+}
+
+// List of rules
+type ListRules []ItemRule
+
 // Main information about compute
 type ItemCompute struct {
 	// Account ID
@@ -327,13 +351,13 @@ type ItemCompute struct {
 	AffinityLabel string `json:"affinityLabel"`
 
 	// List of affinity rules
-	AffinityRules []interface{} `json:"affinityRules"`
+	AffinityRules ListRules `json:"affinityRules"`
 
 	// Affinity weight
 	AffinityWeight uint64 `json:"affinityWeight"`
 
 	// List of anti affinity rules
-	AntiAffinityRules []interface{} `json:"antiAffinityRules"`
+	AntiAffinityRules ListRules `json:"antiAffinityRules"`
 
 	// Number of CPU
 	CPUs uint64 `json:"cpus"`

@@ -24,25 +24,25 @@ type ListAudits []ItemAudit
 // Reservation information of usage
 type Reservation struct {
 	// Number of CPU
-	CPU uint64 `json:"cpu"`
+	CPU int64 `json:"cpu"`
 
 	// Disk size
-	DiskSize uint64 `json:"disksize"`
+	DiskSize float64 `json:"disksize"`
 
 	// Max disk size
-	DiskSizeMax int64 `json:"disksizemax"`
+	DiskSizeMax uint64 `json:"disksizemax"`
 
 	// External IPs
-	ExtIPs uint64 `json:"extips"`
+	ExtIPs int64 `json:"extips"`
 
 	// External traffic
-	ExtTraffic uint64 `json:"exttraffic"`
+	ExtTraffic int64 `json:"exttraffic"`
 
 	// Number of GPU
-	GPU uint64 `json:"gpu"`
+	GPU int64 `json:"gpu"`
 
 	// Number of RAM
-	RAM uint64 `json:"ram"`
+	RAM int64 `json:"ram"`
 
 	// SEPs
 	SEPs map[string]map[string]DiskUsage `json:"seps"`
@@ -54,7 +54,7 @@ type DiskUsage struct {
 	DiskSize float64 `json:"disksize"`
 
 	// Disk size max
-	DiskSizeMax float64 `json:"disksizemax"`
+	DiskSizeMax uint64 `json:"disksizemax"`
 }
 
 // Resources usage information
@@ -138,7 +138,7 @@ type ItemRG struct {
 	CreatedTime uint64 `json:"createdTime"`
 
 	// DefNet ID
-	DefNetID int64 `json:"def_net_id"`
+	DefNetID uint64 `json:"def_net_id"`
 
 	// DefNet type
 	DefNetType string `json:"def_net_type"`
@@ -252,7 +252,7 @@ type ItemRule struct {
 	Value string `json:"value"`
 }
 
-// List rules
+// List of rules
 type ListRules []ItemRule
 
 // Main information about compute
