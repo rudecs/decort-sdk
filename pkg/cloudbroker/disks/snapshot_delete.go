@@ -11,11 +11,11 @@ import (
 type SnapshotDeleteRequest struct {
 	// ID of disk to delete
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// Label of the snapshot to delete
 	// Required: false
-	Label string `url:"label"`
+	Label string `url:"label" json:"label"`
 }
 
 func (drq SnapshotDeleteRequest) validate() error {

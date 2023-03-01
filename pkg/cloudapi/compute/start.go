@@ -11,11 +11,11 @@ import (
 type StartRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of CD-ROM live image to boot
 	// Required: false
-	AltBootID uint64 `url:"altBootId,omitempty"`
+	AltBootID uint64 `url:"altBootId,omitempty" json:"altBootId,omitempty"`
 }
 
 func (crq StartRequest) validate() error {

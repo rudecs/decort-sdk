@@ -11,7 +11,7 @@ import (
 type RebootRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 }
 
 func (crq RebootRequest) validate() error {

@@ -10,7 +10,7 @@ import (
 type GetDiagnosisRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 }
 
 func (grq GetDiagnosisRequest) validate() error {

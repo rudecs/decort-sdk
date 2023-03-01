@@ -11,15 +11,15 @@ import (
 type MassStopRequest struct {
 	// IDs of compute instances to stop
 	// Required: true
-	ComputeIDs []uint64 `url:"computeIds"`
+	ComputeIDs []uint64 `url:"computeIds" json:"computeIds"`
 
 	// Force stop compute
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq MassStopRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type GetPoolRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Pool name
 	// Required: true
-	PoolName string `url:"pool_name"`
+	PoolName string `url:"pool_name" json:"pool_name"`
 }
 
 func (srq GetPoolRequest) validate() error {

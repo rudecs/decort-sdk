@@ -11,11 +11,11 @@ import (
 type ServicesRestartRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// Node ID
 	// Required: true
-	NID uint64 `url:"nid"`
+	NID uint64 `url:"nid" json:"nid"`
 }
 
 func (grq ServicesRestartRequest) validate() error {

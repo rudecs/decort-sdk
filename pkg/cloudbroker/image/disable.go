@@ -11,7 +11,7 @@ import (
 type DisableRequest struct {
 	// ID of image to be disabled
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 }
 
 func (irq DisableRequest) validate() error {

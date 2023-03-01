@@ -13,46 +13,46 @@ import (
 type CreateRequest struct {
 	// ID of the account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// ID of the grid (platform)
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// Name of disk
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Description of disk
 	// Required: false
-	Description string `url:"description,omitempty"`
+	Description string `url:"description,omitempty" json:"description,omitempty"`
 
 	// Size in GB, default is 0
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 
 	// Type of disk
 	//	- B=Boot
 	//	- D=Data
 	//	- T=Temp
 	// Required: true
-	Type string `url:"type"`
+	Type string `url:"type" json:"type"`
 
 	// Size in GB default is 0
 	// Required: false
-	SSDSize uint64 `url:"ssdSize,omitempty"`
+	SSDSize uint64 `url:"ssdSize,omitempty" json:"ssdSize,omitempty"`
 
 	// Max IOPS disk can perform defaults to 2000
 	// Required: false
-	IOPS uint64 `url:"iops,omitempty"`
+	IOPS uint64 `url:"iops,omitempty" json:"iops,omitempty"`
 
 	// Storage endpoint provider ID to create disk
 	// Required: false
-	SEPID uint64 `url:"sep_id,omitempty"`
+	SEPID uint64 `url:"sep_id,omitempty" json:"sep_id,omitempty"`
 
 	// Pool name to create disk
 	// Required: false
-	Pool string `url:"pool,omitempty"`
+	Pool string `url:"pool,omitempty" json:"pool,omitempty"`
 }
 
 func (drq CreateRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of the service to query information
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 }
 
 func (bsrq GetRequest) validate() error {

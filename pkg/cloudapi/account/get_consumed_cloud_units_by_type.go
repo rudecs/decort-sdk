@@ -13,11 +13,11 @@ import (
 type GetConsumedCloudUnitsByTypeRequest struct {
 	// ID an account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Cloud unit resource type
 	// Required: true
-	CUType string `url:"cutype"`
+	CUType string `url:"cutype" json:"cutype"`
 }
 
 func (arq GetConsumedCloudUnitsByTypeRequest) validate() error {

@@ -29,7 +29,7 @@ func NewHttpClient(cfg config.Config) *http.Client {
 			retries:      cfg.Retries,
 			clientID:     cfg.AppID,
 			clientSecret: cfg.AppSecret,
-			SSOURL:       cfg.SSOURL,
+			ssoURL:       cfg.SSOURL,
 			token:        cfg.Token,
 			expiryTime:   expiredTime,
 			//TLSClientConfig: &tls.Config{InsecureSkipVerify: true},

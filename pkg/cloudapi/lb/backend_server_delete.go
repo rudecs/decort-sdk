@@ -11,15 +11,15 @@ import (
 type BackendServerDeleteRequest struct {
 	// ID of the load balancer instance to BackendServerDelete
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Must match one of the existing backens - name of the backend to add servers to
 	// Required: true
-	BackendName string `url:"backendName"`
+	BackendName string `url:"backendName" json:"backendName"`
 
 	// Must be unique among all servers defined for this backend - name of the server definition to add
 	// Required: true
-	ServerName string `url:"serverName"`
+	ServerName string `url:"serverName" json:"serverName"`
 }
 
 func (lbrq BackendServerDeleteRequest) validate() error {

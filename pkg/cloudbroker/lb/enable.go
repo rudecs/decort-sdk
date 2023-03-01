@@ -11,7 +11,7 @@ import (
 type EnableRequest struct {
 	// ID of the load balancer instance to enable
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 }
 
 func (lbrq EnableRequest) validate() error {

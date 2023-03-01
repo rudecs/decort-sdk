@@ -11,50 +11,50 @@ import (
 type WorkersGroupAddRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// Worker group name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// ID of SEP to create boot disks for default worker nodes group. Uses images SEP ID if not set
 	// Required: false
-	WorkerSEPID uint64 `url:"workerSepId,omitempty"`
+	WorkerSEPID uint64 `url:"workerSepId,omitempty" json:"workerSepId,omitempty"`
 
 	// Pool to use if worker SEP ID is set, can be also empty if needed to be chosen by system
 	// Required: false
-	WorkerSEPPool string `url:"workerSepPool,omitempty"`
+	WorkerSEPPool string `url:"workerSepPool,omitempty" json:"workerSepPool,omitempty"`
 
 	// List of strings with labels for worker group
 	// i.e: ["label1=value1", "label2=value2"]
 	// Required: false
-	Labels []string `url:"labels,omitempty"`
+	Labels []string `url:"labels,omitempty" json:"labels,omitempty"`
 
 	// List of strings with taints for worker group
 	// i.e: ["key1=value1:NoSchedule", "key2=value2:NoExecute"]
 	// Required: false
-	Taints []string `url:"taints,omitempty"`
+	Taints []string `url:"taints,omitempty" json:"taints,omitempty"`
 
 	// List of strings with annotations for worker group
 	// i.e: ["key1=value1", "key2=value2"]
 	// Required: false
-	Annotations []string `url:"annotations,omitempty"`
+	Annotations []string `url:"annotations,omitempty" json:"annotations,omitempty"`
 
 	// Number of worker nodes to create
 	// Required: false
-	WorkerNum uint64 `url:"workerNum,omitempty"`
+	WorkerNum uint64 `url:"workerNum,omitempty" json:"workerNum,omitempty"`
 
 	// Worker node CPU count
 	// Required: false
-	WorkerCPU uint64 `url:"workerCpu,omitempty"`
+	WorkerCPU uint64 `url:"workerCpu,omitempty" json:"workerCpu,omitempty"`
 
 	// Worker node RAM volume in MB
 	// Required: false
-	WorkerRAM uint64 `url:"workerRam,omitempty"`
+	WorkerRAM uint64 `url:"workerRam,omitempty" json:"workerRam,omitempty"`
 
 	// Worker node boot disk size in GB If 0 is specified, size is defined by the OS image size
 	// Required: false
-	WorkerDisk uint64 `url:"workerDisk,omitempty"`
+	WorkerDisk uint64 `url:"workerDisk,omitempty" json:"workerDisk,omitempty"`
 }
 
 func (krq WorkersGroupAddRequest) validate() error {

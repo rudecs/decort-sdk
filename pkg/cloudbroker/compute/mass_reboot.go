@@ -11,11 +11,11 @@ import (
 type MassRebootRequest struct {
 	// IDs of compute instances to reboot
 	// Required: true
-	ComputeIDs []uint64 `url:"computeIds"`
+	ComputeIDs []uint64 `url:"computeIds" json:"computeIds"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq MassRebootRequest) validate() error {

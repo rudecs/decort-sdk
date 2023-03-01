@@ -11,7 +11,7 @@ import (
 type ExtNetDisconnectRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 }
 
 func (vrq ExtNetDisconnectRequest) validate() error {

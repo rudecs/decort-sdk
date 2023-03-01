@@ -11,40 +11,40 @@ import (
 type DiskAddRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Name for disk
 	// Required: true
-	DiskName string `url:"diskName"`
+	DiskName string `url:"diskName" json:"diskName"`
 
 	// Disk size in GB
 	// Required: true
-	Size uint64 `url:"size"`
+	Size uint64 `url:"size" json:"size"`
 
 	// Type of the disk
 	// Should be one of:
 	//	- D
 	//	- B
 	// Required: false
-	DiskType string `url:"diskType,omitempty"`
+	DiskType string `url:"diskType,omitempty" json:"diskType,omitempty"`
 
 	// Storage endpoint provider ID
 	// By default the same with boot disk
 	// Required: false
-	SepID uint64 `url:"sepId,omitempty"`
+	SepID uint64 `url:"sepId,omitempty" json:"sepId,omitempty"`
 
 	// Pool name
 	// By default will be chosen automatically
 	// Required: false
-	Pool string `url:"pool,omitempty"`
+	Pool string `url:"pool,omitempty" json:"pool,omitempty"`
 
 	// Optional description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 
 	// Specify image id for create disk from template
 	// Required: false
-	ImageID uint64 `url:"imageId,omitempty"`
+	ImageID uint64 `url:"imageId,omitempty" json:"imageId,omitempty"`
 }
 
 func (crq DiskAddRequest) validate() error {

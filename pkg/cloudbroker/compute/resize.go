@@ -11,25 +11,25 @@ import (
 type ResizeRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// New CPU count.
 	// Pass 0 if no change to CPU count is required
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// New RAM volume in MB.
 	// Pass 0 if no change to RAM volume is required
 	// Required: false
-	CPU uint64 `url:"cpu,omitempty"`
+	CPU uint64 `url:"cpu,omitempty" json:"cpu,omitempty"`
 
 	// Force compute resize
 	// Required: false
-	RAM uint64 `url:"ram,omitempty"`
+	RAM uint64 `url:"ram,omitempty" json:"ram,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq ResizeRequest) validate() error {

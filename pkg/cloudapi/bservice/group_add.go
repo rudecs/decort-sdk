@@ -11,62 +11,62 @@ import (
 type GroupAddRequest struct {
 	// ID of the Basic Service to add a group to
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// Name of the Compute Group to add
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Computes number. Defines how many computes must be there in the group
 	// Required: true
-	Count uint64 `url:"count"`
+	Count uint64 `url:"count" json:"count"`
 
 	// Compute CPU number. All computes in the group have the same CPU count
 	// Required: true
-	CPU uint64 `url:"cpu"`
+	CPU uint64 `url:"cpu" json:"cpu"`
 
 	// Compute RAM volume in MB. All computes in the group have the same RAM volume
 	// Required: true
-	RAM uint64 `url:"ram"`
+	RAM uint64 `url:"ram" json:"ram"`
 
 	// Compute boot disk size in GB
 	// Required: true
-	Disk uint64 `url:"disk"`
+	Disk uint64 `url:"disk" json:"disk"`
 
 	// OS image ID to create computes from
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// Compute driver
 	// should be one of:
 	//	- KVM_X86
 	//	- KVM_PPC
 	// Required: true
-	Driver string `url:"driver"`
+	Driver string `url:"driver" json:"driver"`
 
 	// Storage endpoint provider ID
 	// Required: false
-	SEPID uint64 `url:"sepId,omitempty"`
+	SEPID uint64 `url:"sepId,omitempty" json:"sepId,omitempty"`
 
 	// Pool to use if sepId is set, can be also empty if needed to be chosen by system
 	// Required: false
-	SEPPool string `url:"sepPool,omitempty"`
+	SEPPool string `url:"sepPool,omitempty" json:"sepPool,omitempty"`
 
 	// Group role tag. Can be empty string, does not have to be unique
 	// Required: false
-	Role string `url:"role,omitempty"`
+	Role string `url:"role,omitempty" json:"role,omitempty"`
 
 	// List of ViNSes to connect computes to
 	// Required: false
-	VINSes []uint64 `url:"vinses,omitempty"`
+	VINSes []uint64 `url:"vinses,omitempty" json:"vinses,omitempty"`
 
 	// List of external networks to connect computes to
 	// Required: false
-	ExtNets []uint64 `url:"extnets,omitempty"`
+	ExtNets []uint64 `url:"extnets,omitempty" json:"extnets,omitempty"`
 
 	// Time of Compute Group readiness
 	// Required: false
-	TimeoutStart uint64 `url:"timeoutStart"`
+	TimeoutStart uint64 `url:"timeoutStart" json:"timeoutStart"`
 }
 
 func (bsrq GroupAddRequest) validate() error {

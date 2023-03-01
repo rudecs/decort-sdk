@@ -11,43 +11,43 @@ import (
 type UpdateRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// New name
 	// Required: false
-	Name string `url:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// New description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 
 	// Max size of memory in MB
 	// Required: false
-	MaxMemoryCapacity uint64 `url:"maxMemoryCapacity,omitempty"`
+	MaxMemoryCapacity uint64 `url:"maxMemoryCapacity,omitempty" json:"maxMemoryCapacity,omitempty"`
 
 	// Max size of aggregated virtual disks in GB
 	// Required: false
-	MaxVDiskCapacity uint64 `url:"maxVDiskCapacity,omitempty"`
+	MaxVDiskCapacity uint64 `url:"maxVDiskCapacity,omitempty" json:"maxVDiskCapacity,omitempty"`
 
 	// Max number of CPU cores
 	// Required: false
-	MaxCPUCapacity uint64 `url:"maxCPUCapacity,omitempty"`
+	MaxCPUCapacity uint64 `url:"maxCPUCapacity,omitempty" json:"maxCPUCapacity,omitempty"`
 
 	// Max sent/received network transfer peering
 	// Required: false
-	MaxNetworkPeerTransfer uint64 `url:"maxNetworkPeerTransfer,omitempty"`
+	MaxNetworkPeerTransfer uint64 `url:"maxNetworkPeerTransfer,omitempty" json:"maxNetworkPeerTransfer,omitempty"`
 
 	// Max number of assigned public IPs
 	// Required: false
-	MaxNumPublicIP uint64 `url:"maxNumPublicIP,omitempty"`
+	MaxNumPublicIP uint64 `url:"maxNumPublicIP,omitempty" json:"maxNumPublicIP,omitempty"`
 
 	// Register computes in registration system
 	// Required: false
-	RegisterComputes bool `url:"registerComputes,omitempty"`
+	RegisterComputes bool `url:"registerComputes,omitempty" json:"registerComputes,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq UpdateRequest) validate() error {

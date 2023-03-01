@@ -11,11 +11,11 @@ import (
 type DetachGPURequest struct {
 	// Identifier compute
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Identifier virtual GPU
 	// Required: false
-	VGPUID int64 `url:"vgpuId,omitempty"`
+	VGPUID int64 `url:"vgpuId,omitempty" json:"vgpuId,omitempty"`
 }
 
 func (crq DetachGPURequest) validate() error {

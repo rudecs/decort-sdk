@@ -11,19 +11,19 @@ import (
 type CreateRequest struct {
 	// Name of the service
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// ID of the Resource Group where this service will be placed
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Name of the user to deploy SSH key for. Pass empty string if no SSH key deployment is required
 	// Required: false
-	SSHUser string `url:"sshUser,omitempty"`
+	SSHUser string `url:"sshUser,omitempty" json:"sshUser,omitempty"`
 
 	// SSH key to deploy for the specified user. Same key will be deployed to all computes of the service
 	// Required: false
-	SSHKey string `url:"sshKey,omitempty"`
+	SSHKey string `url:"sshKey,omitempty" json:"sshKey,omitempty"`
 }
 
 func (bsrq CreateRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type PurgeLogsRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// Age of the records to remove, e.g. -1h for records older than 1 hour, -1w - one week, etc
 	// Required: true
-	Age string `url:"age"`
+	Age string `url:"age" json:"age"`
 }
 
 func (grq PurgeLogsRequest) validate() error {

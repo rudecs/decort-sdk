@@ -11,15 +11,15 @@ import (
 type DeleteUserRequest struct {
 	// ID of the account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// ID or emailaddress of the user to remove
 	// Required: true
-	UserName string `url:"username"`
+	UserName string `url:"username" json:"username"`
 
 	// Recursively revoke access rights from owned cloudspaces and vmachines
 	// Required: false
-	RecursiveDelete bool `url:"recursivedelete,omitempty"`
+	RecursiveDelete bool `url:"recursivedelete,omitempty" json:"recursivedelete,omitempty"`
 }
 
 func (arq DeleteUserRequest) validate() error {

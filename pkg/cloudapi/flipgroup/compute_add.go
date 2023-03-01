@@ -11,11 +11,11 @@ import (
 type ComputeAddRequest struct {
 	// ID of the Floating IP group to add compute instance to
 	// Required: true
-	FLIPGroupID uint64 `url:"flipgroupId"`
+	FLIPGroupID uint64 `url:"flipgroupId" json:"flipgroupId"`
 
 	// ID of the compute instance to add to this group
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 }
 
 func (frq ComputeAddRequest) validate() error {

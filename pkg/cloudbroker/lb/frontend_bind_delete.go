@@ -11,15 +11,15 @@ import (
 type FrontendBindDeleteRequest struct {
 	// ID of the load balancer instance to FrontendBindDelete
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Name of the frontend to delete
 	// Required: true
-	FrontendName string `url:"frontendName"`
+	FrontendName string `url:"frontendName" json:"frontendName"`
 
 	// Name of the binding to delete
 	// Required: true
-	BindingName string `url:"bindingName"`
+	BindingName string `url:"bindingName" json:"bindingName"`
 }
 
 func (lbrq FrontendBindDeleteRequest) validate() error {

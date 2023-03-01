@@ -11,7 +11,7 @@ import (
 type StopRequest struct {
 	// ID of the service to stop
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 }
 
 func (bsrq StopRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type UnshareRequest struct {
 	// ID of the disk to unshare
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 }
 
 func (drq UnshareRequest) validate() error {

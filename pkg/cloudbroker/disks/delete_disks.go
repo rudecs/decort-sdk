@@ -11,15 +11,15 @@ import (
 type DeleteDisksRequest struct {
 	// List of disk ids to delete
 	// Required: true
-	DisksIDs []uint64 `url:"diskIds"`
+	DisksIDs []uint64 `url:"diskIds" json:"diskIds"`
 
 	// Reason for deleting the disks
 	// Required: true
-	Reason string `url:"reason"`
+	Reason string `url:"reason" json:"reason"`
 
 	// Whether to completely delete the disks, works only with non attached disks
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 }
 
 func (drq DeleteDisksRequest) validate() error {

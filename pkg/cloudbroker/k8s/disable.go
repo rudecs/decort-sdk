@@ -11,7 +11,7 @@ import (
 type DisableRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 }
 
 func (krq DisableRequest) validate() error {

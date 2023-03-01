@@ -11,19 +11,19 @@ import (
 type ExtNetConnectRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// External network ID
 	// Required: true
-	NetID uint64 `url:"netId"`
+	NetID uint64 `url:"netId" json:"netId"`
 
 	// Directly set IP address
 	// Required: false
-	IP string `url:"ip,omitempty"`
+	IP string `url:"ip,omitempty" json:"ip,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (vrq ExtNetConnectRequest) validate() error {

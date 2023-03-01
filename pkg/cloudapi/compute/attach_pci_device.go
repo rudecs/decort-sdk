@@ -11,11 +11,11 @@ import (
 type AttachPCIDeviceRequest struct {
 	// Identifier compute
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// PCI device ID
 	// Required: true
-	DeviceID uint64 `url:"deviceId"`
+	DeviceID uint64 `url:"deviceId" json:"deviceId"`
 }
 
 func (crq AttachPCIDeviceRequest) validate() error {

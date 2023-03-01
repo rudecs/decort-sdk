@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gridId"`
+	GID uint64 `url:"gridId" json:"gridId"`
 }
 
 func (grq GetRequest) validate() error {

@@ -11,23 +11,23 @@ import (
 type MigrateStorageRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// SEP ID to migrate disks
 	// Required: true
-	SEPID uint64 `url:"sepId"`
+	SEPID uint64 `url:"sepId" json:"sepId"`
 
 	// SEP pool name to migrate disks
 	// Required: true
-	PoolName string `url:"poolName"`
+	PoolName string `url:"poolName" json:"poolName"`
 
 	// Target stack ID
 	// Required: true
-	StackID uint64 `url:"stackId"`
+	StackID uint64 `url:"stackId" json:"stackId"`
 
 	// Async API call
 	// Required: true
-	Sync bool `url:"sync"`
+	Sync bool `url:"sync" json:"sync"`
 }
 
 func (crq MigrateStorageRequest) validate() error {

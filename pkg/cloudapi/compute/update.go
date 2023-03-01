@@ -11,15 +11,15 @@ import (
 type UpdateRequest struct {
 	// ID of the compute
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// New name
 	// Required: false
-	Name string `url:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// New description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 }
 
 func (crq UpdateRequest) validate() error {

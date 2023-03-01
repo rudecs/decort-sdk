@@ -10,19 +10,19 @@ import (
 type ListRequest struct {
 	// Filter images by storage endpoint provider ID
 	// Required: false
-	SepID uint64 `url:"sepId,omitempty"`
+	SepID uint64 `url:"sepId,omitempty" json:"sepId,omitempty"`
 
 	// Filter images by account ID availability
 	// Required: false
-	SharedWith uint64 `url:"sharedWith,omitempty"`
+	SharedWith uint64 `url:"sharedWith,omitempty" json:"sharedWith,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `url:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list of information about images

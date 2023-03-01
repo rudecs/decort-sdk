@@ -11,12 +11,12 @@ import (
 type DeleteRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// True if cluster is destroyed permanently.
 	// Otherwise it can be restored from Recycle Bin
 	// Required: true
-	Permanently bool `url:"permanently"`
+	Permanently bool `url:"permanently" json:"permanently"`
 }
 
 func (krq DeleteRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type ListComputesRequest struct {
 	// Filter by account ID
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 }
 
 func (erq ListComputesRequest) validate() error {

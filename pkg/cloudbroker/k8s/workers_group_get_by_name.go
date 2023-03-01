@@ -11,11 +11,11 @@ import (
 type WorkersGroupGetByNameRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// Worker group name
 	// Required: true
-	GroupName string `url:"groupName"`
+	GroupName string `url:"groupName" json:"groupName"`
 }
 
 func (krq WorkersGroupGetByNameRequest) validate() error {

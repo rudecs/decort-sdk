@@ -13,15 +13,15 @@ import (
 type ConfigFieldEditRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Field name
 	// Required: true
-	FieldName string `url:"field_name"`
+	FieldName string `url:"field_name" json:"field_name"`
 
 	// Field value
 	// Required: true
-	FieldValue string `url:"field_value"`
+	FieldValue string `url:"field_value" json:"field_value"`
 
 	// Field type
 	// Should be one of:
@@ -31,7 +31,7 @@ type ConfigFieldEditRequest struct {
 	//	- list
 	//	- dict
 	// Required: true
-	FieldType string `url:"field_type"`
+	FieldType string `url:"field_type" json:"field_type"`
 }
 
 func (srq ConfigFieldEditRequest) validate() error {

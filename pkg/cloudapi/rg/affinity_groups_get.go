@@ -11,11 +11,11 @@ import (
 type AffinityGroupsGetRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Label affinity group
 	// Required: true
-	AffinityGroup string `url:"affinityGroup"`
+	AffinityGroup string `url:"affinityGroup" json:"affinityGroup"`
 }
 
 func (rgrq AffinityGroupsGetRequest) validate() error {

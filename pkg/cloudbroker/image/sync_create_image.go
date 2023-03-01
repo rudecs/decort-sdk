@@ -13,22 +13,22 @@ import (
 type SyncCreateRequest struct {
 	// Name of the rescue disk
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// URL where to download media from
 	// Required: true
-	URL string `url:"url"`
+	URL string `url:"url" json:"url"`
 
 	// Grid (platform) ID where this template should be create in
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// Boot type of image
 	// Should be one of:
 	//	- bios
 	//	- UEFI
 	// Required: true
-	BootType string `url:"boottype"`
+	BootType string `url:"boottype" json:"boottype"`
 
 	// Image type
 	// Should be one of:
@@ -36,55 +36,55 @@ type SyncCreateRequest struct {
 	//	- windows
 	//	- or other
 	// Required: true
-	ImageType string `url:"imagetype"`
+	ImageType string `url:"imagetype" json:"imagetype"`
 
 	// Does this machine supports hot resize
 	// Required: false
-	HotResize bool `url:"hotresize,omitempty"`
+	HotResize bool `url:"hotresize,omitempty" json:"hotresize,omitempty"`
 
 	// Optional username for the image
 	// Required: false
-	Username string `url:"username,omitempty"`
+	Username string `url:"username,omitempty" json:"username,omitempty"`
 
 	// Optional password for the image
 	// Required: false
-	Password string `url:"password,omitempty"`
+	Password string `url:"password,omitempty" json:"password,omitempty"`
 
 	// Account ID to make the image exclusive
 	// Required: false
-	AccountID uint64 `url:"accountId,omitempty"`
+	AccountID uint64 `url:"accountId,omitempty" json:"accountId,omitempty"`
 
 	// Username for upload binary media
 	// Required: false
-	UsernameDL string `url:"usernameDL,omitempty"`
+	UsernameDL string `url:"usernameDL,omitempty" json:"usernameDL,omitempty"`
 
 	// Password for upload binary media
 	// Required: false
-	PasswordDL string `url:"passwordDL,omitempty"`
+	PasswordDL string `url:"passwordDL,omitempty" json:"passwordDL,omitempty"`
 
 	// Storage endpoint provider ID
 	// Required: false
-	SEPID uint64 `url:"sepId,omitempty"`
+	SEPID uint64 `url:"sepId,omitempty" json:"sepId,omitempty"`
 
 	// Pool for image create
 	// Required: false
-	PoolName string `url:"poolName,omitempty"`
+	PoolName string `url:"poolName,omitempty" json:"poolName,omitempty"`
 
 	// Binary architecture of this image
 	// Should be one of:
 	//	- X86_64
 	//	- PPC64_LE
 	// Required: false
-	Architecture string `url:"architecture,omitempty"`
+	Architecture string `url:"architecture,omitempty" json:"architecture,omitempty"`
 
 	// List of types of compute suitable for image
 	// Example: [ "KVM_X86" ]
 	// Required: true
-	Drivers []string `url:"drivers"`
+	Drivers []string `url:"drivers" json:"drivers"`
 
 	// Bootable image or not
 	// Required: false
-	Bootable bool `url:"bootable,omitempty"`
+	Bootable bool `url:"bootable,omitempty" json:"bootable,omitempty"`
 }
 
 func (irq SyncCreateRequest) validate() error {

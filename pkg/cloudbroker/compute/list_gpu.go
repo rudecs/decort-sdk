@@ -11,11 +11,11 @@ import (
 type ListGPURequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Also list destroyed
 	// Required: false
-	ListDestroyed bool `url:"list_destroyed,omitempty"`
+	ListDestroyed bool `url:"list_destroyed,omitempty" json:"list_destroyed,omitempty"`
 }
 
 func (crq ListGPURequest) validate() error {

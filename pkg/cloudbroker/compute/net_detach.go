@@ -11,19 +11,19 @@ import (
 type NetDetachRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// IP of the network interface
 	// Required: false
-	IPAddr string `url:"ipAddr,omitempty"`
+	IPAddr string `url:"ipAddr,omitempty" json:"ipAddr,omitempty"`
 
 	// MAC of the network interface
 	// Required: false
-	MAC string `url:"mac,omitempty"`
+	MAC string `url:"mac,omitempty" json:"mac,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq NetDetachRequest) validate() error {

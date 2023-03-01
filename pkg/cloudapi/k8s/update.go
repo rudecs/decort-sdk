@@ -11,17 +11,17 @@ import (
 type UpdateRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// New name to set.
 	// If empty string is passed, name is not updated
 	// Required: false
-	Name string `url:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// New description to set.
 	// If empty string is passed, description is not updated
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 }
 
 func (krq UpdateRequest) validate() error {

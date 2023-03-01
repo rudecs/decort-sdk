@@ -11,7 +11,7 @@ import (
 type GetReservedAccountUnitsRequest struct {
 	// ID an account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 }
 
 func (arq GetReservedAccountUnitsRequest) validate() error {

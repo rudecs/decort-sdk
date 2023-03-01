@@ -11,15 +11,15 @@ import (
 type UpdateRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// New external network name
 	// Required: false
-	Name string `url:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// New external network description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 }
 
 func (erq UpdateRequest) validate() error {

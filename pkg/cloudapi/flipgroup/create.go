@@ -13,36 +13,36 @@ import (
 type CreateRequest struct {
 	// Account ID
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// FLIPGroup name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Network type
 	// Should be one of:
 	//	- EXTNET
 	//	- VINS
 	// Required: true
-	NetType string `url:"netType"`
+	NetType string `url:"netType" json:"netType"`
 
 	// ID of external network or VINS
 	// Required: true
-	NetID uint64 `url:"netId"`
+	NetID uint64 `url:"netId" json:"netId"`
 
 	// Type of client
 	//	- 'compute'
 	//	- 'vins' (will be later)
 	// Required: true
-	ClientType string `url:"clientType"`
+	ClientType string `url:"clientType" json:"clientType"`
 
 	// IP address to associate with this group. If empty, the platform will autoselect IP address
 	// Required: false
-	IP string `url:"ip,omitempty"`
+	IP string `url:"ip,omitempty" json:"ip,omitempty"`
 
 	// Text description of this FLIPGorup instance
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 }
 
 func (frq CreateRequest) validate() error {

@@ -11,15 +11,15 @@ import (
 type EditRequest struct {
 	// FLIPGroup ID
 	// Required: true
-	FLIPGroupID uint64 `url:"flipgroupId"`
+	FLIPGroupID uint64 `url:"flipgroupId" json:"flipgroupId"`
 
 	// FLIPGroup name
 	// Required: true
-	Name string `url:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// FLIPGroup description
 	// Required: true
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 }
 
 func (frq EditRequest) validate() error {

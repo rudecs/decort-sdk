@@ -10,15 +10,15 @@ import (
 type ListRequest struct {
 	// Filter by account ID
 	// Required: false
-	AccountID uint64 `url:"accountId,omitempty"`
+	AccountID uint64 `url:"accountId,omitempty" json:"accountId,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `url:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list all available external networks

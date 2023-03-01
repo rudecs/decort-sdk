@@ -11,11 +11,11 @@ import (
 type RenameRequest struct {
 	// ID of the virtual image to rename
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// New name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 }
 
 func (irq RenameRequest) validate() error {

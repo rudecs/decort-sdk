@@ -10,7 +10,7 @@ import (
 type ListUnattachedRequest struct {
 	// ID of the account
 	// Required: false
-	AccountID uint64 `url:"accountId,omitempty"`
+	AccountID uint64 `url:"accountId,omitempty" json:"accountId,omitempty"`
 }
 
 // ListUnattached gets list of unattached disks

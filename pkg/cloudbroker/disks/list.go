@@ -10,19 +10,19 @@ import (
 type ListRequest struct {
 	// ID of the account the disks belong to
 	// Required: false
-	AccountID uint64 `url:"accountId,omitempty"`
+	AccountID uint64 `url:"accountId,omitempty" json:"accountId,omitempty"`
 
 	// Type of the disks
 	// Required: false
-	Type string `url:"type,omitempty"`
+	Type string `url:"type,omitempty" json:"type,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `url:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list the created disks belonging to an account

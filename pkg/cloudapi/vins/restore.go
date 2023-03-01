@@ -11,7 +11,7 @@ import (
 type RestoreRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 }
 
 func (vrq RestoreRequest) validate() error {

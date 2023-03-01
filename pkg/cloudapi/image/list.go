@@ -10,15 +10,15 @@ import (
 type ListRequest struct {
 	// Optional account ID to include account images
 	// Required: false
-	AccountID uint64 `json:"accountId,omitempty"`
+	AccountID uint64 `url:"accountId,omitempty" json:"accountId,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `json:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `json:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list available images, optionally filtering by account ID

@@ -11,7 +11,7 @@ import (
 type StartRequest struct {
 	// ID of the service to start
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 }
 
 func (bsrq StartRequest) validate() error {

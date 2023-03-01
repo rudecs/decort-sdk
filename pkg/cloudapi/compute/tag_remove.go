@@ -11,11 +11,11 @@ import (
 type TagRemoveRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Tag key
 	// Required: true
-	Key string `url:"key"`
+	Key string `url:"key" json:"key"`
 }
 
 func (crq TagRemoveRequest) validate() error {

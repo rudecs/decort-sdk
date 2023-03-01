@@ -11,15 +11,15 @@ import (
 type IPsIncludeRangeRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// Starting IP
 	// Required: true
-	IPStart string `url:"ip_start"`
+	IPStart string `url:"ip_start" json:"ip_start"`
 
 	// Ending IP
 	// Required: true
-	IPEnd string `url:"ip_end"`
+	IPEnd string `url:"ip_end" json:"ip_end"`
 }
 
 func (erq IPsIncludeRangeRequest) validate() error {

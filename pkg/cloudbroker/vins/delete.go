@@ -11,23 +11,23 @@ import (
 type DeleteRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// Set to True if you want force delete non-empty VINS.
 	// Primarily, VINS is considered non-empty if it has virtual machines connected to it,
 	// and force flag will detach them from the VINS being deleted.
 	// Otherwise method will return an error
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// Set to True if you want to destroy VINS and all linked resources, if any, immediately.
 	// Otherwise, they will be placed into recycle bin and could be restored later within the recycle bin's purge period
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (vrq DeleteRequest) validate() error {

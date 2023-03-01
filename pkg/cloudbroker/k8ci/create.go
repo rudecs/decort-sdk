@@ -13,19 +13,19 @@ import (
 type CreateRequest struct {
 	// Name of catalog item
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Version tag
 	// Required: true
-	Version string `url:"version"`
+	Version string `url:"version" json:"version"`
 
 	// Optional description
 	// Required: false
-	Description string `url:"description,omitempty"`
+	Description string `url:"description,omitempty" json:"description,omitempty"`
 
 	// Image ID for master K8S node
 	// Required: true
-	MasterImageID uint64 `url:"masterImageId"`
+	MasterImageID uint64 `url:"masterImageId" json:"masterImageId"`
 
 	// Compute driver
 	// Should be one of:
@@ -33,11 +33,11 @@ type CreateRequest struct {
 	//	- KVM_PPC
 	//	- etc
 	// Required: true
-	MasterDriver string `url:"masterDriver"`
+	MasterDriver string `url:"masterDriver" json:"masterDriver"`
 
 	// Image ID for worker K8S node
 	// Required: true
-	WorkerImageID uint64 `url:"workerImageId"`
+	WorkerImageID uint64 `url:"workerImageId" json:"workerImageId"`
 
 	// Compute driver
 	// Should be one of
@@ -45,24 +45,24 @@ type CreateRequest struct {
 	//	- KVM_PPC
 	//	- etc
 	// Required: true
-	WorkerDriver string `url:"workerDriver"`
+	WorkerDriver string `url:"workerDriver" json:"workerDriver"`
 
 	// Image ID for load balancer node
 	// Required: true
-	LBImageID uint64 `url:"lbImageId"`
+	LBImageID uint64 `url:"lbImageId" json:"lbImageId"`
 
 	// List of account IDs, which have access to this item.
 	// If empty, any account has access
 	// Required: false
-	SharedWith []uint64 `url:"sharedWith,omitempty"`
+	SharedWith []uint64 `url:"sharedWith,omitempty" json:"sharedWith,omitempty"`
 
 	// Policy limit on maximum number of master nodes
 	// Required: true
-	MaxMasterCount uint64 `url:"maxMasterCount"`
+	MaxMasterCount uint64 `url:"maxMasterCount" json:"maxMasterCount"`
 
 	// Policy limit on maximum number of worker nodes
 	// Required: true
-	MaxWorkerCount uint64 `url:"maxWorkerCount"`
+	MaxWorkerCount uint64 `url:"maxWorkerCount" json:"maxWorkerCount"`
 }
 
 func (krq CreateRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type ConsumptionRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 }
 
 func (srq ConsumptionRequest) validate() error {

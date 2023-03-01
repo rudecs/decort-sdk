@@ -11,11 +11,11 @@ import (
 type DeleteRequest struct {
 	// ID of the BasicService to be delete
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// If set to False, Basic service will be deleted to recycle bin. Otherwise destroyed immediately
 	// Required: true
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 }
 
 func (bsrq DeleteRequest) validate() error {

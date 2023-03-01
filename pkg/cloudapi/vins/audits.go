@@ -11,7 +11,7 @@ import (
 type AuditsRequest struct {
 	// ID of the VINS
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 }
 
 func (vrq AuditsRequest) validate() error {

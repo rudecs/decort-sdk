@@ -10,11 +10,11 @@ import (
 type GetLogRequest struct {
 	// ID of compute instance to get log for
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Path to log file
 	// Required: true
-	Path string `url:"path"`
+	Path string `url:"path" json:"path"`
 }
 
 func (crq GetLogRequest) validate() error {

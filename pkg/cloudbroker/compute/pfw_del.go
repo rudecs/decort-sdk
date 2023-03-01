@@ -11,34 +11,34 @@ import (
 type PFWDelRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of the rule to delete. If specified, all other arguments will be ignored
 	// Required: false
-	RuleID uint64 `url:"ruleId,omitempty"`
+	RuleID uint64 `url:"ruleId,omitempty" json:"ruleId,omitempty"`
 
 	// External start port number for the rule
 	// Required: false
-	PublicPortStart uint64 `url:"publicPortStart,omitempty"`
+	PublicPortStart uint64 `url:"publicPortStart,omitempty" json:"publicPortStart,omitempty"`
 
 	// End port number (inclusive) for the ranged rule
 	// Required: false
-	PublicPortEnd uint64 `url:"publicPortEnd,omitempty"`
+	PublicPortEnd uint64 `url:"publicPortEnd,omitempty" json:"publicPortEnd,omitempty"`
 
 	// Internal base port number
 	// Required: false
-	LocalBasePort uint64 `url:"localBasePort,omitempty"`
+	LocalBasePort uint64 `url:"localBasePort,omitempty" json:"localBasePort,omitempty"`
 
 	// Network protocol
 	// Should be one of:
 	//	- tcp
 	//	- udp
 	// Required: false
-	Proto string `url:"proto,omitempty"`
+	Proto string `url:"proto,omitempty" json:"proto,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq PFWDelRequest) validate() error {

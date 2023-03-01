@@ -11,7 +11,7 @@ import (
 type RestartRequest struct {
 	// ID of the load balancer instance to restart
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 }
 
 func (lbrq RestartRequest) validate() error {

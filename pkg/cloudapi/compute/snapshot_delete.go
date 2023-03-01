@@ -11,11 +11,11 @@ import (
 type SnapshotDeleteRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Text label of snapshot to delete
 	// Required: true
-	Label string `url:"label"`
+	Label string `url:"label" json:"label"`
 }
 
 func (crq SnapshotDeleteRequest) validate() error {

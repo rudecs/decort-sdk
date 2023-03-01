@@ -11,15 +11,15 @@ import (
 type StopRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Force stop compute
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq StopRequest) validate() error {

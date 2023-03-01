@@ -10,11 +10,11 @@ import (
 type MassEnableRequest struct {
 	// IDs of the resource groups
 	// Required: true
-	RGIDs []uint64 `url:"rgIds"`
+	RGIDs []uint64 `url:"rgIds" json:"rgIds"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq MassEnableRequest) validate() error {

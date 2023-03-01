@@ -1,54 +1,11 @@
-## Version 1.1.2
-
-### Feature
-
-#### Cloudbroker
-
-- Disks
-  - Add share method
-  - Add unshare method
+## Version 1.2.0
 
 ### Bug fixes
 
-#### CloudAPI
+#### Client
 
-- Account/Create
-  - Change the MaxMemoryCapacity field type to int64
-  - Change the MaxVDiskCapacity field type to int64
-  - Change the MaxCPUCapacity field type to int64
-  - Change the MaxNetworkPeerTransfer field type to int64
-  - Change the MaxNumPublicIP field type to int64
-  - Change the GPUUnits field type to int64
-  - Change url to cloudapi
-- Account/Models
-  - Change the DiskSize field type to float64
-  - Change the DiskSizeMax field type to uint64
-- RG/Create
-  - Change the MaxMemoryCapacity field type to int64
-  - Change the MaxVDiskCapacity field type to int64
-  - Change the MaxCPUCapacity field type to int64
-  - Change the MaxNumPublicIP field type to int64
-- RG/Models
-  - Change the DiskSize field type to float64
-  - Change the DiskSizeMax field type to uint64
+- Added legacy client authorization support
 
-#### Cloudbroker
+#### All
 
-- Account/Create
-  - Change the MaxMemoryCapacity field type to int64
-  - Change the MaxVDiskCapacity field type to int64
-  - Change the MaxCPUCapacity field type to int64
-  - Change the MaxNetworkPeerTransfer field type to int64
-  - Change the MaxNumPublicIP field type to int64
-  - Change the GPUUnits field type to int64
-- Account/Models
-  - Change the DiskSize field type to float64
-  - Change the DiskSizeMax field type to uint64
-- RG/Create
-  - Change the MaxMemoryCapacity field type to int64
-  - Change the MaxVDiskCapacity field type to int64
-  - Change the MaxCPUCapacity field type to int64
-  - Change the MaxNumPublicIP field type to int64
-- RG/Models
-  - Change the DiskSize field type to float64
-  - Change the DiskSizeMax field type to uint64
+- Add json tags for requests

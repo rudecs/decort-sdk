@@ -11,11 +11,11 @@ import (
 type FrontendDeleteRequest struct {
 	// ID of the load balancer instance to FrontendDelete
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Name of the frontend to delete
 	// Required: true
-	FrontendName string `url:"frontendName"`
+	FrontendName string `url:"frontendName" json:"frontendName"`
 }
 
 func (lbrq FrontendDeleteRequest) validate() error {

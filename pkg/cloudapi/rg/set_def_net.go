@@ -13,22 +13,22 @@ import (
 type SetDefNetRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Network type
 	// Should be one of:
 	//	- "PUBLIC"
 	//	- "PRIVATE"
 	// Required: true
-	NetType string `url:"netType"`
+	NetType string `url:"netType" json:"netType"`
 
 	// Network ID
 	// Required: false
-	NetID uint64 `url:"netId"`
+	NetID uint64 `url:"netId" json:"netId"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq SetDefNetRequest) validate() error {

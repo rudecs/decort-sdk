@@ -11,15 +11,15 @@ import (
 type DeleteMasterFromGroupRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// ID of the masters compute group
 	// Required: true
-	MasterGroupID uint64 `url:"masterGroupId"`
+	MasterGroupID uint64 `url:"masterGroupId" json:"masterGroupId"`
 
 	// List of Compute IDs of master nodes to delete
 	// Required: true
-	MasterIDs []string `url:"masterIds"`
+	MasterIDs []string `url:"masterIds" json:"masterIds"`
 }
 
 func (krq DeleteMasterFromGroupRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type DisableRequest struct {
 	// ID of the service to disable
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 }
 
 func (bsrq DisableRequest) validate() error {

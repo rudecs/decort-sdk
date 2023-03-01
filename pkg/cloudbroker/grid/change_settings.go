@@ -11,11 +11,11 @@ import (
 type ChangeSettingsRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"id"`
+	GID uint64 `url:"id" json:"id"`
 
 	// Json data of the new settings will override old data
 	// Required: true
-	Settings string `url:"settings"`
+	Settings string `url:"settings" json:"settings"`
 }
 
 func (grq ChangeSettingsRequest) validate() error {

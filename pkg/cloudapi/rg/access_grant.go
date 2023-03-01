@@ -13,22 +13,22 @@ import (
 type AccessGrantRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// User or group name to grant access
 	// Required: true
-	User string `url:"user"`
+	User string `url:"user" json:"user"`
 
 	// Access rights to set, one of:
 	//	- "R"
 	//	-  "RCX"
 	//	- "ARCXDU"
 	// Required: true
-	Right string `url:"right"`
+	Right string `url:"right" json:"right"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq AccessGrantRequest) validate() error {

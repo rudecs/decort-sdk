@@ -11,15 +11,15 @@ import (
 type DiskQOSRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of the disk to apply limits
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// Limit IO for a certain disk total and read/write options are not allowed to be combined
 	// Required: true
-	Limits string `url:"limits"`
+	Limits string `url:"limits" json:"limits"`
 }
 
 func (crq DiskQOSRequest) validate() error {

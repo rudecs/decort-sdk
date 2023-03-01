@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// FLIPGroup ID
 	// Required: true
-	FLIPGroupID uint64 `url:"flipgroupId"`
+	FLIPGroupID uint64 `url:"flipgroupId" json:"flipgroupId"`
 }
 
 func (frq GetRequest) validate() error {

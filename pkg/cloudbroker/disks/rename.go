@@ -11,11 +11,11 @@ import (
 type RenameRequest struct {
 	// ID of the disk to rename
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// New name of disk
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 }
 
 func (drq RenameRequest) validate() error {

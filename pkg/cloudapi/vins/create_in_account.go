@@ -11,27 +11,27 @@ import (
 type CreateInAccountRequest struct {
 	// VINS name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// ID of account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Grid ID
 	// Required: false
-	GID uint64 `url:"gid,omitempty"`
+	GID uint64 `url:"gid,omitempty" json:"gid,omitempty"`
 
 	// Private network IP CIDR
 	// Required: false
-	IPCIDR string `url:"ipcidr,omitempty"`
+	IPCIDR string `url:"ipcidr,omitempty" json:"ipcidr,omitempty"`
 
 	// Description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 
 	// Number of pre created reservations
 	// Required: false
-	PreReservationsNum uint64 `url:"preReservationsNum,omitempty"`
+	PreReservationsNum uint64 `url:"preReservationsNum,omitempty" json:"preReservationsNum,omitempty"`
 }
 
 func (vrq CreateInAccountRequest) validate() error {

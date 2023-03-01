@@ -11,19 +11,19 @@ import (
 type AccessGrantToPoolRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Pool name
 	// Required: true
-	PoolName string `url:"pool_name"`
+	PoolName string `url:"pool_name" json:"pool_name"`
 
 	// Account ID to grant access to the specified pool SEP
 	// Required: false
-	AccountID uint64 `url:"account_id,omitempty"`
+	AccountID uint64 `url:"account_id,omitempty" json:"account_id,omitempty"`
 
 	// Resource group to grant access to the specified pool SEP
 	// Required: false
-	RGID uint64 `url:"resgroup_id,omitempty"`
+	RGID uint64 `url:"resgroup_id,omitempty" json:"resgroup_id,omitempty"`
 }
 
 func (srq AccessGrantToPoolRequest) validate() error {

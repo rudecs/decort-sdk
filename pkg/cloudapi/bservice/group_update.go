@@ -11,35 +11,35 @@ import (
 type GroupUpdateRequest struct {
 	// ID of the Basic Service of Compute Group
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute Group
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 
 	// Specify non-empty string to update Compute Group name
 	// Required: false
-	Name string `url:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// Specify non-empty string to update group role
 	// Required: false
-	Role string `url:"role,omitempty"`
+	Role string `url:"role,omitempty" json:"role,omitempty"`
 
 	// Specify positive value to set new compute CPU count
 	// Required: false
-	CPU uint64 `url:"cpu,omitempty"`
+	CPU uint64 `url:"cpu,omitempty" json:"cpu,omitempty"`
 
 	// Specify positive value to set new compute RAM volume in MB
 	// Required: false
-	RAM uint64 `url:"ram,omitempty"`
+	RAM uint64 `url:"ram,omitempty" json:"ram,omitempty"`
 
 	// Specify new compute boot disk size in GB
 	// Required: false
-	Disk uint64 `url:"disk,omitempty"`
+	Disk uint64 `url:"disk,omitempty" json:"disk,omitempty"`
 
 	// Force resize Compute Group
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 }
 
 func (bsrq GroupUpdateRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type ExtNetListRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 }
 
 func (vrq ExtNetListRequest) validate() error {

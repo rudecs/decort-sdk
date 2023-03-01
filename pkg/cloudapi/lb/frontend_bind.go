@@ -11,26 +11,26 @@ import (
 type FrontendBindRequest struct {
 	// ID of the load balancer instance to FrontendBind
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Name of the frontend to update
 	// Required: true
-	FrontendName string `url:"frontendName"`
+	FrontendName string `url:"frontendName" json:"frontendName"`
 
 	// Name of the binding to update
 	// Required: true
-	BindingName string `url:"bindingName"`
+	BindingName string `url:"bindingName" json:"bindingName"`
 
 	// If specified must be within the IP range of either Ext Net or ViNS,
 	// where this load balancer is connected - new IP address to use for this binding.
 	// If omitted, current IP address is retained
 	// Required: false
-	BindingAddress string `url:"bindingAddress,omitempty"`
+	BindingAddress string `url:"bindingAddress,omitempty" json:"bindingAddress,omitempty"`
 
 	// New port number to use for this binding.
 	// If omitted, current port number is retained
 	// Required: false
-	BindingPort uint64 `url:"bindingPort,omitempty"`
+	BindingPort uint64 `url:"bindingPort,omitempty" json:"bindingPort,omitempty"`
 }
 
 func (lbrq FrontendBindRequest) validate() error {

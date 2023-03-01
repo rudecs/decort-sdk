@@ -11,20 +11,20 @@ import (
 type DeleteRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Set to True if you want force delete non-empty resource group
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// Set to True if you want to destroy resource group and all linked resources, if any, immediately.
 	// Otherwise, they will be placed into recycle bin and could be restored later within recycle bin's purge period
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq DeleteRequest) validate() error {

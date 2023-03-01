@@ -11,7 +11,7 @@ import (
 type ShareRequest struct {
 	// ID of the disk to share
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 }
 
 func (drq ShareRequest) validate() error {

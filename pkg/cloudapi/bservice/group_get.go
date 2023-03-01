@@ -11,11 +11,11 @@ import (
 type GroupGetRequest struct {
 	// ID of the Basic Service of Compute Group
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute Group
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 }
 
 func (bsrq GroupGetRequest) validate() error {

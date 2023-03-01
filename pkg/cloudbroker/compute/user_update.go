@@ -13,11 +13,11 @@ import (
 type UserUpdateRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Name of the user to update
 	// Required: true
-	Username string `url:"userName"`
+	Username string `url:"userName" json:"userName"`
 
 	// Access type
 	// Should be one of:
@@ -25,7 +25,7 @@ type UserUpdateRequest struct {
 	//	- 'RCX' for Write
 	//	- 'ARCXDU' for Admin
 	// Required: true
-	AccessType string `url:"accesstype"`
+	AccessType string `url:"accesstype" json:"accesstype"`
 }
 
 func (crq UserUpdateRequest) validate() error {

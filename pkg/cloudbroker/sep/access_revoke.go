@@ -11,11 +11,11 @@ import (
 type AccessRevokeRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Account ID to revoke access to the specified SEP
 	// Required: true
-	AccountID uint64 `url:"account_id"`
+	AccountID uint64 `url:"account_id" json:"account_id"`
 }
 
 func (srq AccessRevokeRequest) validate() error {

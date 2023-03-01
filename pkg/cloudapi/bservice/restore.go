@@ -11,7 +11,7 @@ import (
 type RestoreRequest struct {
 	// ID of the BasicService to be restored
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 }
 
 func (bsrq RestoreRequest) validate() error {

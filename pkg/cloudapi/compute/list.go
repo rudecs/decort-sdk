@@ -10,15 +10,15 @@ import (
 type ListRequest struct {
 	// Include deleted computes
 	// Required: false
-	IncludeDeleted bool `url:"includedeleted,omitempty"`
+	IncludeDeleted bool `url:"includedeleted,omitempty" json:"includedeleted,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `url:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list of the available computes.

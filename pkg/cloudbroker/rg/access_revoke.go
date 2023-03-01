@@ -11,15 +11,15 @@ import (
 type AccessRevokeRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// User or group name to revoke access
 	// Required: true
-	User string `url:"user"`
+	User string `url:"user" json:"user"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq AccessRevokeRequest) validate() error {

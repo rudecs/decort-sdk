@@ -11,11 +11,11 @@ import (
 type DiskListRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Pool name
 	// Required: false
-	PoolName string `url:"pool_name,omitempty"`
+	PoolName string `url:"pool_name,omitempty" json:"pool_name,omitempty"`
 }
 
 func (srq DiskListRequest) validate() error {

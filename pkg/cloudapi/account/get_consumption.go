@@ -10,15 +10,15 @@ import (
 type GetConsumtionRequest struct {
 	// ID an account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Epoch represents the start time
 	// Required: true
-	Start uint64 `url:"start"`
+	Start uint64 `url:"start" json:"start"`
 
 	// Epoch represents the end time
 	// Required: true
-	End uint64 `url:"end"`
+	End uint64 `url:"end" json:"end"`
 }
 
 func (arq GetConsumtionRequest) validate() error {

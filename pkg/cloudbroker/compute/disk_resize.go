@@ -11,19 +11,19 @@ import (
 type DiskResizeRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of the disk to resize
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// New disk size
 	// Required: true
-	Size uint64 `url:"size"`
+	Size uint64 `url:"size" json:"size"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq DiskResizeRequest) validate() error {

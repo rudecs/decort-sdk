@@ -11,7 +11,7 @@ import (
 type SnapshotListRequest struct {
 	// ID of the Basic Service
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 }
 
 func (bsrq SnapshotListRequest) validate() error {

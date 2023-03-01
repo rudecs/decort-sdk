@@ -11,11 +11,11 @@ import (
 type ShareRequest struct {
 	// ID of the image to share
 	// Required: true
-	ImageId uint64 `url:"imageId"`
+	ImageId uint64 `url:"imageId" json:"imageId"`
 
 	// List of account IDs
 	// Required: true
-	AccountIDs []uint64 `url:"accounts"`
+	AccountIDs []uint64 `url:"accounts" json:"accounts"`
 }
 
 func (irq ShareRequest) validate() error {

@@ -11,35 +11,35 @@ import (
 type CreateRequest struct {
 	// Grid ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// SEP name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Type of storage
 	// Required: true
-	SEPType string `url:"sep_type"`
+	SEPType string `url:"sep_type" json:"sep_type"`
 
 	// Description
 	// Required: false
-	Description string `url:"description,omitempty"`
+	Description string `url:"description,omitempty" json:"description,omitempty"`
 
 	// SEP config
 	// Required: false
-	Config string `url:"config,omitempty"`
+	Config string `url:"config,omitempty" json:"config,omitempty"`
 
 	// List of provider node IDs
 	// Required: false
-	ProviderNIDs []uint64 `url:"provider_nids,omitempty"`
+	ProviderNIDs []uint64 `url:"provider_nids,omitempty" json:"provider_nids,omitempty"`
 
 	// List of consumer node IDs
 	// Required: false
-	ConsumerNIDs []uint64 `url:"consumer_nids,omitempty"`
+	ConsumerNIDs []uint64 `url:"consumer_nids,omitempty" json:"consumer_nids,omitempty"`
 
 	// Enable SEP after creation
 	// Required: false
-	Enable bool `url:"enable,omitempty"`
+	Enable bool `url:"enable,omitempty" json:"enable,omitempty"`
 }
 
 func (srq CreateRequest) validate() error {

@@ -10,35 +10,35 @@ import (
 type CreateSystemSpaceRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"id"`
+	GID uint64 `url:"id" json:"id"`
 
 	// Name of the account/cloudspace to be created for the system
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// ID of the specific image
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// Size of base volume
 	// Required: true
-	BootSize uint64 `url:"bootsize"`
+	BootSize uint64 `url:"bootsize" json:"bootsize"`
 
 	// Data disk size in gigabytes
 	// Required: true
-	DataDiskSize uint64 `url:"dataDiskSize"`
+	DataDiskSize uint64 `url:"dataDiskSize" json:"dataDiskSize"`
 
 	// ID of the specific size
 	// Required: false
-	SizeID uint64 `url:"sizeId,omitempty"`
+	SizeID uint64 `url:"sizeId,omitempty" json:"sizeId,omitempty"`
 
 	// Number of vcpus to provide
 	// Required: false
-	VCPUS uint64 `url:"vcpus,omitempty"`
+	VCPUS uint64 `url:"vcpus,omitempty" json:"vcpus,omitempty"`
 
 	// Amount of memory to provide
 	// Required: false
-	Memory uint64 `url:"memory,omitempty"`
+	Memory uint64 `url:"memory,omitempty" json:"memory,omitempty"`
 }
 
 func (grq CreateSystemSpaceRequest) validate() error {

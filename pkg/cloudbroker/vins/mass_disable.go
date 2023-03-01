@@ -10,11 +10,11 @@ import (
 type MassDisableRequest struct {
 	// VINS IDs
 	// Required: true
-	VINSIDs []uint64 `url:"vinsIds"`
+	VINSIDs []uint64 `url:"vinsIds" json:"vinsIds"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (vrq MassDisableRequest) validate() error {

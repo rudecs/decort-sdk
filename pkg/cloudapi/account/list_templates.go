@@ -11,11 +11,11 @@ import (
 type ListTemplatesRequest struct {
 	// ID an account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Include deleted images
 	// Required: false
-	IncludeDeleted bool `url:"includedeleted"`
+	IncludeDeleted bool `url:"includedeleted" json:"includedeleted"`
 }
 
 func (arq ListTemplatesRequest) validate() error {

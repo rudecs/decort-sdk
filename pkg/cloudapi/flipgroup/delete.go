@@ -11,7 +11,7 @@ import (
 type DeleteRequest struct {
 	// FLIPGroup ID
 	// Required: true
-	FLIPGroupID uint64 `url:"flipgroupId"`
+	FLIPGroupID uint64 `url:"flipgroupId" json:"flipgroupId"`
 }
 
 func (frq DeleteRequest) validate() error {

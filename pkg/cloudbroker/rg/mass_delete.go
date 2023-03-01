@@ -10,22 +10,22 @@ import (
 type MassDeleteRequest struct {
 	// IDs of the resource groups
 	// Required: true
-	RGIDs []uint64 `url:"rgIds"`
+	RGIDs []uint64 `url:"rgIds" json:"rgIds"`
 
 	// Set to true if you want force delete non-empty resource groups
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// Set to true if you want to destroy resource group and all linked
 	// resources, if any, immediately.
 	// Otherwise, they will be placed into recycle bin and could be
 	// restored later within recycle bins purge period
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (rgrq MassDeleteRequest) validate() error {

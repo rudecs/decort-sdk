@@ -11,19 +11,19 @@ import (
 type DeleteRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Delete permanently
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 
 	// Set True if you want to detach data disks (if any) from the compute before its deletion
 	// Required: false
-	DetachDisks bool `url:"detachDisks,omitempty"`
+	DetachDisks bool `url:"detachDisks,omitempty" json:"detachDisks,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq DeleteRequest) validate() error {

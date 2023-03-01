@@ -11,7 +11,7 @@ import (
 type UserListRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 }
 
 func (crq UserListRequest) validate() error {

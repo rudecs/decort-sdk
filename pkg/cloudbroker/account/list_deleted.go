@@ -10,11 +10,11 @@ import (
 type ListDeletedRequest struct {
 	// Page number
 	// Required: false
-	Page uint64 `url:"page"`
+	Page uint64 `url:"page" json:"page"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size"`
+	Size uint64 `url:"size" json:"size"`
 }
 
 // ListDeleted gets list all deleted accounts the user has access to

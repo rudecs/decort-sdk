@@ -10,7 +10,7 @@ import (
 type EnableAccountsRequest struct {
 	// IDs od accounts
 	// Required: true
-	AccountIDs []uint64 `url:"accountIds"`
+	AccountIDs []uint64 `url:"accountIds" json:"accountIds"`
 }
 
 func (arq EnableAccountsRequest) validate() error {

@@ -13,7 +13,7 @@ import (
 type UpdateResourceTypesRequest struct {
 	// ID of resource group
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Resource types available to create in this resource group
 	// Each element in a resource type slice must be one of:
@@ -24,7 +24,7 @@ type UpdateResourceTypesRequest struct {
 	//	- lb
 	//	- flipgroup
 	// Required: true
-	ResTypes []string `url:"resourceTypes"`
+	ResTypes []string `url:"resourceTypes" json:"resourceTypes"`
 }
 
 func (rgrq UpdateResourceTypesRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type DecommissionRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Clear disks and images physically
 	// Required: false
-	ClearPhisically bool `url:"clear_physically,omitempty"`
+	ClearPhisically bool `url:"clear_physically,omitempty" json:"clear_physically,omitempty"`
 }
 
 func (srq DecommissionRequest) validate() error {

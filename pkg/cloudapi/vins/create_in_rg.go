@@ -11,31 +11,31 @@ import (
 type CreateInRGRequest struct {
 	// VINS name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Private network IP CIDR
 	// Required: false
-	IPCIDR string `url:"ipcidr,omitempty"`
+	IPCIDR string `url:"ipcidr,omitempty" json:"ipcidr,omitempty"`
 
 	// External network ID
 	// Required: false
-	ExtNetID uint64 `url:"extNetId,omitempty"`
+	ExtNetID uint64 `url:"extNetId,omitempty" json:"extNetId,omitempty"`
 
 	// External IP, related only for extNetId >= 0
 	// Required: false
-	ExtIP string `url:"extIp,omitempty"`
+	ExtIP string `url:"extIp,omitempty" json:"extIp,omitempty"`
 
 	// Description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 
 	// Number of pre created reservations
 	// Required: false
-	PreReservationsNum uint `url:"preReservationsNum,omitempty"`
+	PreReservationsNum uint `url:"preReservationsNum,omitempty" json:"preReservationsNum,omitempty"`
 }
 
 func (vrq CreateInRGRequest) validate() error {

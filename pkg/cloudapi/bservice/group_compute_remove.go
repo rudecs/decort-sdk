@@ -11,15 +11,15 @@ import (
 type GroupComputeRemoveRequest struct {
 	// ID of the Basic Service
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute GROUP
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 
 	// ID of the Compute
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 }
 
 func (bsrq GroupComputeRemoveRequest) validate() error {

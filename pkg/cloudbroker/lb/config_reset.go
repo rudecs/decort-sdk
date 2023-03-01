@@ -11,7 +11,7 @@ import (
 type ConfigResetRequest struct {
 	// ID of the load balancer instance to ConfigReset
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 }
 
 func (lbrq ConfigResetRequest) validate() error {

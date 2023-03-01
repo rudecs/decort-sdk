@@ -11,7 +11,7 @@ import (
 type DisabelEnableRequest struct {
 	// ID of account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 }
 
 func (arq DisabelEnableRequest) validate() error {

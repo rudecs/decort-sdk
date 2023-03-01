@@ -11,11 +11,11 @@ import (
 type RenameRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// New name
 	// Required: true
-	Name string `url:"Name"`
+	Name string `url:"Name" json:"Name"`
 }
 
 func (grq RenameRequest) validate() error {

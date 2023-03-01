@@ -11,10 +11,10 @@ import (
 type DeviceMigrateRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// Target stack ID to migrate to
-	StackID uint64 `url:"stackId"`
+	StackID uint64 `url:"stackId" json:"stackId"`
 }
 
 func (erq DeviceMigrateRequest) validate() error {

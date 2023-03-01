@@ -11,12 +11,12 @@ import (
 type NATRuleDelRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// ID of the rule to delete.
 	// Pass -1 to clear all rules at once
 	// Required: true
-	RuleID uint64 `url:"ruleId"`
+	RuleID uint64 `url:"ruleId" json:"ruleId"`
 }
 
 func (vrq NATRuleDelRequest) validate() error {

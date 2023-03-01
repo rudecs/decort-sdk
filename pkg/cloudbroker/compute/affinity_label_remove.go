@@ -11,7 +11,7 @@ import (
 type AffinityLabelRemoveRequest struct {
 	// IDs of the compute instances
 	// Required: true
-	ComputeIDs []uint64 `url:"computeIds"`
+	ComputeIDs []uint64 `url:"computeIds" json:"computeIds"`
 }
 
 func (crq AffinityLabelRemoveRequest) validate() error {

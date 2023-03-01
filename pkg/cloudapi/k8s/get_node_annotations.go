@@ -10,11 +10,11 @@ import (
 type GetNodeAnnotationsRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// Node ID
 	// Required: true
-	NodeID uint64 `url:"nodeId"`
+	NodeID uint64 `url:"nodeId" json:"nodeId"`
 }
 
 func (krq GetNodeAnnotationsRequest) validate() error {

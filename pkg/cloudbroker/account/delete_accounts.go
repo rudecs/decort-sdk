@@ -10,15 +10,15 @@ import (
 type DeleteAccountsRequest struct {
 	// IDs of accounts
 	// Required: true
-	AccountsIDs []uint64 `url:"accountIds"`
+	AccountsIDs []uint64 `url:"accountIds" json:"accountIds"`
 
 	// Reason for deletion
 	// Required: true
-	Reason string `url:"reason"`
+	Reason string `url:"reason" json:"reason"`
 
 	// Whether to completely destroy accounts or not
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 }
 
 func (arq DeleteAccountsRequest) validate() error {

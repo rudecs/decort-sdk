@@ -11,11 +11,11 @@ import (
 type LinkRequest struct {
 	// ID of the virtual image
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// ID of real image to link this virtual image to
 	// Required: true
-	TargetID uint64 `url:"targetId"`
+	TargetID uint64 `url:"targetId" json:"targetId"`
 }
 
 func (irq LinkRequest) validate() error {

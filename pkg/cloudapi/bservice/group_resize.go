@@ -13,22 +13,22 @@ import (
 type GroupResizeRequest struct {
 	// ID of the Basic Service of Compute Group
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute Group to resize
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 
 	// Either delta or absolute value of computes
 	// Required: true
-	Count int64 `url:"count"`
+	Count int64 `url:"count" json:"count"`
 
 	// Either delta or absolute value of computes
 	// Should be one of:
 	//	- ABSOLUTE
 	//	- RELATIVE
 	// Required: true
-	Mode string `url:"mode"`
+	Mode string `url:"mode" json:"mode"`
 }
 
 func (bsrq GroupResizeRequest) validate() error {

@@ -11,15 +11,15 @@ import (
 type MassDeleteRequest struct {
 	// IDs of compute instances to delete
 	// Required: true
-	ComputeIDs []uint64 `url:"computeIds"`
+	ComputeIDs []uint64 `url:"computeIds" json:"computeIds"`
 
 	// Delete computes permanently
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq MassDeleteRequest) validate() error {

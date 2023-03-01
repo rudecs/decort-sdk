@@ -11,15 +11,15 @@ import (
 type PinToStackRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Stack ID to pin to
 	// Required: true
-	TargetStackID uint64 `url:"targetStackId"`
+	TargetStackID uint64 `url:"targetStackId" json:"targetStackId"`
 
 	// Try to migrate or not if compute in running states
 	// Required: false
-	Force bool `url:"force"`
+	Force bool `url:"force" json:"force"`
 }
 
 func (crq PinToStackRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type AuditsRequest struct {
 	// ID of the account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 }
 
 func (arq AuditsRequest) validate() error {

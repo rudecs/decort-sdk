@@ -10,7 +10,7 @@ import (
 type DisableAccountsRequest struct {
 	// IDs of accounts
 	// Required: true
-	AccountIDs []uint64 `url:"accountIds,omitempty"`
+	AccountIDs []uint64 `url:"accountIds,omitempty" json:"accountIds,omitempty"`
 }
 
 func (arq DisableAccountsRequest) validate() error {

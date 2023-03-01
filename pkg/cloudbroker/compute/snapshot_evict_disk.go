@@ -11,11 +11,11 @@ import (
 type SnapshotEvictDiskRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of the disk instance
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 }
 
 func (crq SnapshotEvictDiskRequest) validate() error {

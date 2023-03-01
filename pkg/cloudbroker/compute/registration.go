@@ -11,11 +11,11 @@ import (
 type RegistrationRequest struct {
 	// ID of the Compute
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Unique compute registration key
 	// Required: true
-	RegistrationKey string `url:"registrationKey"`
+	RegistrationKey string `url:"registrationKey" json:"registrationKey"`
 }
 
 func (crq RegistrationRequest) validate() error {

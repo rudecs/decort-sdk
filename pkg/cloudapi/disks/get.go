@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of the disk
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 }
 
 func (drq GetRequest) validate() error {

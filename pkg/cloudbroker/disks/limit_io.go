@@ -11,63 +11,63 @@ import (
 type LimitIORequest struct {
 	// ID of the disk to limit
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// Alias for total_iops_sec for backwards compatibility
 	// Required: false
-	IOPS uint64 `url:"iops,omitempty"`
+	IOPS uint64 `url:"iops,omitempty" json:"iops,omitempty"`
 
 	// TotalBytesSec
 	// Required: false
-	TotalBytesSec uint64 `url:"total_bytes_sec,omitempty"`
+	TotalBytesSec uint64 `url:"total_bytes_sec,omitempty" json:"total_bytes_sec,omitempty"`
 
 	// ReadBytesSec
 	// Required: false
-	ReadBytesSec uint64 `url:"read_bytes_sec,omitempty"`
+	ReadBytesSec uint64 `url:"read_bytes_sec,omitempty" json:"read_bytes_sec,omitempty"`
 
 	// WriteBytesSec
 	// Required: false
-	WriteBytesSec uint64 `url:"write_bytes_sec,omitempty"`
+	WriteBytesSec uint64 `url:"write_bytes_sec,omitempty" json:"write_bytes_sec,omitempty"`
 
 	// TotalIOPSSec
 	// Required: false
-	TotalIOPSSec uint64 `url:"total_iops_sec,omitempty"`
+	TotalIOPSSec uint64 `url:"total_iops_sec,omitempty" json:"total_iops_sec,omitempty"`
 
 	// ReadIOPSSec
 	// Required: false
-	ReadIOPSSec uint64 `url:"read_iops_sec,omitempty"`
+	ReadIOPSSec uint64 `url:"read_iops_sec,omitempty" json:"read_iops_sec,omitempty"`
 
 	// WriteIOPSSec
 	// Required: false
-	WriteIOPSSec uint64 `url:"write_iops_sec,omitempty"`
+	WriteIOPSSec uint64 `url:"write_iops_sec,omitempty" json:"write_iops_sec,omitempty"`
 
 	// TotalBytesSecMax
 	// Required: false
-	TotalBytesSecMax uint64 `url:"total_bytes_sec_max,omitempty"`
+	TotalBytesSecMax uint64 `url:"total_bytes_sec_max,omitempty" json:"total_bytes_sec_max,omitempty"`
 
 	// ReadBytesSecMax
 	// Required: false
-	ReadBytesSecMax uint64 `url:"read_bytes_sec_max,omitempty"`
+	ReadBytesSecMax uint64 `url:"read_bytes_sec_max,omitempty" json:"read_bytes_sec_max,omitempty"`
 
 	// WriteBytesSecMax
 	// Required: false
-	WriteBytesSecMax uint64 `url:"write_bytes_sec_max,omitempty"`
+	WriteBytesSecMax uint64 `url:"write_bytes_sec_max,omitempty" json:"write_bytes_sec_max,omitempty"`
 
 	// TotalIOPSSecMax
 	// Required: false
-	TotalIOPSSecMax uint64 `url:"total_iops_sec_max,omitempty"`
+	TotalIOPSSecMax uint64 `url:"total_iops_sec_max,omitempty" json:"total_iops_sec_max,omitempty"`
 
 	// ReadIOPSSecMax
 	// Required: false
-	ReadIOPSSecMax uint64 `url:"read_iops_sec_max,omitempty"`
+	ReadIOPSSecMax uint64 `url:"read_iops_sec_max,omitempty" json:"read_iops_sec_max,omitempty"`
 
 	// WriteIOPSSecMax
 	// Required: false
-	WriteIOPSSecMax uint64 `url:"write_iops_sec_max,omitempty"`
+	WriteIOPSSecMax uint64 `url:"write_iops_sec_max,omitempty" json:"write_iops_sec_max,omitempty"`
 
 	// SizeIOPSSec
 	// Required: false
-	SizeIOPSSec uint64 `url:"size_iops_sec,omitempty"`
+	SizeIOPSSec uint64 `url:"size_iops_sec,omitempty" json:"size_iops_sec,omitempty"`
 }
 
 func (drq LimitIORequest) validate() error {

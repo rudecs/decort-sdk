@@ -11,11 +11,11 @@ import (
 type DeleteRequest struct {
 	// K8CI ID
 	// Required: true
-	K8CIID uint64 `url:"k8ciId"`
+	K8CIID uint64 `url:"k8ciId" json:"k8ciId"`
 
 	// Delete permanently or not
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 }
 
 func (krq DeleteRequest) validate() error {

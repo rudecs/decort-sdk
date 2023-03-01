@@ -11,41 +11,41 @@ import (
 type MassCreateRequest struct {
 	// ID of the resource group, which will own this VM
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Name of this VM.
 	// Must be unique among all VMs (including those in DELETED state) in target resource group
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Number of VMs
 	// Required: true
-	Count uint64 `url:"count"`
+	Count uint64 `url:"count" json:"count"`
 
 	// Number CPUs to allocate to this VM
 	// Required: true
-	CPU uint64 `url:"cpu"`
+	CPU uint64 `url:"cpu" json:"cpu"`
 
 	// Volume of RAM in MB to allocate to this VM
 	// Required: true
-	RAM uint64 `url:"ram"`
+	RAM uint64 `url:"ram" json:"ram"`
 
 	// Image ID
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// Size of the boot disk in GB
 	// Required: true
-	BootDisk uint64 `url:"bootDisk"`
+	BootDisk uint64 `url:"bootDisk" json:"bootDisk"`
 
 	// ID of SEP to create boot disk on.
 	// Uses images SEP ID if not set
 	// Required: true
-	SEPID uint64 `url:"sepId"`
+	SEPID uint64 `url:"sepId" json:"sepId"`
 
 	// Pool to use if SEP ID is set, can be also empty if needed to be chosen by system
 	// Required: true
-	Pool string `url:"pool"`
+	Pool string `url:"pool" json:"pool"`
 
 	// Network type
 	// Should be one of:
@@ -53,30 +53,30 @@ type MassCreateRequest struct {
 	//	- EXTNET
 	//	- NONE
 	// Required: false
-	NetType string `url:"netType,omitempty"`
+	NetType string `url:"netType,omitempty" json:"netType,omitempty"`
 
 	// Network ID for connect to,
 	// for EXTNET - external network ID,
 	// for VINS - VINS ID,
 	// when network type is not "NONE"
 	// Required: false
-	NetID uint64 `url:"netId,omitempty"`
+	NetID uint64 `url:"netId,omitempty" json:"netId,omitempty"`
 
 	// Input data for cloud-init facility
 	// Required: false
-	UserData string `url:"userdata,omitempty"`
+	UserData string `url:"userdata,omitempty" json:"userdata,omitempty"`
 
 	// Text description of this VM
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 
 	// Start after create of not
 	// Required: false
-	Start bool `url:"start,omitempty"`
+	Start bool `url:"start,omitempty" json:"start,omitempty"`
 
 	// Reason to action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (krq MassCreateRequest) validate() error {

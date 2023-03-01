@@ -11,7 +11,7 @@ import (
 type RestoreRequest struct {
 	// ID an account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 }
 
 func (arq RestoreRequest) validate() error {

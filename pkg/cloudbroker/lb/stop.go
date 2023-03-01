@@ -11,7 +11,7 @@ import (
 type StopRequest struct {
 	// ID of the LB instance to stop
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 }
 
 func (lbrq StopRequest) validate() error {

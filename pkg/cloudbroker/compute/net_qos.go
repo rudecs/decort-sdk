@@ -13,30 +13,30 @@ import (
 type NetQOSRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Network ID
 	// Required: true
-	NetID uint64 `url:"netId"`
+	NetID uint64 `url:"netId" json:"netId"`
 
 	// Network type
 	// Should be one of:
 	//	- VINS
 	//	- EXTNET
 	// Required: true
-	NetType string `url:"netType"`
+	NetType string `url:"netType" json:"netType"`
 
 	// Internal traffic, kbit
 	// Required: false
-	IngressRate uint64 `url:"ingress_rate,omitempty"`
+	IngressRate uint64 `url:"ingress_rate,omitempty" json:"ingress_rate,omitempty"`
 
 	// Internal traffic burst, kbit
 	// Required: false
-	IngressBurst uint64 `url:"ingress_burst,omitempty"`
+	IngressBurst uint64 `url:"ingress_burst,omitempty" json:"ingress_burst,omitempty"`
 
 	// External traffic rate, kbit
 	// Required: false
-	EgressRate uint64 `url:"egress_rate,omitempty"`
+	EgressRate uint64 `url:"egress_rate,omitempty" json:"egress_rate,omitempty"`
 }
 
 func (crq NetQOSRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of the load balancer to get details for
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 }
 
 func (lbrq GetRequest) validate() error {

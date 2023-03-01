@@ -11,11 +11,11 @@ import (
 type SnapshotCreateRequest struct {
 	// ID of the Basic Service
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// Label of the snapshot
 	// Required: true
-	Label string `url:"label"`
+	Label string `url:"label" json:"label"`
 }
 
 func (bsrq SnapshotCreateRequest) validate() error {

@@ -13,7 +13,7 @@ import (
 type BootOrderSetRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// List of boot devices
 	// Should be one of:
@@ -21,7 +21,7 @@ type BootOrderSetRequest struct {
 	//	- network
 	//	- hd
 	// Required: true
-	Order []string `url:"order"`
+	Order []string `url:"order" json:"order"`
 }
 
 func (crq BootOrderSetRequest) validate() error {

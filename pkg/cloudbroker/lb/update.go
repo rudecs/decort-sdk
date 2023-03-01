@@ -11,12 +11,12 @@ import (
 type UpdateRequest struct {
 	// ID of the load balancer to update
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// New description of this load balancer.
 	// If omitted, current description is retained
 	// Required: true
-	Description string `url:"desc"`
+	Description string `url:"desc" json:"desc"`
 }
 
 func (lbrq UpdateRequest) validate() error {

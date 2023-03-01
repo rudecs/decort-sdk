@@ -11,18 +11,18 @@ import (
 type UpdateUserRequest struct {
 	// ID of the account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Userid/Email for registered users or emailaddress for unregistered users
 	// Required: true
-	UserID string `url:"userId"`
+	UserID string `url:"userId" json:"userId"`
 
 	// Account permission types:
 	//	- 'R' for read only access
 	//	- 'RCX' for Write
 	//	- 'ARCXDU' for Admin
 	// Required: true
-	AccessType string `url:"accesstype"`
+	AccessType string `url:"accesstype" json:"accesstype"`
 }
 
 func (arq UpdateUserRequest) validate() error {

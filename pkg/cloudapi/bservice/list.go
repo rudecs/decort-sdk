@@ -10,19 +10,19 @@ import (
 type ListRequest struct {
 	// ID of the account to query for BasicService instances
 	// Required: false
-	AccountID uint64 `url:"accountId,omitempty"`
+	AccountID uint64 `url:"accountId,omitempty" json:"accountId,omitempty"`
 
 	// ID of the resource group to query for BasicService instances
 	// Required: false
-	RGID uint64 `url:"rgId,omitempty"`
+	RGID uint64 `url:"rgId,omitempty" json:"rgId,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `url:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list BasicService instances associated with the specified Resource Group

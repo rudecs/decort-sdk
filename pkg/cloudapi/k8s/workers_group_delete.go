@@ -11,11 +11,11 @@ import (
 type WorkersGroupDeleteRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// Worker group ID
 	// Required: true
-	WorkersGroupID uint64 `url:"workersGroupId"`
+	WorkersGroupID uint64 `url:"workersGroupId" json:"workersGroupId"`
 }
 
 func (krq WorkersGroupDeleteRequest) validate() error {

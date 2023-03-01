@@ -11,11 +11,11 @@ import (
 type AddProviderNodesRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// List of node IDs
 	// Required: true
-	ProviderNIDs []uint64 `url:"provider_nids"`
+	ProviderNIDs []uint64 `url:"provider_nids" json:"provider_nids"`
 }
 
 func (srq AddProviderNodesRequest) validate() error {

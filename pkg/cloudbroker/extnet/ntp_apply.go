@@ -11,11 +11,11 @@ import (
 type NTPApplyRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// List of NTP to apply
 	// Required: false
-	NTPList []string `url:"ntp_list,omitempty"`
+	NTPList []string `url:"ntp_list,omitempty" json:"ntp_list,omitempty"`
 }
 
 func (erq NTPApplyRequest) validate() error {

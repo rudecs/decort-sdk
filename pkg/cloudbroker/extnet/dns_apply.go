@@ -11,11 +11,11 @@ import (
 type DNSApplyRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// List of DNS to apply
 	// Required: false
-	DNSList []string `url:"dns_list,omitempty"`
+	DNSList []string `url:"dns_list,omitempty" json:"dns_list,omitempty"`
 }
 
 func (erq DNSApplyRequest) validate() error {

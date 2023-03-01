@@ -12,15 +12,15 @@ import (
 type CreateTemplateRequest struct {
 	// ID of the compute to create template from
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Name to assign to the template being created
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 
 	// Async API call
 	// For async call use CreateTemplateAsync

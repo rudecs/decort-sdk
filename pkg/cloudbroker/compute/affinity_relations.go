@@ -11,11 +11,11 @@ import (
 type AffinityRelationsRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Affinity group label
 	// Required: false
-	AffinityLabel string `url:"affinityLabel,omitempty"`
+	AffinityLabel string `url:"affinityLabel,omitempty" json:"affinityLabel,omitempty"`
 }
 
 func (crq AffinityRelationsRequest) validate() error {

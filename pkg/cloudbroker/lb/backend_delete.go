@@ -11,11 +11,11 @@ import (
 type BackendDeleteRequest struct {
 	// ID of the load balancer instance to BackendDelete
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Cannot be emtpy string - name of the backend to delete
 	// Required: true
-	BackendName string `url:"backendName"`
+	BackendName string `url:"backendName" json:"backendName"`
 }
 
 func (lbrq BackendDeleteRequest) validate() error {

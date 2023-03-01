@@ -11,7 +11,7 @@ import (
 type ComputeCIUnsetRequest struct {
 	// ID of the image
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 }
 
 func (irq ComputeCIUnsetRequest) validate() error {

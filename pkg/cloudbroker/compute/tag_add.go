@@ -11,15 +11,15 @@ import (
 type TagAddRequest struct {
 	// IDs of the compute instances
 	// Required: true
-	ComputeIDs []uint64 `url:"computeIds"`
+	ComputeIDs []uint64 `url:"computeIds" json:"computeIds"`
 
 	// Tag key
 	// Required: true
-	Key string `url:"key"`
+	Key string `url:"key" json:"key"`
 
 	// Tag value
 	// Required: true
-	Value string `url:"value"`
+	Value string `url:"value" json:"value"`
 }
 
 func (crq TagAddRequest) validate() error {

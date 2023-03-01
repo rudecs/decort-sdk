@@ -11,15 +11,15 @@ import (
 type AddRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// Name of the location
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Location code typicly used in dns names
 	// Required: true
-	LocationCode string `url:"locationcode"`
+	LocationCode string `url:"locationcode" json:"locationcode"`
 }
 
 func (grq AddRequest) validate() error {

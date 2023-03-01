@@ -11,17 +11,17 @@ import (
 type FrontendCreateRequest struct {
 	// ID of the load balancer instance to FrontendCreate
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Must be unique among all frontends of
 	// this load balancer - name of the new frontend to create
 	// Required: true
-	FrontendName string `url:"frontendName"`
+	FrontendName string `url:"frontendName" json:"frontendName"`
 
 	// Should be one of the backends existing on
 	// this load balancer - name of the backend to use
 	// Required: true
-	BackendName string `url:"backendName"`
+	BackendName string `url:"backendName" json:"backendName"`
 }
 
 func (lbrq FrontendCreateRequest) validate() error {

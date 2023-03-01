@@ -11,11 +11,11 @@ import (
 type ComputeRemoveRequest struct {
 	// ID of the Floating IP group to remove compute instance from
 	// Required: true
-	FLIPGroupID uint64 `url:"flipgroupId"`
+	FLIPGroupID uint64 `url:"flipgroupId" json:"flipgroupId"`
 
 	// ID of the compute instance to remove
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 }
 
 func (frq ComputeRemoveRequest) validate() error {

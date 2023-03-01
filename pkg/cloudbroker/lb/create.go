@@ -11,32 +11,32 @@ import (
 type CreateRequest struct {
 	// ID of the resource group where this load balancer instance will be located
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Name of the load balancer.
 	// Must be unique among all load balancers in this resource group
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// OS image ID to create load balancer from
 	// Required: false
-	ImageID uint64 `url:"imageId,omitempty"`
+	ImageID uint64 `url:"imageId,omitempty" json:"imageId,omitempty"`
 
 	// External network to connect this load balancer to
 	// Required: true
-	ExtNetID uint64 `url:"extnetId"`
+	ExtNetID uint64 `url:"extnetId" json:"extnetId"`
 
 	// Internal network (VINS) to connect this load balancer to
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// Start now Load balancer
 	// Required: false
-	Start bool `url:"start"`
+	Start bool `url:"start" json:"start"`
 
 	// Text description of this load balancer
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 }
 
 func (lbrq CreateRequest) validate() error {

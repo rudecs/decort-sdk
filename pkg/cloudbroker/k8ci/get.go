@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of the K8 catalog item to get
 	// Required: true
-	K8CIID uint64 `url:"k8ciId"`
+	K8CIID uint64 `url:"k8ciId" json:"k8ciId"`
 }
 
 func (krq GetRequest) validate() error {

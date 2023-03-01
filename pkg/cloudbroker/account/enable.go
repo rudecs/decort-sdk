@@ -11,11 +11,11 @@ import (
 type EnableRequest struct {
 	// ID of account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Reason to enable
 	// Required: true
-	Reason string `url:"reason"`
+	Reason string `url:"reason" json:"reason"`
 }
 
 func (arq EnableRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type ListLBRequest struct {
 	// Resource group ID
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 }
 
 func (rgrq ListLBRequest) validate() error {

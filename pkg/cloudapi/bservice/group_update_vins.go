@@ -11,15 +11,15 @@ import (
 type GroupUpdateVINSRequest struct {
 	// ID of the Basic Service of Compute Group
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute Group
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 
 	// List of ViNSes to connect computes
 	// Required: false
-	VINSes []uint64 `url:"vinses,omitempty"`
+	VINSes []uint64 `url:"vinses,omitempty" json:"vinses,omitempty"`
 }
 
 func (bsrq GroupUpdateVINSRequest) validate() error {

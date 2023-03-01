@@ -11,12 +11,12 @@ import (
 type SnapshotCreateRequest struct {
 	// ID of the compute instance to create snapshot for
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Text label for snapshot.
 	// Must be unique among this compute snapshots
 	// Required: true
-	Label string `url:"label"`
+	Label string `url:"label" json:"label"`
 }
 
 func (crq SnapshotCreateRequest) validate() error {

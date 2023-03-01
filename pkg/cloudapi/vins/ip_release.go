@@ -11,15 +11,15 @@ import (
 type IPReleaseRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// IP address
 	// Required: false
-	IPAddr string `url:"ipAddr,omitempty"`
+	IPAddr string `url:"ipAddr,omitempty" json:"ipAddr,omitempty"`
 
 	// MAC address
 	// Required: false
-	MAC string `url:"mac,omitempty"`
+	MAC string `url:"mac,omitempty" json:"mac,omitempty"`
 }
 
 func (vrq IPReleaseRequest) validate() error {

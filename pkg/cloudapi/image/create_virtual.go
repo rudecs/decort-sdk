@@ -11,11 +11,11 @@ import (
 type CreateVirtualRequest struct {
 	// Name of the virtual image to create
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// ID of real image to link this virtual image to upon creation
 	// Required: true
-	TargetID uint64 `url:"targetId"`
+	TargetID uint64 `url:"targetId" json:"targetId"`
 }
 
 func (irq CreateVirtualRequest) validate() error {

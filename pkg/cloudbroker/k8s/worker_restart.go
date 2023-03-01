@@ -11,15 +11,15 @@ import (
 type WorkerRestartRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// ID of the workers compute group
 	// Required: true
-	WorkersGroupID uint64 `url:"workersGroupId"`
+	WorkersGroupID uint64 `url:"workersGroupId" json:"workersGroupId"`
 
 	// Compute ID of worker node to restart
 	// Required: true
-	WorkerID uint64 `url:"workerId"`
+	WorkerID uint64 `url:"workerId" json:"workerId"`
 }
 
 func (krq WorkerRestartRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type RestoreRequest struct {
 	// ID of the disk to restore
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// Reason for restoring the disk
 	// Required: true
-	Reason string `url:"reason"`
+	Reason string `url:"reason" json:"reason"`
 }
 
 func (drq RestoreRequest) validate() error {

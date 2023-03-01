@@ -10,11 +10,11 @@ import (
 type AffinityGroupCheckStartRequest struct {
 	// ID of the resource group
 	// Required: true
-	RGID uint64 `url:"rgId"`
+	RGID uint64 `url:"rgId" json:"rgId"`
 
 	// Affinity group label
 	// Required: true
-	AffinityLabel string `url:"affinityLabel"`
+	AffinityLabel string `url:"affinityLabel" json:"affinityLabel"`
 }
 
 func (crq AffinityGroupCheckStartRequest) validate() error {

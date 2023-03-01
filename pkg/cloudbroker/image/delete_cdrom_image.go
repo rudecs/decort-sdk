@@ -11,11 +11,11 @@ import (
 type DeleteCDROMImageRequest struct {
 	// ID of the CD-ROM image to delete
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// Whether to completely delete the CD-ROM image, needs to be unused
 	// Required: true
-	Permanently bool `url:"permanently"`
+	Permanently bool `url:"permanently" json:"permanently"`
 }
 
 func (irq DeleteCDROMImageRequest) validate() error {

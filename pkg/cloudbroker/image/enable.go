@@ -11,7 +11,7 @@ import (
 type EnableRequest struct {
 	// ID of image to be enabled
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 }
 
 func (irq EnableRequest) validate() error {

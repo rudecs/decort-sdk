@@ -11,11 +11,11 @@ import (
 type ConfigValidateRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Storage provider config
 	// Required: true
-	Config string `url:"config"`
+	Config string `url:"config" json:"config"`
 }
 
 func (srq ConfigValidateRequest) validate() error {

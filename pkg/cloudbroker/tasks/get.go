@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of audit GUID
 	// Required: true
-	AuditID string `url:"auditId"`
+	AuditID string `url:"auditId" json:"auditId"`
 }
 
 func (trq GetRequest) validate() error {

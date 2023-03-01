@@ -12,15 +12,15 @@ import (
 type GroupParentAddRequest struct {
 	// ID of the Basic Service of Compute Group
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute Group
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 
 	// ID of the parent Compute Group to register with the current Compute Group
 	// Required: true
-	ParentID uint64 `url:"parentId"`
+	ParentID uint64 `url:"parentId" json:"parentId"`
 }
 
 func (bsrq GroupParentAddRequest) validate() error {

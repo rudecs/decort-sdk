@@ -11,11 +11,11 @@ import (
 type DisableRequest struct {
 	// ID of account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Reason to disable
 	// Required: true
-	Reason string `url:"reason"`
+	Reason string `url:"reason" json:"reason"`
 }
 
 func (arq DisableRequest) validate() error {

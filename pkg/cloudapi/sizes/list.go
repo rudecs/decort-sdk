@@ -10,19 +10,19 @@ import (
 type ListRequest struct {
 	// ID of the cloudspace
 	// Required: false
-	CloudspaceID uint64 `url:"cloudspaceId,omitempty"`
+	CloudspaceID uint64 `url:"cloudspaceId,omitempty" json:"cloudspaceId,omitempty"`
 
 	// Location code for the sizes
 	// Required: false
-	Location string `url:"location,omitempty"`
+	Location string `url:"location,omitempty" json:"location,omitempty"`
 
 	// Page number
 	// Required: false
-	Page uint64 `url:"page,omitempty"`
+	Page uint64 `url:"page,omitempty" json:"page,omitempty"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size,omitempty"`
+	Size uint64 `url:"size,omitempty" json:"size,omitempty"`
 }
 
 // List gets list the available flavors, filtering can be based on the user which is doing the request

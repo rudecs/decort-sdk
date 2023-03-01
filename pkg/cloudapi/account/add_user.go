@@ -13,18 +13,18 @@ import (
 type AddUserRequest struct {
 	// ID of account to add to
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+    AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Name of the user to be given rights
 	// Required: true
-	UserID string `url:"userId"`
+	UserID string `url:"userId" json:"userId"`
 
 	// Account permission types:
 	//	- 'R' for read only access
 	//	- 'RCX' for Write
 	//	- 'ARCXDU' for Admin
 	// Required: true
-	AccessType string `url:"accesstype"`
+    AccessType string `url:"accesstype" json:"accesstype"`
 }
 
 func (arq AddUserRequest) validate() error {

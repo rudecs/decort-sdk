@@ -13,18 +13,18 @@ import (
 type AffinityRuleRemoveRequest struct {
 	// IDs of the compute instances
 	// Required: true
-	ComputeIDs []uint64 `url:"computeIds"`
+	ComputeIDs []uint64 `url:"computeIds" json:"computeIds"`
 
 	// Compute or node, for whom rule applies
 	// Required: true
-	Topology string `url:"topology"`
+	Topology string `url:"topology" json:"topology"`
 
 	// The degree of 'strictness' of this rule
 	// Should be one of:
 	//	- RECOMMENDED
 	//	- REQUIRED
 	// Required: true
-	Policy string `url:"policy"`
+	Policy string `url:"policy" json:"policy"`
 
 	// The comparison mode is 'value', recorded by the specified 'key'
 	// Should be one of:
@@ -32,15 +32,15 @@ type AffinityRuleRemoveRequest struct {
 	//	- EN
 	//	- ANY
 	// Required: true
-	Mode string `url:"mode"`
+	Mode string `url:"mode" json:"mode"`
 
 	// Key that are taken into account when analyzing this rule will be identified
 	// Required: true
-	Key string `url:"key"`
+	Key string `url:"key" json:"key"`
 
 	// Value that must match the key to be taken into account when analyzing this rule
 	// Required: true
-	Value string `url:"value"`
+	Value string `url:"value" json:"value"`
 }
 
 func (crq AffinityRuleRemoveRequest) validate() error {

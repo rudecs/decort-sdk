@@ -11,30 +11,30 @@ import (
 type NATRuleAddRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// Internal IP address to apply this rule to
 	// Required: true
-	IntIP string `url:"intIp "`
+	IntIP string `url:"intIp" json:"intIp"`
 
 	// Internal IP port number to use for this rule
 	// Required: true
-	IntPort uint `url:"intPort"`
+	IntPort uint `url:"intPort" json:"intPort"`
 
 	// External IP start port to use for this rule
 	// Required: true
-	ExtPortStart uint `url:"extPortStart"`
+	ExtPortStart uint `url:"extPortStart" json:"extPortStart"`
 
 	// External IP end port to use for this rule
 	// Required: false
-	ExtPortEnd uint `url:"extPortEnd,omitempty"`
+	ExtPortEnd uint `url:"extPortEnd,omitempty" json:"extPortEnd,omitempty"`
 
 	// IP protocol type
 	// Should be one of:
 	//	- "tcp"
 	//	- "udp"
 	// Required: false
-	Proto string `url:"proto,omitempty"`
+	Proto string `url:"proto,omitempty" json:"proto,omitempty"`
 }
 
 func (vrq NATRuleAddRequest) validate() error {

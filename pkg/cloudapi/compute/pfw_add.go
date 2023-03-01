@@ -13,24 +13,24 @@ import (
 type PFWAddRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// External start port number for the rule
 	// Required: true
-	PublicPortStart uint64 `url:"publicPortStart"`
+	PublicPortStart uint64 `url:"publicPortStart" json:"publicPortStart"`
 
 	// End port number (inclusive) for the ranged rule
 	// Required: false
-	PublicPortEnd uint64 `url:"publicPortEnd,omitempty"`
+	PublicPortEnd uint64 `url:"publicPortEnd,omitempty" json:"publicPortEnd,omitempty"`
 
 	// Internal base port number
 	// Required: true
-	LocalBasePort uint64 `url:"localBasePort"`
+	LocalBasePort uint64 `url:"localBasePort" json:"localBasePort"`
 
 	// Network protocol
 	// either "tcp" or "udp"
 	// Required: true
-	Proto string `url:"proto"`
+	Proto string `url:"proto" json:"proto"`
 }
 
 func (crq PFWAddRequest) validate() error {

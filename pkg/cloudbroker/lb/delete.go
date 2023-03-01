@@ -11,11 +11,11 @@ import (
 type DeleteRequest struct {
 	// ID of the load balancer instance to delete
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 
 	// Set to true to delete load balancer immediately bypassing recycle bin
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 }
 
 func (lbrq DeleteRequest) validate() error {

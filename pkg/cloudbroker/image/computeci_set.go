@@ -11,11 +11,11 @@ import (
 type ComputeCISetRequest struct {
 	// ID of the image
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// ID of the compute CI
 	// Required: true
-	ComputeCIID uint64 `url:"computeciId"`
+	ComputeCIID uint64 `url:"computeciId" json:"computeciId"`
 }
 
 func (irq ComputeCISetRequest) validate() error {

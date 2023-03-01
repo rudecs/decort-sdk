@@ -11,11 +11,11 @@ import (
 type DelConsumerNodesRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// List of consumer node IDs
 	// Required: true
-	ConsumerNIDs []uint64 `url:"consumer_nids"`
+	ConsumerNIDs []uint64 `url:"consumer_nids" json:"consumer_nids"`
 }
 
 func (srq DelConsumerNodesRequest) validate() error {

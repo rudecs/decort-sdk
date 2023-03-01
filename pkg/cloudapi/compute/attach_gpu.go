@@ -11,11 +11,11 @@ import (
 type AttachGPURequest struct {
 	// Identifier compute
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Identifier vGPU
 	// Required: true
-	VGPUID uint64 `url:"vgpuId"`
+	VGPUID uint64 `url:"vgpuId" json:"vgpuId"`
 }
 
 func (crq AttachGPURequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type StartRequest struct {
 	// ID of the LB instance to start
 	// Required: true
-	LBID uint64 `url:"lbId"`
+	LBID uint64 `url:"lbId" json:"lbId"`
 }
 
 func (lbrq StartRequest) validate() error {

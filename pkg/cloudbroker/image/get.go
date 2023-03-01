@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of image
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 }
 
 func (irq GetRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type SetMemAllocationRatioRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gridId"`
+	GID uint64 `url:"gridId" json:"gridId"`
 
 	// Allocation ratio
 	// Required: true
-	Ratio float64 `url:"ratio"`
+	Ratio float64 `url:"ratio" json:"ratio"`
 }
 
 func (grq SetMemAllocationRatioRequest) validate() error {

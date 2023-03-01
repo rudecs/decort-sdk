@@ -11,64 +11,64 @@ import (
 type CreateRequest struct {
 	// External network name
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Grid (platform) ID
 	// Required: true
-	GID uint64 `url:"gid"`
+	GID uint64 `url:"gid" json:"gid"`
 
 	// IP network CIDR
 	// For example 192.168.0.0/24
 	// Required: true
-	IPCIDR string `url:"ipcidr"`
+	IPCIDR string `url:"ipcidr" json:"ipcidr"`
 
 	// External network gateway IP address
 	// Required: true
-	Gateway string `url:"gateway"`
+	Gateway string `url:"gateway" json:"gateway"`
 
 	// VLAN ID
 	// Required: true
-	VLANID uint64 `url:"vlanId"`
+	VLANID uint64 `url:"vlanId" json:"vlanId"`
 
 	// List of DNS addresses
 	// Required: false
-	DNS []string `url:"dns,omitempty"`
+	DNS []string `url:"dns,omitempty" json:"dns,omitempty"`
 
 	// List of NTP addresses
 	// Required: false
-	NTP []string `url:"ntp,omitempty"`
+	NTP []string `url:"ntp,omitempty" json:"ntp,omitempty"`
 
 	// IPs to check network availability
 	// Required: false
-	CheckIPs []string `url:"checkIps,omitempty"`
+	CheckIPs []string `url:"checkIps,omitempty" json:"checkIps,omitempty"`
 
 	// If true - platform DHCP server will not be created
 	// Required: false
-	Virtual bool `url:"virtual,omitempty"`
+	Virtual bool `url:"virtual,omitempty" json:"virtual,omitempty"`
 
 	// Optional description
 	// Required: false
-	Description string `url:"desc,omitempty"`
+	Description string `url:"desc,omitempty" json:"desc,omitempty"`
 
 	// Start of IP range to be explicitly included
 	// Required: false
-	StartIP string `url:"startIP,omitempty"`
+	StartIP string `url:"startIP,omitempty" json:"startIP,omitempty"`
 
 	// End of IP range to be explicitly included
 	// Required: false
-	EndIP string `url:"endIP,omitempty"`
+	EndIP string `url:"endIP,omitempty" json:"endIP,omitempty"`
 
 	// IP to create VNFDev with
 	// Required: false
-	VNFDevIP string `url:"vnfdevIP,omitempty"`
+	VNFDevIP string `url:"vnfdevIP,omitempty" json:"vnfdevIP,omitempty"`
 
 	// Number of pre created reservations
 	// Required: false
-	PreReservationsNum uint64 `url:"preReservationsNum,omitempty"`
+	PreReservationsNum uint64 `url:"preReservationsNum,omitempty" json:"preReservationsNum,omitempty"`
 
 	// OpenvSwith bridge name for ExtNet connection
 	// Required: false
-	OVSBridge string `url:"ovsBridge,omitempty"`
+	OVSBridge string `url:"ovsBridge,omitempty" json:"ovsBridge,omitempty"`
 }
 
 func (erq CreateRequest) validate() error {

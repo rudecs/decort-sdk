@@ -10,15 +10,15 @@ import (
 type CDInsertRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of CD-ROM image
 	// Required: true
-	CDROMID uint64 `url:"cdromId"`
+	CDROMID uint64 `url:"cdromId" json:"cdromId"`
 
 	// Reason to insert
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq CDInsertRequest) validate() error {

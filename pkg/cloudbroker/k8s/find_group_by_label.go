@@ -11,16 +11,16 @@ import (
 type FindGroupByLabelRequest struct {
 	// Kubernetes cluster ID
 	// Required: true
-	K8SID uint64 `url:"k8sId"`
+	K8SID uint64 `url:"k8sId" json:"k8sId"`
 
 	// List of labels to search
 	// Required: true
-	Labels []string `url:"labels"`
+	Labels []string `url:"labels" json:"labels"`
 
 	// If true and more than one label provided, select only groups that have all provided labels.
 	// If false - groups that have at least one label
 	// Required: true
-	Strict bool `url:"strict"`
+	Strict bool `url:"strict" json:"strict"`
 }
 
 func (krq FindGroupByLabelRequest) validate() error {

@@ -11,19 +11,19 @@ import (
 type DeleteRequest struct {
 	// ID of disk to delete
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// Detach disk from machine first
 	// Required: false
-	Detach bool `url:"detach,omitempty"`
+	Detach bool `url:"detach,omitempty" json:"detach,omitempty"`
 
 	// Whether to completely delete the disk, works only with non attached disks
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 
 	// Reason to delete
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (d DeleteRequest) validate() error {

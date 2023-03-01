@@ -11,20 +11,20 @@ import (
 type MigrateRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Particular Stack ID to migrate this compute to
 	// Required: false
-	TargetStackID uint64 `url:"targetStackId,omitempty"`
+	TargetStackID uint64 `url:"targetStackId,omitempty" json:"targetStackId,omitempty"`
 
 	// If live migration fails, destroy compute
 	// on source node and recreate on the target
 	// Required: false
-	Force bool `url:"force,omitempty"`
+	Force bool `url:"force,omitempty" json:"force,omitempty"`
 
 	// Reason for action
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq MigrateRequest) validate() error {

@@ -11,7 +11,7 @@ import (
 type SetDefaultRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 }
 
 func (erq SetDefaultRequest) validate() error {

@@ -12,7 +12,7 @@ import (
 type IPReserveRequest struct {
 	// VINS ID
 	// Required: true
-	VINSID uint64 `url:"vinsId"`
+	VINSID uint64 `url:"vinsId" json:"vinsId"`
 
 	// Type of the reservation
 	// Should be one of:
@@ -20,23 +20,23 @@ type IPReserveRequest struct {
 	//	- VIP
 	//	- EXCLUDE
 	// Required: true
-	Type string `url:"type"`
+	Type string `url:"type" json:"type"`
 
 	// IP address to use. Non-empty string is required for type "EXCLUDE".
 	// Ignored for types "DHCP" and "VIP".
 	// Required: false
-	IPAddr string `url:"ipAddr,omitempty"`
+	IPAddr string `url:"ipAddr,omitempty" json:"ipAddr,omitempty"`
 
 	// MAC address to associate with IP reservation.
 	// Ignored for type "EXCLUDE",
 	// non-empty string is required for "DHCP" and "VIP"
 	// Required: false
-	MAC string `url:"mac,omitempty"`
+	MAC string `url:"mac,omitempty" json:"mac,omitempty"`
 
 	// ID of the compute, associated with this reservation of type "DHCP".
 	// Ignored for other types
 	// Required: false
-	ComputeID uint64 `url:"computeId,omitempty"`
+	ComputeID uint64 `url:"computeId,omitempty" json:"computeId,omitempty"`
 }
 
 func (vrq IPReserveRequest) validate() error {

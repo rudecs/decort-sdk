@@ -11,19 +11,19 @@ import (
 type DefaultQOSUpdateRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// Internal traffic, kbit
 	// Required: false
-	IngressRate uint64 `url:"ingress_rate,omitempty"`
+	IngressRate uint64 `url:"ingress_rate,omitempty" json:"ingress_rate,omitempty"`
 
 	// Internal traffic burst, kbit
 	// Required: false
-	IngressBurst uint64 `url:"ingress_burst,omitempty"`
+	IngressBurst uint64 `url:"ingress_burst,omitempty" json:"ingress_burst,omitempty"`
 
 	// External traffic rate, kbit
 	// Required: false
-	EgressRate uint64 `url:"egress_rate,omitempty"`
+	EgressRate uint64 `url:"egress_rate,omitempty" json:"egress_rate,omitempty"`
 }
 
 func (erq DefaultQOSUpdateRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type UpdateNodesRequest struct {
 	// Image ID
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// List of stacks
 	// Required: false
-	EnabledStacks []uint64 `url:"enabledStacks,omitempty"`
+	EnabledStacks []uint64 `url:"enabledStacks,omitempty" json:"enabledStacks,omitempty"`
 }
 
 func (irq UpdateNodesRequest) validate() error {

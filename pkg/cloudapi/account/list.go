@@ -10,11 +10,11 @@ import (
 type ListRequest struct {
 	// Page number
 	// Required: false
-	Page uint64 `url:"page"`
+	Page uint64 `url:"page" json:"page"`
 
 	// Page size
 	// Required: false
-	Size uint64 `url:"size"`
+	Size uint64 `url:"size" json:"size"`
 }
 
 // List gets list all accounts the user has access to

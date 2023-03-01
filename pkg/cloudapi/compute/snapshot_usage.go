@@ -11,12 +11,12 @@ import (
 type SnapshotUsageRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Specify to show usage exact for this snapshot.
 	// Leave empty for get usage for all compute snapshots
 	// Required: false
-	Label string `url:"label,omitempty"`
+	Label string `url:"label,omitempty" json:"label,omitempty"`
 }
 
 func (crq SnapshotUsageRequest) validate() error {

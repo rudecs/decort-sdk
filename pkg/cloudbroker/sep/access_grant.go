@@ -11,12 +11,12 @@ import (
 type AccessGrantRequest struct {
 	// Storage endpoint provider ID
 	// Required: true
-	SEPID uint64 `url:"sep_id"`
+	SEPID uint64 `url:"sep_id" json:"sep_id"`
 
 	// Account ID to grant access to the specified SEP. If 0,
 	// the SEP will be available for all accounts with no exceptions
 	// Required: true
-	AccountID uint64 `url:"account_id"`
+	AccountID uint64 `url:"account_id" json:"account_id"`
 }
 
 func (srq AccessGrantRequest) validate() error {

@@ -11,11 +11,11 @@ import (
 type IPsExcludeRequest struct {
 	// ID of external network
 	// Required: true
-	NetID uint64 `url:"net_id"`
+	NetID uint64 `url:"net_id" json:"net_id"`
 
 	// List of IPs for exclude from external network
 	// Required: true
-	IPs []string `url:"ips"`
+	IPs []string `url:"ips" json:"ips"`
 }
 
 func (erq IPsExcludeRequest) validate() error {

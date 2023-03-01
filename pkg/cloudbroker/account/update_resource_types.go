@@ -13,7 +13,7 @@ import (
 type UpdateResourceTypesRequest struct {
 	// ID of account
 	// Required: true
-	AccountID uint64 `url:"accountId"`
+	AccountID uint64 `url:"accountId" json:"accountId"`
 
 	// Resource types available to create in this account
 	// Each element in a resource type slice must be one of:
@@ -24,7 +24,7 @@ type UpdateResourceTypesRequest struct {
 	//	- lb
 	//	- flipgroup
 	// Required: true
-	ResTypes []string `url:"resourceTypes"`
+	ResTypes []string `url:"resourceTypes" json:"resourceTypes"`
 }
 
 func (arq UpdateResourceTypesRequest) validate() error {

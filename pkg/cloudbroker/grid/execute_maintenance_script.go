@@ -11,15 +11,15 @@ import (
 type ExecuteMaintenanceScriptRequest struct {
 	// Grid (platform) ID
 	// Required: true
-	GID string `url:"gid"`
+	GID string `url:"gid" json:"gid"`
 
 	// Type of nodes you want to apply the action on
 	// Required: true
-	NodesType string `url:"nodestype"`
+	NodesType string `url:"nodestype" json:"nodestype"`
 
 	// The script you want to run
 	// Required: true
-	Script string `url:"script"`
+	Script string `url:"script" json:"script"`
 }
 
 func (grq ExecuteMaintenanceScriptRequest) validate() error {

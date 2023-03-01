@@ -11,11 +11,11 @@ import (
 type GetRequest struct {
 	// ID of image to get
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// If set to False returns only images in status CREATED
 	// Required: false
-	ShowAll bool `url:"show_all,omitempty"`
+	ShowAll bool `url:"show_all,omitempty" json:"show_all,omitempty"`
 }
 
 func (irq GetRequest) validate() error {

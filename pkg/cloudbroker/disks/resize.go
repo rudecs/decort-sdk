@@ -11,11 +11,11 @@ import (
 type ResizeRequest struct {
 	// ID of the disk to resize
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// New size of the disk in GB
 	// Required: true
-	Size uint64 `url:"size"`
+	Size uint64 `url:"size" json:"size"`
 }
 
 func (drq ResizeRequest) validate() error {

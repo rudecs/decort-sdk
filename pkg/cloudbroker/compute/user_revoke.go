@@ -11,11 +11,11 @@ import (
 type UserRevokeRequest struct {
 	// ID of the compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Name of the user to remove
 	// Required: true
-	Username string `url:"userName"`
+	Username string `url:"userName" json:"userName"`
 }
 
 func (crq UserRevokeRequest) validate() error {

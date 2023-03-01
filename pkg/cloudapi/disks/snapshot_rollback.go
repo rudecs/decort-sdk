@@ -11,15 +11,15 @@ import (
 type SnapshotRollbackRequest struct {
 	// ID of the disk
 	// Required: true
-	DiskID uint64 `url:"diskId"`
+	DiskID uint64 `url:"diskId" json:"diskId"`
 
 	// Label of the snapshot to rollback
 	// Required: true
-	Label string `url:"label"`
+	Label string `url:"label" json:"label"`
 
 	// Timestamp of the snapshot to rollback
 	// Required: true
-	TimeStamp uint64 `url:"timestamp"`
+	TimeStamp uint64 `url:"timestamp" json:"timestamp"`
 }
 
 func (drq SnapshotRollbackRequest) validate() error {

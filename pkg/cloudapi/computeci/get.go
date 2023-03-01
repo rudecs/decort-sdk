@@ -11,7 +11,7 @@ import (
 type GetRequest struct {
 	// ID of the Compute CI
 	// Required: true
-	ComputeCIID uint64 `url:"computeciId"`
+	ComputeCIID uint64 `url:"computeciId" json:"computeciId"`
 }
 
 func (krq GetRequest) validate() error {

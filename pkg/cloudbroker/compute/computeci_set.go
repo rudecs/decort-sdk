@@ -11,11 +11,11 @@ import (
 type ComputeCISetRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// ID of the Compute CI
 	// Required: true
-	ComputeCIID uint64 `url:"computeciId"`
+	ComputeCIID uint64 `url:"computeciId" json:"computeciId"`
 }
 
 func (crq ComputeCISetRequest) validate() error {

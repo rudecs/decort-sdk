@@ -13,23 +13,23 @@ import (
 type NetAttachRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Network type
 	// 'EXTNET' for connect to external network directly
 	// and 'VINS' for connect to ViNS
 	// Required: true
-	NetType string `url:"netType"`
+	NetType string `url:"netType" json:"netType"`
 
 	// Network ID for connect to
 	// For EXTNET - external network ID
 	// For VINS - VINS ID
 	// Required: true
-	NetID uint64 `url:"netId"`
+	NetID uint64 `url:"netId" json:"netId"`
 
 	// Directly required IP address for new network interface
 	// Required: true
-	IPAddr string `url:"ipAddr,omitempty"`
+	IPAddr string `url:"ipAddr,omitempty" json:"ipAddr,omitempty"`
 }
 
 func (crq NetAttachRequest) validate() error {

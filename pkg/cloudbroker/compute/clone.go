@@ -11,23 +11,23 @@ import (
 type CloneRequest struct {
 	// ID of compute instance
 	// Required: true
-	ComputeID uint64 `url:"computeId"`
+	ComputeID uint64 `url:"computeId" json:"computeId"`
 
 	// Name of the clone
 	// Required: true
-	Name string `url:"name"`
+	Name string `url:"name" json:"name"`
 
 	// Timestamp of the parent's snapshot to create clone from
 	// Required: false
-	SnapshotTimestamp uint64 `url:"snapshotTimestamp"`
+	SnapshotTimestamp uint64 `url:"snapshotTimestamp" json:"snapshotTimestamp"`
 
 	// Name of the parent's snapshot to create clone from
 	// Required: false
-	SnapshotName string `url:"snapshotName"`
+	SnapshotName string `url:"snapshotName" json:"snapshotName"`
 
 	// Reason to clone
 	// Required: false
-	Reason string `url:"reason,omitempty"`
+	Reason string `url:"reason,omitempty" json:"reason,omitempty"`
 }
 
 func (crq CloneRequest) validate() error {

@@ -11,15 +11,15 @@ import (
 type GroupUpdateExtNetRequest struct {
 	// ID of the Basic Service of Compute Group
 	// Required: true
-	ServiceID uint64 `url:"serviceId"`
+	ServiceID uint64 `url:"serviceId" json:"serviceId"`
 
 	// ID of the Compute Group
 	// Required: true
-	CompGroupID uint64 `url:"compgroupId"`
+	CompGroupID uint64 `url:"compgroupId" json:"compgroupId"`
 
 	// List of Extnets to connect computes
 	// Required: false
-	ExtNets []uint64 `url:"extnets,omitempty"`
+	ExtNets []uint64 `url:"extnets,omitempty" json:"extnets,omitempty"`
 }
 
 func (bsrq GroupUpdateExtNetRequest) validate() error {

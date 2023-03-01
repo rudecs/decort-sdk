@@ -11,11 +11,11 @@ import (
 type DeleteRequest struct {
 	// ID of the image to delete
 	// Required: true
-	ImageID uint64 `url:"imageId"`
+	ImageID uint64 `url:"imageId" json:"imageId"`
 
 	// Whether to completely delete the image
 	// Required: false
-	Permanently bool `url:"permanently,omitempty"`
+	Permanently bool `url:"permanently,omitempty" json:"permanently,omitempty"`
 }
 
 func (irq DeleteRequest) validate() error {
